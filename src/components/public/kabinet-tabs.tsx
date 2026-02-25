@@ -1,23 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 type KabinetTabsProps = {
     groupedPengurus: Record<string, any[]>;
 };
 
-export function KabinetTabs({ groupedPengurus }: KabinetTabsProps) {
+// Sub-component to handle search params safely within Suspense
+function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
     const searchParams = useSearchParams();
     const tabParam = searchParams.get("tab");
-
-    const [activeTab, setActiveTab] = useState("visi-misi");
 
     useEffect(() => {
         if (tabParam && ["visi-misi", "program-unggulan", "profil"].includes(tabParam)) {
             setActiveTab(tabParam);
         }
-    }, [tabParam]);
+    }, [tabParam, setActiveTab]);
+
+    return null;
+}
+
+export function KabinetTabs({ groupedPengurus }: KabinetTabsProps) {
+    const [activeTab, setActiveTab] = useState("visi-misi");
 
     const tabs = [
         { id: "visi-misi", label: "Visi & Misi" },
@@ -27,6 +32,9 @@ export function KabinetTabs({ groupedPengurus }: KabinetTabsProps) {
 
     return (
         <div className="w-full relative z-20 -mt-10 md:-mt-16 container px-4 flex flex-col items-center">
+            <Suspense fallback={null}>
+                <TabHandler setActiveTab={setActiveTab} />
+            </Suspense>
             {/* Tab Navigation */}
             <div className="flex flex-wrap bg-white/90 backdrop-blur-md rounded-t-xl overflow-hidden shadow-sm border-b justify-center w-full max-w-5xl">
                 {tabs.map((tab) => (
