@@ -3,7 +3,8 @@ import { supabase } from "@/lib/supabase";
 import { DUMMY_PENGURUS } from "@/lib/dummy-data";
 import { ProfileTabs } from "@/components/public/profile-tabs";
 
-export const revalidate = 60;
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
 
 export default function ProfilPage() {
     return (

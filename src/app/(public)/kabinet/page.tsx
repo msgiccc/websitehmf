@@ -3,27 +3,37 @@ import { supabase } from "@/lib/supabase";
 import { DUMMY_PENGURUS } from "@/lib/dummy-data";
 import { KabinetTabs } from "@/components/public/kabinet-tabs";
 
-export const revalidate = 60;
+// Force dynamic rendering to avoid prerender errors when Supabase env vars are not set at build time
+export const dynamic = 'force-dynamic';
 
 export default async function KabinetPage() {
-    // Ambil data pengurus untuk diturunkan ke Tab Profil Kabinet
-    const { data: pengurus } = await supabase
-        .from("Pengurus")
-        .select("*")
-        .order("angkatan", { ascending: true })
-        .order("divisi", { ascending: false });
+    // Ambil data pengurus - fallback ke dummy jika gagal
+    let groupedPengurus: Record<string, any[]> = {};
 
-    const pengurusData = pengurus && pengurus.length > 0 ? pengurus : DUMMY_PENGURUS;
+    try {
+        const { data: pengurus } = await supabase
+            .from("Pengurus")
+            .select("*")
+            .order("angkatan", { ascending: true })
+            .order("divisi", { ascending: false });
 
-    // Kelompokkan pengurus berdasarkan divisi
-    const groupedPengurus = pengurusData.reduce((acc, current) => {
-        const divisi = current.divisi || "Lainnya";
-        if (!acc[divisi]) {
-            acc[divisi] = [];
-        }
-        acc[divisi].push(current);
-        return acc;
-    }, {} as Record<string, typeof pengurusData>);
+        const pengurusData = pengurus && pengurus.length > 0 ? pengurus : DUMMY_PENGURUS;
+
+        groupedPengurus = pengurusData.reduce((acc: Record<string, any[]>, current: any) => {
+            const divisi = current.divisi || "Lainnya";
+            if (!acc[divisi]) acc[divisi] = [];
+            acc[divisi].push(current);
+            return acc;
+        }, {});
+    } catch (e) {
+        // Fallback ke data dummy jika fetch gagal
+        groupedPengurus = DUMMY_PENGURUS.reduce((acc: Record<string, any[]>, current: any) => {
+            const divisi = current.divisi || "Lainnya";
+            if (!acc[divisi]) acc[divisi] = [];
+            acc[divisi].push(current);
+            return acc;
+        }, {});
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
