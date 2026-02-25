@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { supabase } from "@/lib/supabase";
 import { DUMMY_PENGURUS } from "@/lib/dummy-data";
 import { KabinetTabs } from "@/components/public/kabinet-tabs";
@@ -67,7 +68,9 @@ export default async function KabinetPage() {
 
             {/* Interactive Tabs Section */}
             <section className="w-full pb-24">
-                <KabinetTabs groupedPengurus={groupedPengurus} />
+                <Suspense fallback={<div className="container px-4 text-center py-20 text-gray-500">Memuat data kabinet...</div>}>
+                    <KabinetTabs groupedPengurus={groupedPengurus} />
+                </Suspense>
             </section>
         </div>
     );

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { supabase } from "@/lib/supabase";
 import { DUMMY_PENGURUS } from "@/lib/dummy-data";
 import { ProfileTabs } from "@/components/public/profile-tabs";
@@ -34,7 +35,9 @@ export default function ProfilPage() {
 
             {/* 2. Interactive Tabs Section (Sejarah, Lambang, Mars) */}
             <section className="w-full pb-24">
-                <ProfileTabs />
+                <Suspense fallback={<div className="container px-4 text-center py-20 text-gray-500">Memuat informasi profil...</div>}>
+                    <ProfileTabs />
+                </Suspense>
             </section>
         </div>
     );
