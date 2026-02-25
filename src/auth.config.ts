@@ -1,6 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig = {
+    secret: process.env.NEXTAUTH_SECRET || 'fallback-secret-for-build-only-change-in-production',
     pages: {
         signIn: '/login',
     },
