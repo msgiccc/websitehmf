@@ -103,11 +103,28 @@ export default function PublicLayout({
                                 </div>
                             </div>
                         </div>
+                        {/* Menu Content (Eks Media - Disabled temporarily) */}
                         <div className="group relative cursor-pointer py-4">
-                            <Link href="/artikel" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
-                                Media <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
+                            <Link href="#" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
+                                Content
                             </Link>
                         </div>
+
+                        {/* Dropdown DPM */}
+                        <div className="group relative cursor-pointer py-4">
+                            <Link href="#" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
+                                DPM <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
+                            </Link>
+
+                            {/* Dropdown Menu Content DPM */}
+                            <div className="absolute top-full left-0 mt-0 w-64 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
+                                <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
+                                    <Link href="/dpm/struktur-kepengurusan" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Struktur Kepengurusan DPM</Link>
+                                    <Link href="/dpm/produk-mumas" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Produk Mumas</Link>
+                                </div>
+                            </div>
+                        </div>
+
                         <Link href="/galeri" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Social</Link>
                         <Link href="/login" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Partner</Link>
                     </nav>
@@ -161,7 +178,17 @@ export default function PublicLayout({
                                         <Link href="/program-kerja/bidang-sosial-dan-politik" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Sospol</Link>
                                     </div>
                                 </div>
-                                <Link href="/artikel" className="text-lg font-medium hover:text-[#c92020] transition-colors">Media</Link>
+                                <div className="text-lg font-medium text-white/50 block">Content</div>
+
+                                {/* Mobile Dropdown for DPM */}
+                                <div className="space-y-3">
+                                    <div className="text-lg font-medium text-white/50">DPM</div>
+                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
+                                        <Link href="/dpm/struktur-kepengurusan" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Struktur Kepengurusan DPM</Link>
+                                        <Link href="/dpm/produk-mumas" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Produk Mumas</Link>
+                                    </div>
+                                </div>
+
                                 <Link href="/galeri" className="text-lg font-medium hover:text-[#c92020] transition-colors">Social</Link>
                                 <div className="border-t border-white/20 pt-6 mt-4">
                                     <Link href="/login" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Admin/Partner</Link>
