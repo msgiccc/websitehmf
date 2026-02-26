@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield } from "lucide-react";
 import { auth } from "@/auth";
@@ -9,11 +10,11 @@ export default async function AdminLayout({
 }: {
     children: React.ReactNode;
 }) {
-    let session = null;
-    try {
-        session = await auth();
-    } catch {
-        // Jika auth() gagal, tetap render layout tanpa session info
+    const session = await auth();
+
+    // Proteksi Route Admin level Server Component (menggantikan Middleware)
+    if (!session?.user) {
+        redirect('/login');
     }
 
     const navLinks = [
