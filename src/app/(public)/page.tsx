@@ -40,17 +40,10 @@ export default async function HomePage() {
 
         <div className="container px-4 md:px-8 relative z-20 w-full max-w-5xl mx-auto flex flex-col items-center text-center space-y-8">
 
-          {/* Subtitle Top */}
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#1A2C4D]/60 border border-blue-400/30 shadow-lg shadow-blue-900/20 text-blue-100 text-sm md:text-base font-bold tracking-widest uppercase backdrop-blur-md">
-            <div className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></div>
-            Himpunan Mahasiswa Fisika
-          </div>
-
           {/* Main Title */}
           <h1 className="animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 font-serif text-white text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
-            Mengakar,<br />
-            Berkembang,<br />
-            Tumbuh Bersama
+            Himpunan Mahasiswa<br />
+            Fisika
           </h1>
 
           {/* Subtitle Bottom */}
