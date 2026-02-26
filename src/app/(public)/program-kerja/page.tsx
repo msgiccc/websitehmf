@@ -31,11 +31,11 @@ export default function IndeksProgramKerjaPage() {
             <section className="container px-4 md:px-8 mx-auto relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {KATEGORI_PROGRAM.map((cat, idx) => (
-                        <Link href={`/ program - kerja / ${cat.id} `} key={idx} className="group outline-none">
+                        <Link href={`/program-kerja/${cat.id}`} key={idx} className="group outline-none">
                             <div className="relative h-full bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col group-focus-visible:ring-4 group-focus-visible:ring-[#2c1469]/30">
 
                                 {/* Ambient Hover Glow */}
-                                <div className={`absolute - bottom - 20 - right - 20 w - 64 h - 64 bg - gradient - to - br ${cat.color} rounded - full blur - 3xl opacity - 0 group - hover: opacity - 15 transition - opacity duration - 700 pointer - events - none`}></div>
+                                <div className={`absolute -bottom-20 -right-20 w-64 h-64 bg-gradient-to-br ${cat.color} rounded-full blur-3xl opacity-0 group-hover:opacity-15 transition-opacity duration-700 pointer-events-none`}></div>
 
                                 {/* Header / Icon Area */}
                                 <div className="flex justify-between items-start mb-8 relative z-10">
