@@ -14,29 +14,35 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
+                // Validasi input
                 if (!credentials?.username || !credentials?.password) return null;
 
-                const { data: user, error } = await supabase
-                    .from('User')
-                    .select('*')
-                    .eq('username', credentials.username as string)
-                    .single();
+                try {
+                    // Query user dari Supabase
+                    const { data: user, error } = await supabase
+                        .from('User')
+                        .select('*')
+                        .eq('username', credentials.username as string)
+                        .single();
 
-                if (error || !user) {
-                    throw new Error("Invalid username or password");
+                    // Kembalikan null (bukan throw) agar NextAuth menampilkan
+                    // error "CredentialsSignin" ke form, bukan redirect ke /api/auth/error
+                    if (error || !user) return null;
+
+                    // Cek password
+                    const isValid = await compare(credentials.password as string, user.password);
+                    if (!isValid) return null;
+
+                    // Login berhasil
+                    return {
+                        id: user.id,
+                        name: user.name,
+                        username: user.username,
+                    };
+                } catch {
+                    // Jika ada error (Supabase down, tabel belum ada, dll) — return null
+                    return null;
                 }
-
-                const isValid = await compare(credentials.password as string, user.password);
-
-                if (!isValid) {
-                    throw new Error("Invalid username or password");
-                }
-
-                return {
-                    id: user.id,
-                    name: user.name,
-                    username: user.username,
-                };
             },
         }),
     ],
