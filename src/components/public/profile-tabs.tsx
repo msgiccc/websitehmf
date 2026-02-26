@@ -111,61 +111,61 @@ export function ProfileTabs() {
                             </p>
                         </div>
 
-                        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center lg:items-start">
-                            {/* Logo Display */}
-                            <div className="w-full lg:w-1/3 flex flex-col items-center lg:sticky lg:top-32">
-                                <div className="w-64 h-64 md:w-80 md:h-80 relative group">
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-[#0B1F3A]/5 to-[#E63946]/5 rounded-full blur-3xl animate-pulse-slow"></div>
-                                    <div className="absolute inset-0 bg-white rounded-full shadow-[0_10px_50px_rgba(0,0,0,0.05)] border-8 border-[#F4F1EC]/50 flex items-center justify-center p-6 z-10 transform group-hover:scale-105 transition-transform duration-500">
+                        <div className="flex flex-col gap-12 lg:gap-16 items-center">
+                            {/* Logo Display - Top Centered */}
+                            <div className="w-full flex flex-col items-center relative">
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-gradient-to-tr from-[#0B1F3A]/5 to-[#E63946]/5 rounded-full blur-[100px] pointer-events-none"></div>
+                                <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 relative group">
+                                    <div className="absolute inset-0 bg-white rounded-full shadow-[0_20px_60px_rgba(0,0,0,0.08)] border-8 border-[#F4F1EC]/50 flex items-center justify-center p-8 z-10 transform group-hover:-translate-y-2 transition-transform duration-500">
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src="/logo.png" alt="Logo HMF" className="w-full h-full object-contain" />
+                                        <img src="/logo.png" alt="Logo HMF" className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500" />
                                     </div>
                                 </div>
-                                <div className="mt-12">
+                                <div className="mt-12 relative z-20">
                                     <a href="/logo.png" download>
-                                        <button className="bg-white border-2 border-[#0B1F3A] text-[#0B1F3A] hover:bg-[#0B1F3A] hover:text-white rounded-full px-8 py-3.5 font-bold transition-all flex items-center gap-2 shadow-sm hover:shadow-lg hover:-translate-y-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></svg>
-                                            Unduh Lambang HMF
+                                        <button className="bg-white border-2 border-[#0B1F3A] text-[#0B1F3A] hover:bg-[#0B1F3A] hover:text-white rounded-full px-8 py-3.5 font-bold transition-all flex items-center gap-3 shadow-sm hover:shadow-xl hover:-translate-y-1 group/btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/btn:animate-bounce"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></svg>
+                                            Unduh Lambang Resmi
                                         </button>
                                     </a>
                                 </div>
                             </div>
 
                             {/* Meaning Lists Cards Grid */}
-                            <div className="w-full lg:w-2/3">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="w-full relative z-10">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow relative overflow-hidden group">
+                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Tulisan & Lingkaran</h3>
                                         <p className="text-gray-600 leading-relaxed text-sm relative z-10">Tulisan Himpunan Mahasiswa Fisika FPMIPA UPI dan singkatan HMF dalam lingkaran biru menunjukan nama organisasi.</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
-                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow relative overflow-hidden group">
+                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Mahkota Segilima</h3>
                                         <p className="text-gray-600 leading-relaxed text-sm relative z-10">Mahkota segilima warna putih bertepikan biru pada bentuk luar melambangkan menjalankan kegiatan berdasarkan Pancasila, UUD 1945, serta Tridharma PT.</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
-                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow relative overflow-hidden group">
+                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Lingkaran Biru Dalam</h3>
                                         <p className="text-gray-600 leading-relaxed text-sm relative z-10">Mempunyai arti bahwa kegiatan berlandaskan asas kekeluargaan, segala aspek pemecahan masalah diselesaikan secara musyawarah mufakat.</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
-                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow relative overflow-hidden group">
+                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Sepasang Sayap</h3>
                                         <p className="text-gray-600 leading-relaxed text-sm relative z-10">Berwarna putih berarti memiliki bidang-bidang dengan tugasnya masing-masing akan tetapi saling membantu mencapai tujuan.</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
-                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow relative overflow-hidden group">
+                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Lintasan Elektron Merah</h3>
                                         <p className="text-gray-600 leading-relaxed text-sm relative z-10">Berarti HMF memiliki sifat dinamis dan aktif sesuai dengan peraturan dan hukum yang berlaku dan dapat dipertanggungjawabkan.</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
-                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow relative overflow-hidden group">
+                                    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Segitiga Terbalik Merah</h3>
                                         <p className="text-gray-600 leading-relaxed text-sm relative z-10">Mengarah ke bawah berarti HMF memiliki dasar yang kuat dengan akar yang kokoh sehingga mantap walaupun mendapat tantangan.</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
@@ -174,30 +174,25 @@ export function ProfileTabs() {
                                 </div>
 
                                 {/* Arti Warna - Modernized */}
-                                <div className="mt-10 bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-[#0B1F3A] via-[#E63946] to-[#C9A24D]"></div>
-                                    <h3 className="text-2xl font-serif font-bold text-[#0B1F3A] mb-6">Simbolik Warna</h3>
-                                    <div className="space-y-6">
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-6 h-6 rounded-full bg-[#0B1F3A] shrink-0 mt-1 shadow-md"></div>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900">Biru</h4>
-                                                <p className="text-gray-600 text-sm">HMF dijiwai semangat pengabdian yang tinggi untuk mencapai tujuan mulia.</p>
-                                            </div>
+                                <div className="mt-10 bg-white rounded-3xl p-8 lg:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative overflow-hidden pt-12">
+                                    <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#0B1F3A] via-[#E63946] to-[#C9A24D]"></div>
+                                    <h3 className="text-2xl font-serif font-bold text-[#0B1F3A] mb-8 text-center">Simbolik Warna</h3>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                                        <div className="flex flex-col items-center text-center group">
+                                            <div className="w-12 h-12 rounded-full bg-[#0B1F3A] mb-4 shadow-lg group-hover:scale-110 transition-transform"></div>
+                                            <h4 className="font-bold text-gray-900 mb-2">Biru</h4>
+                                            <p className="text-gray-600 text-sm leading-relaxed">HMF dijiwai semangat pengabdian yang tinggi untuk mencapai tujuan mulia.</p>
                                         </div>
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-6 h-6 rounded-full bg-[#E63946] shrink-0 mt-1 shadow-md"></div>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900">Merah</h4>
-                                                <p className="text-gray-600 text-sm">Berarti HMF FPMIPA UPI memiliki energi yang sangat besar sebagai modal dalam beraktifitas.</p>
-                                            </div>
+                                        <div className="flex flex-col items-center text-center group">
+                                            <div className="w-12 h-12 rounded-full bg-[#E63946] mb-4 shadow-lg group-hover:scale-110 transition-transform"></div>
+                                            <h4 className="font-bold text-gray-900 mb-2">Merah</h4>
+                                            <p className="text-gray-600 text-sm leading-relaxed">Berarti HMF FPMIPA UPI memiliki energi yang sangat besar sebagai modal dalam beraktifitas.</p>
                                         </div>
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-6 h-6 rounded-full bg-white border-2 border-gray-200 shrink-0 mt-1 shadow-sm"></div>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900">Putih</h4>
-                                                <p className="text-gray-600 text-sm">Memiliki keragaman potensi anggota yang berpadu untuk mencapai tujuan organisasi yang sama.</p>
-                                            </div>
+                                        <div className="flex flex-col items-center text-center group">
+                                            <div className="w-12 h-12 rounded-full bg-white border-4 border-gray-200 mb-4 shadow-md group-hover:scale-110 transition-transform"></div>
+                                            <h4 className="font-bold text-gray-900 mb-2">Putih</h4>
+                                            <p className="text-gray-600 text-sm leading-relaxed">Memiliki keragaman potensi anggota yang berpadu untuk mencapai tujuan organisasi yang sama.</p>
                                         </div>
                                     </div>
                                 </div>
