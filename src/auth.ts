@@ -4,7 +4,8 @@ import { supabase } from '@/lib/supabase';
 import { compare } from 'bcryptjs';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-    secret: process.env.NEXTAUTH_SECRET,
+    // NextAuth v5 menggunakan AUTH_SECRET, tapi kita juga cek NEXTAUTH_SECRET
+    secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/login',
     },
