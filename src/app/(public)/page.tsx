@@ -25,84 +25,70 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
 
-      {/* 1. Hero Section (Navy Layout) */}
-      <section className="relative w-full min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-[#2c1469]">
-        {/* Abstract Background Accent */}
-        <div className="absolute top-0 right-0 w-2/3 h-full bg-white/5 -skew-x-12 translate-x-1/4 rounded-3xl pointer-events-none"></div>
-        <div className="absolute top-20 -left-40 w-[500px] h-[500px] bg-[#E63946]/10 rounded-full blur-[100px] pointer-events-none"></div>
+      {/* 1. Hero Section (Center-Aligned Cinematic Layout) */}
+      <section className="relative w-full min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden">
+        {/* Cinematic Background */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[#071324]/80 bg-gradient-to-t from-[#071324] via-[#0B1F3A]/70 to-[#1A2C4D]/60 mix-blend-multiply z-10"></div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="https://images.unsplash.com/photo-1517445312882-62fe8dc2c5fa?q=80&w=2670&auto=format&fit=crop" alt="HMF Background" className="w-full h-full object-cover object-center" />
 
-        <div className="container px-4 md:px-8 relative z-10 w-full max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+          {/* Glowing Accents */}
+          <div className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-blue-600/30 rounded-full blur-[120px] pointer-events-none z-10"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none z-10"></div>
+        </div>
 
-            {/* Left Content */}
-            <div className="flex flex-col items-start text-left space-y-6 lg:pr-10">
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 border border-white/20 shadow-sm text-white text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
-                <div className="w-2 h-2 rounded-full bg-[#E63946] animate-pulse"></div>
-                Himpunan Mahasiswa Fisika
-              </div>
+        <div className="container px-4 md:px-8 relative z-20 w-full max-w-5xl mx-auto flex flex-col items-center text-center space-y-8">
 
-              <h1 className="font-serif text-white text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
-                Mengakar,<br />
-                Berkembang,<br />
-                Tumbuh Bersama
-              </h1>
-
-              <p className="text-gray-300 text-base md:text-lg max-w-md leading-relaxed">
-                Tangguh bersatu jaya, membaktikan diri untuk Bangsa. Mengabdi dengan sepenuh hati demi almamater dan Indonesia.
-              </p>
-
-              <div className="pt-4 flex flex-wrap gap-4">
-                <Link href="/profil">
-                  <Button size="lg" className="bg-[#E63946] hover:bg-[#c92020] text-white rounded-full font-bold px-8 py-6 h-auto shadow-[0_8px_20px_rgba(230,57,70,0.4)] hover:-translate-y-1 transition-all flex items-center gap-2 group border-none">
-                    Lebih Dekat <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </Button>
-                </Link>
-                <Link href="/artikel">
-                  <Button size="lg" variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white rounded-full font-bold px-8 py-6 h-auto transition-all flex items-center gap-2 backdrop-blur-sm">
-                    Kabar Terbaru
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Stats Snippet */}
-              <div className="pt-8 grid grid-cols-3 gap-8 border-t border-white/20 w-full mt-6">
-                <div>
-                  <p className="text-3xl font-black text-white">1954</p>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-1">Berdiri</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-black text-white">10+</p>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-1">Divisi</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-black text-white">500+</p>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-1">Keluarga Aktif</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Content - Photo Grid/Collage */}
-            <div className="relative h-[450px] sm:h-[550px] w-full mt-8 lg:mt-0 lg:ml-auto">
-              {/* Back Image (Secondary) */}
-              <div className="absolute top-0 right-0 w-[60%] h-[70%] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/50 z-10 hover:-translate-y-2 transition-transform duration-500">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94" alt="Kegiatan" className="w-full h-full object-cover" />
-              </div>
-
-              {/* Main Floating Image (Primary) */}
-              <div className="absolute bottom-10 left-0 w-[55%] h-[60%] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(11,31,58,0.2)] border-8 border-[#F4F1EC] z-20 hover:scale-105 transition-transform duration-500">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="Diskusi" className="w-full h-full object-cover" />
-              </div>
-
-              {/* Third small accent image */}
-              <div className="absolute bottom-0 right-[15%] w-32 h-32 rounded-full overflow-hidden shadow-xl border-4 border-white z-30 animate-pulse-slow">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="https://images.unsplash.com/photo-1444653389962-8149286c578a" alt="Momen" className="w-full h-full object-cover" />
-              </div>
-            </div>
-
+          {/* Subtitle Top */}
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#1A2C4D]/60 border border-blue-400/30 shadow-lg shadow-blue-900/20 text-blue-100 text-sm md:text-base font-bold tracking-widest uppercase backdrop-blur-md">
+            <div className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></div>
+            Himpunan Mahasiswa Fisika
           </div>
+
+          {/* Main Title */}
+          <h1 className="animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 font-serif text-white text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+            Mengakar,<br />
+            Berkembang,<br />
+            Tumbuh Bersama
+          </h1>
+
+          {/* Subtitle Bottom */}
+          <p className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 text-blue-100/90 text-lg md:text-xl md:text-2xl max-w-3xl leading-relaxed font-medium drop-shadow-md">
+            Fakultas Pendidikan Matematika dan Ilmu Pengetahuan Alam<br />
+            Universitas Pendidikan Indonesia
+          </p>
+
+          {/* Action Buttons */}
+          <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500 pt-8 flex flex-wrap justify-center gap-6">
+            <Link href="/profil">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold px-10 py-7 h-auto text-lg shadow-[0_8px_30px_rgba(37,99,235,0.4)] hover:shadow-[0_8px_30px_rgba(37,99,235,0.6)] hover:-translate-y-1 transition-all flex items-center gap-3 group border-none">
+                Lebih Dekat <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </Button>
+            </Link>
+            <Link href="/artikel">
+              <Button size="lg" variant="outline" className="border-blue-400/30 bg-[#0B1F3A]/60 text-blue-100 hover:bg-blue-900/50 hover:text-white hover:border-blue-400/50 rounded-full font-bold px-10 py-7 h-auto text-lg transition-all flex items-center gap-3 backdrop-blur-md">
+                Kabar Terbaru
+              </Button>
+            </Link>
+          </div>
+
+          {/* Stats Snippet Centered */}
+          <div className="animate-in fade-in duration-1000 delay-700 pt-16 flex flex-wrap justify-center gap-12 md:gap-24 w-full border-t border-blue-500/20 mt-8">
+            <div className="flex flex-col items-center">
+              <p className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 drop-shadow-sm">1954</p>
+              <p className="text-xs md:text-sm font-bold text-blue-300 uppercase tracking-[0.2em] mt-2">Berdiri</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <p className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 drop-shadow-sm">10+</p>
+              <p className="text-xs md:text-sm font-bold text-blue-300 uppercase tracking-[0.2em] mt-2">Divisi</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <p className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 drop-shadow-sm">500+</p>
+              <p className="text-xs md:text-sm font-bold text-blue-300 uppercase tracking-[0.2em] mt-2">Keluarga Aktif</p>
+            </div>
+          </div>
+
         </div>
       </section>
 
