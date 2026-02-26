@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Linkedin, Instagram } from "lucide-react";
+import { Linkedin, Instagram, PlayCircle } from "lucide-react";
 
 // Sub-component to handle search params safely within Suspense
 function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
@@ -221,10 +221,10 @@ export function ProfileTabs() {
                                     <div className="absolute top-8 right-8 text-[#F4F1EC]">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" /></svg>
                                     </div>
-                                    <h3 className="text-4xl font-serif font-bold text-[#0B1F3A] mb-2">Mars</h3>
-                                    <p className="text-sm font-bold text-gray-400 mb-8 uppercase tracking-widest">Ciptaan : Doni Nurdiansyah</p>
+                                    <h3 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1F3A] mb-2">Mars HMF</h3>
+                                    <p className="text-xs md:text-sm font-bold text-gray-400 mb-6 uppercase tracking-widest">Ciptaan : Doni Nurdiansyah</p>
 
-                                    <div className="text-lg md:text-xl font-serif italic text-gray-700 leading-[2.2] flex-1">
+                                    <div className="text-base md:text-lg font-serif italic text-gray-700 leading-loose flex-1 mb-8">
                                         <p>Kibarkan bakti di jiwa</p>
                                         <p>Membangun HMF tercinta</p>
                                         <p>Semangatkan tekad dihati</p>
@@ -236,6 +236,11 @@ export function ProfileTabs() {
                                         <p>Bulatkan hati tuk raih prestasi</p>
                                         <p>Bersama di fisika UPI</p>
                                     </div>
+
+                                    <a href="https://youtu.be/xTKOQEZwEgg" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-[#0B1F3A] text-white rounded-full font-bold text-sm tracking-wide hover:bg-[#E63946] transition-colors self-start shadow-md hover:shadow-lg hover:-translate-y-0.5 group/btn">
+                                        <PlayCircle className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+                                        Dengarkan di YouTube
+                                    </a>
                                 </div>
                             </div>
 
@@ -246,10 +251,10 @@ export function ProfileTabs() {
                                     <div className="absolute top-8 right-8 text-[#F4F1EC]">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" /></svg>
                                     </div>
-                                    <h3 className="text-4xl font-serif font-bold text-[#E63946] mb-2">Hymne</h3>
-                                    <p className="text-sm font-bold text-gray-400 mb-8 uppercase tracking-widest">Ciptaan : Doni Nurdiansyah</p>
+                                    <h3 className="text-3xl md:text-4xl font-serif font-bold text-[#E63946] mb-2">Hymne HMF</h3>
+                                    <p className="text-xs md:text-sm font-bold text-gray-400 mb-6 uppercase tracking-widest">Ciptaan : Doni Nurdiansyah</p>
 
-                                    <div className="text-lg md:text-xl font-serif italic text-gray-700 leading-[2.2] flex-1">
+                                    <div className="text-base md:text-lg font-serif italic text-gray-700 leading-loose flex-1 mb-8">
                                         <p>Fisika bumi siliwangi</p>
                                         <p>Tempat ku bernaung dan berdiri</p>
                                         <p>Cerahkan negeri bakti ibu pertiwi</p>
@@ -260,6 +265,11 @@ export function ProfileTabs() {
                                         <p>Kibarkan panji harumkan negeri</p>
                                         <p>Fisika Jayalah di hati</p>
                                     </div>
+
+                                    <a href="https://youtu.be/jCrs_U4pZr4" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-[#E63946] text-white rounded-full font-bold text-sm tracking-wide hover:bg-[#0B1F3A] transition-colors self-start shadow-md hover:shadow-lg hover:-translate-y-0.5 group/btn">
+                                        <PlayCircle className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+                                        Dengarkan di YouTube
+                                    </a>
                                 </div>
                             </div>
                         </div>
