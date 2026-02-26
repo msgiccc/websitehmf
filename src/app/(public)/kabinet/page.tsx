@@ -42,7 +42,7 @@ export default async function KabinetPage() {
 
                 {/* Background Image with Blue Tone Overlay */}
                 <div
-                    className="absolute inset-0 z-0 opacity-[0.15] mix-blend-luminosity"
+                    className="absolute inset-0 z-0 opacity-[0.25]"
                     style={{
                         backgroundImage: "url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2000&auto=format&fit=crop')",
                         backgroundSize: 'cover',
@@ -50,8 +50,8 @@ export default async function KabinetPage() {
                         backgroundAttachment: 'fixed',
                     }}
                 />
-                <div className="absolute inset-0 z-0 bg-[#0B1F3A]/5 backdrop-blur-[1px]"></div>
-                <div className="absolute inset-0 z-0 bg-gradient-to-b from-white/40 via-blue-50/50 to-gray-50 pointer-events-none"></div>
+                <div className="absolute inset-0 z-0 bg-blue-900/10 mix-blend-multiply"></div>
+                <div className="absolute inset-0 z-0 bg-gradient-to-b from-white/30 via-blue-50/80 to-gray-50 pointer-events-none"></div>
 
                 <div className="container px-4 md:px-8 relative z-10 w-full flex flex-col items-center text-center">
 
