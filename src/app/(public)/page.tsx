@@ -26,22 +26,22 @@ export default async function HomePage() {
     <div className="flex flex-col min-h-screen bg-white font-sans">
 
       {/* 1. Hero Section (Center-Aligned Cinematic Layout) */}
-      <section className="relative w-full min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden">
+      <section className="relative w-full min-h-screen flex items-center justify-center pt-32 md:pt-40 pb-12 overflow-hidden">
         {/* Cinematic Background */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[#071324]/80 bg-gradient-to-t from-[#071324] via-[#0B1F3A]/70 to-[#1A2C4D]/60 mix-blend-multiply z-10"></div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.unsplash.com/photo-1517445312882-62fe8dc2c5fa?q=80&w=2670&auto=format&fit=crop" alt="HMF Background" className="w-full h-full object-cover object-center" />
+          <img src="/bg-hero.png" alt="HMF Background" className="w-full h-full object-cover object-center" />
 
           {/* Glowing Accents */}
           <div className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-blue-600/30 rounded-full blur-[120px] pointer-events-none z-10"></div>
           <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none z-10"></div>
         </div>
 
-        <div className="container px-4 md:px-8 relative z-20 w-full max-w-5xl mx-auto flex flex-col items-center text-center space-y-8">
+        <div className="container px-4 md:px-8 relative z-20 w-full max-w-5xl mx-auto flex flex-col items-center text-center space-y-8 mt-12">
 
           {/* Main Title */}
-          <h1 className="animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 font-serif text-white text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+          <h1 className="animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 font-serif text-white text-4xl md:text-5xl lg:text-6xl font-black leading-[1.2] tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
             Himpunan Mahasiswa<br />
             Fisika
           </h1>
@@ -64,22 +64,6 @@ export default async function HomePage() {
                 Kabar Terbaru
               </Button>
             </Link>
-          </div>
-
-          {/* Stats Snippet Centered */}
-          <div className="animate-in fade-in duration-1000 delay-700 pt-16 flex flex-wrap justify-center gap-12 md:gap-24 w-full border-t border-blue-500/20 mt-8">
-            <div className="flex flex-col items-center">
-              <p className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 drop-shadow-sm">1954</p>
-              <p className="text-xs md:text-sm font-bold text-blue-300 uppercase tracking-[0.2em] mt-2">Berdiri</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 drop-shadow-sm">10+</p>
-              <p className="text-xs md:text-sm font-bold text-blue-300 uppercase tracking-[0.2em] mt-2">Divisi</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 drop-shadow-sm">500+</p>
-              <p className="text-xs md:text-sm font-bold text-blue-300 uppercase tracking-[0.2em] mt-2">Keluarga Aktif</p>
-            </div>
           </div>
 
         </div>
