@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Linkedin, Instagram, PlayCircle, Sparkles } from "lucide-react";
+import { Linkedin, Instagram, PlayCircle, Sparkles, Users } from "lucide-react";
 
 // Sub-component to handle search params safely within Suspense
 function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
@@ -21,6 +21,7 @@ function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
 
 export function ProfileTabs() {
     const [activeTab, setActiveTab] = useState("sejarah");
+    const [activeUkkTab, setActiveUkkTab] = useState("khauf");
 
     const tabs = [
         { id: "sejarah", label: "Sejarah Singkat" },
@@ -280,106 +281,165 @@ export function ProfileTabs() {
                 {/* TAB 4: UKK */}
                 {activeTab === "ukk" && (
                     <div className="animate-in fade-in slide-in-from-right-8 duration-700 max-w-6xl mx-auto">
-                        <div className="text-center mb-16">
+                        <div className="text-center mb-10">
                             <span className="inline-block py-1.5 px-4 rounded-full bg-[#0B1F3A]/10 text-[#0B1F3A] text-xs font-bold tracking-widest uppercase mb-4">Unit Kegiatan Khusus</span>
                             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#0B1F3A]">KHAUF & CAKRAWALA</h2>
-                            <div className="w-16 h-1 bg-gradient-to-r from-[#0B1F3A] to-[#E63946] mx-auto mt-6 rounded-full"></div>
+                            <div className="w-16 h-1 bg-gradient-to-r from-[#0B1F3A] to-[#E63946] mx-auto mt-6 rounded-full mb-8"></div>
+
+                            {/* UKK Sub-Tabs */}
+                            <div className="flex justify-center gap-4 mb-16 flex-wrap">
+                                <button
+                                    onClick={() => setActiveUkkTab("khauf")}
+                                    className={`px-8 py-3 rounded-full font-bold text-sm transition-all duration-300 shadow-sm border ${activeUkkTab === "khauf"
+                                            ? "bg-emerald-600 text-white border-emerald-600 shadow-emerald-500/30 shadow-lg scale-105"
+                                            : "bg-white text-emerald-900 border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
+                                        }`}
+                                >
+                                    UKK KHAUF
+                                </button>
+                                <button
+                                    onClick={() => setActiveUkkTab("cakrawala")}
+                                    className={`px-8 py-3 rounded-full font-bold text-sm transition-all duration-300 shadow-sm border ${activeUkkTab === "cakrawala"
+                                            ? "bg-[#152C53] text-white border-[#152C53] shadow-[#152C53]/30 shadow-lg scale-105"
+                                            : "bg-[#0B1F3A] text-blue-100 border-[#3A568C] border-opacity-30 hover:bg-blue-900/50 hover:text-blue-200"
+                                        }`}
+                                >
+                                    UKK CAKRAWALA
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="space-y-20">
+                        <div className="relative">
                             {/* KHAUF Section */}
-                            <div className="flex flex-col lg:flex-row gap-12 items-center bg-[#F4F1EC]/30 rounded-[3rem] p-8 md:p-12 border border-gray-100 relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700"></div>
-                                <div className="lg:w-1/3 flex flex-col items-center text-center relative z-10">
-                                    <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-white shadow-xl border-4 border-emerald-50 p-6 flex items-center justify-center mb-8 relative">
-                                        {/* Decorative ring */}
-                                        <div className="absolute inset-[-15px] border-2 border-dashed border-emerald-200 rounded-full animate-spin-slow"></div>
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src="/khauf.png" alt="Logo KHAUF" className="w-full h-full object-contain" />
+                            {activeUkkTab === "khauf" && (
+                                <div className="animate-in fade-in zoom-in-95 duration-500 flex flex-col gap-12 bg-[#F4F1EC]/30 rounded-[3rem] p-8 md:p-12 border border-emerald-100 relative overflow-hidden group">
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700"></div>
+
+                                    <div className="flex flex-col lg:flex-row gap-12 items-center">
+                                        <div className="lg:w-1/3 flex flex-col items-center text-center relative z-10 shrink-0">
+                                            <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-white shadow-xl border-4 border-emerald-50 p-6 flex items-center justify-center mb-8 relative">
+                                                <div className="absolute inset-[-15px] border-2 border-dashed border-emerald-200 rounded-full animate-spin-slow"></div>
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src="/khauf.png" alt="Logo KHAUF" className="w-full h-full object-contain" />
+                                            </div>
+                                            <h3 className="text-4xl font-black text-emerald-900 tracking-tight mb-2">KHAUF</h3>
+                                            <p className="text-emerald-700 font-medium mb-6 uppercase tracking-wider text-sm">(Komunitas Hijau Fisika)</p>
+                                        </div>
+
+                                        <div className="lg:w-2/3 space-y-6 relative z-10 text-justify text-gray-700 leading-relaxed text-sm md:text-base">
+                                            <p className="font-bold text-emerald-900">Salam Rimba! Salam Lestari!</p>
+                                            <p>KHAUF “The Real Adventure of Science, Keep Fun and Lovely”. Dari slogan tersebut, sudah tergambar kan KHAUF itu organisasi seperti apa? Mari kita kenali lebih lanjut!</p>
+
+                                            <p className="font-bold text-emerald-900 mt-6 pt-4 border-t border-emerald-200/50">SEJARAH SINGKAT KHAUF</p>
+                                            <p>Komunitas Hijau Fisika (KHAUF) adalah salah satu UKK di HMF FPMIPA UPI dan merupakan organisasi yang bergerak di bidang petualangan alam terbuka serta berbasis sains. KHAUF berdiri pada tanggal 02 April 2000 pukul 06.06 WIB di Gunung Tangkuban Perahu yang dideklarasikan oleh 28 orang mahasiswa jurusan Pendidikan Fisika UPI dari berbagai angkatan, mulai angkatan 1993 sampai angkatan 1999. Pada saat itu, latar belakang berdirinya KHAUF adalah karena adanya persamaan hobi mendaki gunung. Kemudian, latar belakang tersebut berkembang menjadi sebuah keinginan untuk mendirikan sebuah organisasi berbasis petualangan. Pada mulanya kegiatan KHAUF hanya sekedar hobi saja namun seiring berjalannya waktu, kegiatan KHAUF berkembang pada beberapa hal seperti petualangan gunung hutan, climbing dan akses tali, kerelawanan. KHAUF juga tengah melakukan Seven Volcanic Summits Expedition Indonesia, yakni penelitian tujuh gunung api tertinggi di Indonesia. Udah kemana aja nih? Nah sudah ke Gunung Sumbing (2020) dan Gunung Slamet (2024), kepoo akan kemana selanjutnya? Pantengin terus sosial media KHAUF.</p>
+                                            <p>KHAUF telah melahirkan 22 angkatan di antaranya adalah Tapak Sebelas (TS), TIKAM, Lumut Rimba (LR), Mutiara Alam (MA), Panca Angin Rimba (PAR), Tapak Guntur (TG), Kabut Wana Sakti (KWS), Deru Lazuardi (DL), Laskar Pantera (LP), Elang Buana (EB), Bayu Kencana (BK), Wono Gondo (WG), Napak Manunggal (NM), Halimun Punggung Sembilan (HPS), Babad Satapak Lima (BSL), Lembah Surya Begonia (LSB), dan Puncak Wana Imaji (PWI), Bahtera surya kencana (BSK), Eka Embun (EE), Gantari Bumandala (GB), Bara Sabit (BS), dan Tanjakan Korsa (TK) Siapa yang akan menjadi angkatan selanjutnya?</p>
+
+                                            <p className="font-bold text-emerald-900 mt-6 pt-4 border-t border-emerald-200/50">TUJUAN</p>
+                                            <p>Tujuan yang hendak dicapai oleh KHAUF diantaranya adalah:</p>
+                                            <p>1. Meningkatkan kualitas anggota HMF FPMIPA UPI yang religius, spiritual, ilmiah, edukatif, mandiri, berkarya yang kreatif dan produktif, dinamis serta berwawasan luas dalam bidang sains, keorganisasian dan kepencintaalaman.</p>
+                                            <p>2. Ikut serta bertanggung jawab dalam mewujudkan cita-cita Bangsa Indonesia dengan penuh kesadaran.</p>
+                                            <p>3. Menumbuhkan rasa kecintaan terhadap alam, lingkungan hidup, dan tanah air.</p>
+                                            <p>4. Menumbuhkembangkan jiwa sains terhadap fenomena alam yang berlandaskan kebebasan berfikir.</p>
+
+                                            <p className="font-bold text-emerald-900 mt-6 pt-4 border-t border-emerald-200/50">TRIVIA</p>
+                                            <p>1. Terdapat dua jenis angkatandi KHAUF, yaitu angkatan perintis dan angkatan biasa. Angkatan perintis adalah anggota KHAUF yang telah mendirikan KHAUF. Sedangkan anggota biasa adalah anggota KHAUF yang dilantik menjadi anggota setelah mengikuti kegiatan pendidikan dan latihan dasar KHAUF.</p>
+                                            <p>2. Anggota KHAUF terdiri dari 3 kelompok, yaitu Anggota Muda (AM), Anggota Biasa (AB), dan Anggota Istimewa.</p>
+                                            <p>3. Setiap anggota KHAUF memiliki nama rimba masing-masing yang didapatkan pada saat pendidikan dasar. Selama berkegiatan dalam organisasi, setiap anggota memanggil anggota lainnya dengan sebutan nama rimba.</p>
+
+                                            <div className="mt-8 bg-white p-6 rounded-xl border border-emerald-100 shadow-sm text-left">
+                                                <p className="mb-4">Masih penasaran mengenai KHAUF? Yuk follow akun sosial media kami</p>
+                                                <p>Instagram : @khauf_upi</p>
+                                                <p>Facebook : Komunitas Hijau Fisika</p>
+                                                <p>YouTube : Khauf UPI</p>
+                                                <p className="mt-4">Atau bisa mengunjungi web KHAUF di <a href="http://khauf-adventure.blogspot.co.id/" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">http://khauf-adventure.blogspot.co.id/</a></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 className="text-4xl font-black text-emerald-900 tracking-tight mb-2">KHAUF</h3>
-                                    <p className="text-emerald-700 font-medium mb-6 uppercase tracking-wider text-sm">Komunitas Hijau Fisika</p>
-                                    <div className="flex gap-4">
-                                        <a href="https://instagram.com/khauf_upi" target="_blank" rel="noopener noreferrer" className="p-3 bg-white rounded-full text-emerald-600 hover:bg-emerald-600 hover:text-white transition-colors shadow-sm">
-                                            <Instagram className="w-5 h-5" />
-                                        </a>
-                                        <a href="https://youtube.com/@KhaufUPI" target="_blank" rel="noopener noreferrer" className="p-3 bg-white rounded-full text-emerald-600 hover:bg-emerald-600 hover:text-white transition-colors shadow-sm cursor-pointer">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-                                        </a>
+
+                                    {/* Pengurus Khauf */}
+                                    <div className="mt-8 pt-8 border-t border-emerald-200/50 relative z-10 w-full">
+                                        <div className="flex items-center gap-3 mb-8 justify-center">
+                                            <Users className="w-6 h-6 text-emerald-700" />
+                                            <h4 className="text-2xl font-bold text-emerald-900 tracking-tight">Ketua / Pengurus KHAUF</h4>
+                                        </div>
+
+                                        <div className="flex flex-wrap justify-center gap-8">
+                                            {/* Dummy Pengurus Khauf */}
+                                            <div className="bg-white rounded-3xl p-6 border border-emerald-100 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center w-64 group">
+                                                <div className="w-24 h-24 mb-5 rounded-full bg-emerald-50 border-4 border-white shadow-md overflow-hidden relative group-hover:-translate-y-2 transition-transform duration-500">
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=KhaufLeader&backgroundColor=transparent" alt="Ketua Khauf" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                                </div>
+                                                <h3 className="font-bold text-emerald-900 text-lg mb-1 group-hover:text-emerald-600 transition-colors">Ketua KHAUF</h3>
+                                                <p className="text-emerald-700 font-medium text-sm mb-2">Pimpinan Unit</p>
+                                                <span className="px-3 py-1 bg-emerald-100/50 text-emerald-800 rounded-full text-xs font-semibold uppercase">Kabinet Terkini</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="lg:w-2/3 space-y-6 relative z-10">
-                                    <div className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-xl">
-                                        <p className="text-emerald-900 font-serif italic text-lg md:text-xl leading-relaxed">
-                                            "The Real Adventure of Science, Keep Fun and Lovely"<br />
-                                            <span className="text-sm font-sans font-bold uppercase mt-3 block text-emerald-700 tracking-wider">Salam Rimba! Salam Lestari!</span>
-                                        </p>
-                                    </div>
-                                    <div className="space-y-4 text-gray-700 leading-relaxed text-sm md:text-base text-justify">
-                                        <p><strong className="text-emerald-800">Sejarah Singkat:</strong> Komunitas Hijau Fisika (KHAUF) berdiri pada tanggal 02 April 2000 pukul 06.06 WIB di Gunung Tangkuban Perahu, dideklarasikan oleh 28 orang mahasiswa mulai angkatan 1993 sampai 1999. Berawal dari persamaan hobi mendaki gunung, KHAUF berkembang pada petualangan gunung hutan, climbing & akses tali, serta kerelawanan.</p>
-                                        <p>Saat ini, KHAUF bergerak melakukan <em>Seven Volcanic Summits Expedition Indonesia</em>. Gunung Sumbing (2020) dan Gunung Slamet (2024) telah ditaklukkan. KHAUF hingga kini telah melahirkan 22 angkatan pendaki tangguh.</p>
-                                        <div>
-                                            <strong className="text-emerald-800">Tujuan:</strong>
-                                            <ul className="list-disc pl-5 mt-2 space-y-1 text-left">
-                                                <li>Meningkatkan kualitas anggota yang religius, spiritual, ilmiah, edukatif, mandiri, kreatif produktif, dinamis, serta berwawasan luas.</li>
-                                                <li>Ikut serta bertanggung jawab mewujudkan cita-cita Bangsa.</li>
-                                                <li>Menumbuhkan rasa kecintaan terhadap alam, lingkungan hidup, dan tanah air.</li>
-                                                <li>Menumbuhkembangkan jiwa sains terhadap fenomena alam berlandaskan kebebasan berfikir.</li>
-                                            </ul>
-                                        </div>
-                                        <div className="bg-white p-5 rounded-xl border border-emerald-100 shadow-sm mt-4 text-left">
-                                            <h4 className="font-bold text-emerald-800 mb-2">💡 Trivia KHAUF</h4>
-                                            <ul className="list-disc pl-5 space-y-2 text-sm">
-                                                <li>Terdapat 2 jenis angkatan: perintis (pendiri) dan biasa (dilantik setelah pendidikan dasar).</li>
-                                                <li>Anggota KHAUF terdiri dari Anggota Muda (AM), Anggota Biasa (AB), dan Anggota Istimewa.</li>
-                                                <li>Setiap anggota memiliki <strong>nama rimba</strong> yang didapatkan saat pendidikan dasar, digunakan sebagai panggilan selama berkegiatan dalam organisasi.</li>
-                                            </ul>
-                                        </div>
-                                        <p className="text-sm mt-4 italic text-left">Kunjungi web KHAUF di <a href="http://khauf-adventure.blogspot.co.id/" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline font-semibold font-sans">khauf-adventure.blogspot.co.id</a></p>
-                                    </div>
-                                </div>
-                            </div>
+                            )}
 
                             {/* CAKRAWALA Section */}
-                            <div className="flex flex-col lg:flex-row-reverse gap-12 items-center bg-[#0B1F3A] text-white rounded-[3rem] p-8 md:p-12 border border-[#0B1F3A] relative overflow-hidden shadow-xl group">
-                                <div className="absolute top-0 left-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700"></div>
-                                <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700 delay-100"></div>
+                            {activeUkkTab === "cakrawala" && (
+                                <div className="animate-in fade-in zoom-in-95 duration-500 flex flex-col gap-12 bg-[#0B1F3A] text-white rounded-[3rem] p-8 md:p-12 border border-[#0B1F3A] relative overflow-hidden shadow-xl group">
+                                    <div className="absolute top-0 left-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700"></div>
+                                    <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700 delay-100"></div>
 
-                                <div className="lg:w-1/3 flex flex-col items-center text-center relative z-10">
-                                    <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-[#152C53] shadow-2xl border-4 border-[#3A568C] p-6 flex items-center justify-center mb-8 relative">
-                                        <div className="absolute inset-[-15px] border-[1px] border-dashed border-indigo-300/30 rounded-full animate-[spin_20s_linear_infinite]"></div>
-                                        <div className="absolute inset-[-30px] border-[1px] border-solid border-blue-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src="/cakrawala.png" alt="Logo CAKRAWALA" className="w-full h-full object-contain drop-shadow-lg" />
-                                    </div>
-                                    <h3 className="text-4xl font-black text-[#F0C14B] tracking-tight mb-2">CAKRAWALA</h3>
-                                    <p className="text-blue-300 font-medium mb-6 uppercase tracking-wider text-sm">Pengetahuan Bumi & Antariksa</p>
-                                    <div className="flex gap-4">
-                                        <a href="https://instagram.com/cakrawala_upi" target="_blank" rel="noopener noreferrer" className="p-3 bg-[#152C53] rounded-full text-blue-300 hover:bg-blue-500 hover:text-white transition-colors shadow-none border border-[#3A568C]">
-                                            <Instagram className="w-5 h-5" />
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="lg:w-2/3 space-y-6 relative z-10">
-                                    <div className="bg-[#152C53]/50 backdrop-blur-sm border-l-4 border-blue-400 p-6 rounded-r-xl">
-                                        <p className="text-blue-100 font-serif italic text-lg md:text-xl leading-relaxed">
-                                            "Let’s Explore The Universe!!"
-                                        </p>
-                                    </div>
-                                    <div className="space-y-4 text-gray-300 leading-relaxed text-sm md:text-base text-justify">
-                                        <p><strong className="text-white">Sejarah Singkat:</strong> Pada 1 September 2002, enam mahasiswa UPI yang terdaftar di Forum Komunitas Ilmu Falak (ZENITH) bersepakat mendirikan wadah Ilmu Pengetahuan Bumi dan Antariksa (IPBA) bernama Forum Ilmiah Fisika Cakrawala di Laboratorium IPBA pada koordinat 06° 51’ 42,5” S, 107° 35’ 24,8” E di ketinggian 1236 mdpl.</p>
-                                        <p>Awalnya berstatus forum tanpa struktur terikat, namun dibentuklah kepengurusan pada 2004 diketuai oleh Cahyo Puji Asmoro untuk mengatasi kendala birokrasi. Karena benturan legalitas di tubuh Himpunan, pada awal 2007 (Mumas), status Cakrawala ditingkatkan menjadi <strong>Unit Kegiatan Khusus (UKK)</strong>, bukan lagi sekadar forum.</p>
-                                        <div className="bg-[#152C53]/40 p-5 rounded-xl border border-blue-500/20 mt-4 text-left">
-                                            <h4 className="font-bold text-blue-200 mb-2 flex items-center gap-2">
-                                                <Sparkles className="w-4 h-4 text-yellow-300" />
-                                                Bintang Angkatan: Aldebaran CO 16
-                                            </h4>
-                                            <p className="text-sm text-blue-100/80 leading-relaxed">Aldebaran diambil dari nama rasi bintang terang di Taurus. Huruf 'C' untuk Corona dan 'O' untuk Online, menandai pembentukan/pelantikan selama periode pandemi secara online. Angka 16 menunjukan ini adalah angkatan ke-16.</p>
+                                    <div className="flex flex-col lg:flex-row gap-12 items-center">
+                                        <div className="lg:w-1/3 flex flex-col items-center text-center relative z-10 shrink-0">
+                                            <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-[#152C53] shadow-2xl border-4 border-[#3A568C] p-6 flex items-center justify-center mb-8 relative">
+                                                <div className="absolute inset-[-15px] border-[1px] border-dashed border-indigo-300/30 rounded-full animate-[spin_20s_linear_infinite]"></div>
+                                                <div className="absolute inset-[-30px] border-[1px] border-solid border-blue-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src="/cakrawala.png" alt="Logo CAKRAWALA" className="w-full h-full object-contain drop-shadow-lg" />
+                                            </div>
+                                            <h3 className="text-4xl font-black text-[#F0C14B] tracking-tight mb-2">CAKRAWALA</h3>
                                         </div>
-                                        <p className="text-sm mt-4 italic text-left">Kunjungi informasi lengkap web CAKRAWALA di <a href="http://cakrawalaupi.wordpress.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 hover:underline font-semibold font-sans">cakrawalaupi.wordpress.com</a></p>
+
+                                        <div className="lg:w-2/3 space-y-6 relative z-10 text-justify text-blue-50/90 leading-relaxed text-sm md:text-base">
+                                            <div className="bg-[#152C53]/50 backdrop-blur-sm border-l-4 border-blue-400 p-6 rounded-r-xl">
+                                                <p className="text-blue-100 font-serif italic text-lg md:text-xl font-bold">Sejarah dan profil UKK CAKRAWALA</p>
+                                            </div>
+
+                                            <p className="font-bold text-[#F0C14B]">Lets Explore The Universe!!</p>
+                                            <p>Nah itu dia jargon andalan UKK Cakrawala FPMIPA UPI ini. Apasih UKK Cakrawala itu?</p>
+                                            <p>Pada tanggal 1 September 2002 enam orang mahasiswa UPI yang terdaftar dalam Forum Komunitas Ilmu Falak (ZENITH) bersepakat mendirikan sebuah forum yang mewadahi hobi mahasiswa Fisika FPMIPA UPI pada bidang Ilmu Pengetahuan Bumi dan Antariksa (IPBA) FPMIPA UPI, forum tersebut diberi nama Forum Ilmiah Fisika Cakrawala di Laboratorium IPBA pada koordinat/altitude 060 51’ 42,5° S, longitude 1070 35’ 24,8° E pada ketinggian 1236 meter di atas permukaan laut.</p>
+                                            <p>FIF-Cakrawala pada awalnya dibentuk tanpa struktur organisasi karena sifatnya sebagai forum, maka semua mahasiwa yang bergabung tidak memiliki keterikatan dan dapat berasal dari mana saja. Ternyata dengan sifat seperti itu banyak kendala dalam FIF-Cakrawala ini, misalmnya dalam birokrasi ketika mengadakan kegiatan yang bersifat publik. Akhirnya pada tahun 2004 dibentuklah kepengurusan FIF-Cakrawala dengan ketua Cahyo Puji Asmoro dengan mengganti logo sesuai tujuan organisasi. Periode ini Cakrawala menjadi organisasi yang cukup digemari para mahasiswa. Tetapi pada akhir 2006 Cakrawala mengalami benturan legalitas pada tubuh HMF (Himpunan Mahasiswa Fisika).</p>
+                                            <p>Karena adanya permasalahan tersebut pada awal 2007 melalui Musyawarah Mahasiswa Fisika (mumas), status Cakrawala menjadi Unit Kegiatan Khusus (UKK), bukan sebagai forum dalam bidang pendidikan HMF FPMIPA UPI lagi.</p>
+                                            <p>Kepengurusan periode 2016-2017 dengan ketua umum Arief Rizqiyanto Achmad CA.11003 yang bernama bintang ACRUX ini merupakan angkatan ke-11 UKK Cakrawala FPMIPA UPI. Bagi teman-teman yang ingin lebih jauh mengetahui UKK Cakrawala yuk follow Instagram UKK Cakrawala dengan id cakrawala_upi dan add Official Account Line UKK Cakrawala di @dwk5854c.</p>
+                                            <p>Nah, itu dia sejarah singkat UKK Cakrawala. Let’s Explore The Universe!</p>
+                                            <p>untuk informasi lengkap UKK cakrawala bisa kunjungi official web cakrawala, <a href="http://cakrawalaupi.wordpress.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-white underline">http://cakrawalaupi.wordpress.com</a></p>
+
+                                            <div className="bg-[#152C53]/80 p-6 rounded-xl border border-[#3A568C] mt-6 shadow-lg">
+                                                <p>Nama angkatan : Aldebaran CO 16</p>
+                                                <p className="mt-2">Deskripsi Singkat:</p>
+                                                <p>Aldebaran diambil dari nama salah satu bintang yang paling terang pada rasi taurus, sedangkan C diambil dari corona dan O diambil dari online karena pembentukan ini dilaksanakan pada saat pandemi dan dilantik secara online. Sedangkan 16 adalah angka yang menunjukan angkatan.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Pengurus Cakrawala */}
+                                    <div className="mt-8 pt-8 border-t border-[#3A568C]/50 relative z-10 w-full">
+                                        <div className="flex items-center gap-3 mb-8 justify-center">
+                                            <Users className="w-6 h-6 text-[#F0C14B]" />
+                                            <h4 className="text-2xl font-bold text-white tracking-tight">Ketua / Pengurus CAKRAWALA</h4>
+                                        </div>
+
+                                        <div className="flex flex-wrap justify-center gap-8">
+                                            {/* Dummy Pengurus Cakrawala */}
+                                            <div className="bg-[#152C53]/80 backdrop-blur-sm rounded-3xl p-6 border border-[#3A568C] shadow-lg hover:shadow-[0_8px_30px_rgba(58,86,140,0.3)] transition-all duration-300 flex flex-col items-center text-center w-64 group">
+                                                <div className="w-24 h-24 mb-5 rounded-full bg-[#0B1F3A] border-4 border-[#3A568C] shadow-sm overflow-hidden relative group-hover:-translate-y-2 transition-transform duration-500">
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=CakrawalaLeader&backgroundColor=transparent" alt="Ketua Cakrawala" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                                </div>
+                                                <h3 className="font-bold text-[#F0C14B] text-lg mb-1 group-hover:text-white transition-colors">Ketua CAKRAWALA</h3>
+                                                <p className="text-blue-300 font-medium text-sm mb-2">Pimpinan Unit</p>
+                                                <span className="px-3 py-1 bg-[#3A568C] text-blue-100 rounded-full text-xs font-semibold uppercase">Kabinet Terkini</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 )}
