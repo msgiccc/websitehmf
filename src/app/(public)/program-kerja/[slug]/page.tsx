@@ -10,8 +10,9 @@ export function generateStaticParams() {
     }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-    const category = KATEGORI_PROGRAM.find(c => c.id === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const category = KATEGORI_PROGRAM.find(c => c.id === slug);
     if (!category) return { title: 'Program Kerja Tidak Ditemukan' };
 
     return {
@@ -20,9 +21,10 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
     };
 }
 
-export default function DetailProgramKerjaPage({ params }: { params: { slug: string } }) {
-    const category = KATEGORI_PROGRAM.find(c => c.id === params.slug);
-    const programs = PROGRAM_DATA[params.slug];
+export default async function DetailProgramKerjaPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const category = KATEGORI_PROGRAM.find(c => c.id === slug);
+    const programs = PROGRAM_DATA[slug];
 
     if (!category || !programs) {
         notFound();
