@@ -1,14 +1,29 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield } from "lucide-react";
-import { signOut, auth } from "@/auth";
+import { auth } from "@/auth";
+import { logoutAction } from "@/lib/logout-action";
 
 export default async function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const session = await auth();
+    let session = null;
+    try {
+        session = await auth();
+    } catch {
+        // Jika auth() gagal, tetap render layout tanpa session info
+    }
+
+    const navLinks = [
+        { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+        { href: '/admin/kabinet', label: 'Kabinet', icon: Shield },
+        { href: '/admin/pengurus', label: 'Pengurus', icon: Users },
+        { href: '/admin/artikel', label: 'Artikel', icon: FileText },
+        { href: '/admin/proker', label: 'Program Kerja', icon: Briefcase },
+        { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon },
+    ];
 
     return (
         <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
@@ -23,45 +38,26 @@ export default async function AdminLayout({
                     </div>
                     <div className="flex-1 overflow-auto py-2">
                         <nav className="grid items-start px-4 text-sm font-medium">
-                            <Link href="/admin" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                <LayoutDashboard className="h-4 w-4" />
-                                Dashboard
-                            </Link>
-                            <Link href="/admin/kabinet" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                <Shield className="h-4 w-4" />
-                                Kabinet
-                            </Link>
-                            <Link href="/admin/pengurus" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                <Users className="h-4 w-4" />
-                                Pengurus
-                            </Link>
-                            <Link href="/admin/artikel" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                <FileText className="h-4 w-4" />
-                                Artikel
-                            </Link>
-                            <Link href="/admin/proker" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                <Briefcase className="h-4 w-4" />
-                                Program Kerja
-                            </Link>
-                            <Link href="/admin/galeri" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                <ImageIcon className="h-4 w-4" />
-                                Galeri
-                            </Link>
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                                >
+                                    <link.icon className="h-4 w-4" />
+                                    {link.label}
+                                </Link>
+                            ))}
                         </nav>
                     </div>
                     <div className="p-4 border-t space-y-3">
-                        {session?.user && (
-                            <div className="px-3 py-2 text-xs text-muted-foreground">
-                                <p className="font-medium text-foreground">{session.user.name}</p>
+                        {session?.user?.name && (
+                            <div className="px-3 py-2">
+                                <p className="font-medium text-sm text-foreground">{session.user.name}</p>
                                 <p className="text-xs text-muted-foreground">Administrator</p>
                             </div>
                         )}
-                        <form
-                            action={async () => {
-                                'use server';
-                                await signOut({ redirectTo: '/login' });
-                            }}
-                        >
+                        <form action={logoutAction}>
                             <Button variant="outline" className="w-full gap-2" type="submit">
                                 <LogOut className="h-4 w-4" />
                                 Logout
@@ -78,7 +74,7 @@ export default async function AdminLayout({
                         <Shield className="h-4 w-4 text-primary" />
                         CMS Admin HMF
                     </div>
-                    {session?.user && (
+                    {session?.user?.name && (
                         <div className="ml-auto flex items-center gap-3">
                             <span className="text-sm text-muted-foreground hidden lg:block">
                                 Selamat datang, <span className="font-semibold text-foreground">{session.user.name}</span>
