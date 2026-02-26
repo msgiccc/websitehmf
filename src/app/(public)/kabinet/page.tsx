@@ -1,42 +1,25 @@
 import { Suspense } from "react";
-import { supabase } from "@/lib/supabase";
 import { DUMMY_PENGURUS } from "@/lib/dummy-data";
 import { KabinetTabs } from "@/components/public/kabinet-tabs";
-import { getKabinetAktif } from "@/lib/admin-actions";
-import Image from "next/image";
+import { getKabinetAktif, getAllPengurus } from "@/lib/data";
 
 export const dynamic = 'force-dynamic';
 
 export default async function KabinetPage() {
-    // Ambil data kabinet aktif dari database
-    const kabinet = await getKabinetAktif();
+    // Ambil data kabinet aktif & pengurus dari database
+    const [kabinet, pengurus] = await Promise.all([
+        getKabinetAktif(),
+        getAllPengurus(),
+    ]);
 
-    // Ambil data pengurus - fallback ke dummy jika gagal
-    let groupedPengurus: Record<string, any[]> = {};
+    const pengurusData = pengurus && pengurus.length > 0 ? pengurus : DUMMY_PENGURUS;
 
-    try {
-        const { data: pengurus } = await supabase
-            .from("Pengurus")
-            .select("*")
-            .order("angkatan", { ascending: true })
-            .order("divisi", { ascending: false });
-
-        const pengurusData = pengurus && pengurus.length > 0 ? pengurus : DUMMY_PENGURUS;
-
-        groupedPengurus = pengurusData.reduce((acc: Record<string, any[]>, current: any) => {
-            const divisi = current.divisi || "Lainnya";
-            if (!acc[divisi]) acc[divisi] = [];
-            acc[divisi].push(current);
-            return acc;
-        }, {});
-    } catch (e) {
-        groupedPengurus = DUMMY_PENGURUS.reduce((acc: Record<string, any[]>, current: any) => {
-            const divisi = current.divisi || "Lainnya";
-            if (!acc[divisi]) acc[divisi] = [];
-            acc[divisi].push(current);
-            return acc;
-        }, {});
-    }
+    const groupedPengurus = pengurusData.reduce((acc: Record<string, any[]>, current: any) => {
+        const divisi = current.divisi || "Lainnya";
+        if (!acc[divisi]) acc[divisi] = [];
+        acc[divisi].push(current);
+        return acc;
+    }, {});
 
     // Fallback values jika kabinet belum diisi di database
     const namaKabinet = kabinet?.namaKabinet || "Niskala Cakra Murni";

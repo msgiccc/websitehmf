@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { KATEGORI_PROGRAM } from '@/lib/data-program-kerja';
-import { supabase } from '@/lib/supabase';
+import { getProkerByBidang, getPengurusByDivisi } from '@/lib/data';
 import { ChevronLeft, Compass, Target, Sparkles, FolderOpen, Clock, Users, CheckCircle2, Circle, Timer } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -32,21 +32,12 @@ export default async function DetailProgramKerjaPage({ params }: { params: Promi
         notFound();
     }
 
-    // Ambil pengurus dari bidang ini
-    const { data: pengurus } = await supabase
-        .from('Pengurus')
-        .select('*')
-        .eq('divisi', category.name)
-        .order('jabatan', { ascending: true });
+    // Ambil pengurus & proker dari DB via data.ts (tanpa auth dependency)
+    const [pengurus, programs] = await Promise.all([
+        getPengurusByDivisi(category!.name),
+        getProkerByBidang(slug),
+    ]);
 
-    // Ambil proker dari DB berdasarkan bidang
-    const { data: prokerFromDB } = await supabase
-        .from('ProgramKerja')
-        .select('*')
-        .eq('bidang', slug)
-        .order('tanggalPelaksanaan', { ascending: true });
-
-    const programs = prokerFromDB || [];
 
     return (
         <div className="min-h-screen bg-[#FAFAFA] flex flex-col pt-24 pb-24 font-sans selection:bg-[#E63946] selection:text-white">
