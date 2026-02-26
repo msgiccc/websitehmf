@@ -1,11 +1,9 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { supabase } from '@/lib/supabase';
-import { compare } from 'bcryptjs';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-    // NextAuth v5 menggunakan AUTH_SECRET, tapi kita juga cek NEXTAUTH_SECRET
-    secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
+    // Coba AUTH_SECRET (NextAuth v5 default) lalu NEXTAUTH_SECRET (compat)
+    secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET ?? 'fallback-change-in-prod',
     pages: {
         signIn: '/login',
     },
@@ -22,23 +20,46 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 if (!credentials?.username || !credentials?.password) return null;
 
                 try {
-                    const { data: user, error } = await supabase
+                    // Dynamic import agar tidak crash saat module di-load di edge/serverless
+                    const { createClient } = await import('@supabase/supabase-js');
+                    const { compare } = await import('bcryptjs');
+
+                    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+                    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+                    if (!supabaseUrl || !supabaseKey) {
+                        console.error('[auth] Supabase env vars not set');
+                        return null;
+                    }
+
+                    const client = createClient(supabaseUrl, supabaseKey);
+
+                    const { data: user, error } = await client
                         .from('User')
                         .select('id, name, username, password')
                         .eq('username', credentials.username as string)
                         .single();
 
-                    if (error || !user) return null;
+                    if (error || !user) {
+                        console.error('[auth] User not found:', error?.message);
+                        return null;
+                    }
 
                     const isValid = await compare(credentials.password as string, user.password);
-                    if (!isValid) return null;
 
+                    if (!isValid) {
+                        console.error('[auth] Invalid password');
+                        return null;
+                    }
+
+                    console.log('[auth] Login success:', user.username);
                     return {
                         id: user.id,
                         name: user.name,
                         username: user.username,
                     };
-                } catch {
+                } catch (err) {
+                    console.error('[auth] authorize error:', err);
                     return null;
                 }
             },
