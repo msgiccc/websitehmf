@@ -74,8 +74,8 @@ export default function PublicLayout({
                         </div>
 
                         <div className="group relative cursor-pointer py-4">
-                            <Link href="/program" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
-                                Events <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
+                            <Link href="/program-kerja" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
+                                Program Kerja <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
                             </Link>
                         </div>
                         <div className="group relative cursor-pointer py-4">
@@ -119,7 +119,7 @@ export default function PublicLayout({
                                     </div>
                                 </div>
 
-                                <Link href="/program" className="text-lg font-medium hover:text-[#c92020] transition-colors">Events</Link>
+                                <Link href="/program-kerja" className="text-lg font-medium hover:text-[#c92020] transition-colors">Program Kerja</Link>
                                 <Link href="/artikel" className="text-lg font-medium hover:text-[#c92020] transition-colors">Media</Link>
                                 <Link href="/galeri" className="text-lg font-medium hover:text-[#c92020] transition-colors">Social</Link>
                                 <div className="border-t border-white/20 pt-6 mt-4">
