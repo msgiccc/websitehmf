@@ -2,9 +2,9 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-    // Coba AUTH_SECRET (NextAuth v5 default) lalu NEXTAUTH_SECRET (compat)
     secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET ?? 'fallback-change-in-prod',
     trustHost: true,
+    basePath: '/api/auth', // Explicitly tetapkan basePath untuk menghindari "TypeError: Invalid URL" di Vercel
     pages: {
         signIn: '/login',
     },
