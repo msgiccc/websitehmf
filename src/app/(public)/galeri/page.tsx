@@ -6,12 +6,20 @@ import { id } from "date-fns/locale";
 export const revalidate = 60;
 
 export default async function GaleriPage() {
-    const { data: pictures } = await supabase
-        .from("Galeri")
-        .select("*")
-        .order("createdAt", { ascending: false });
+    let galeriData: any[] = [];
 
-    const galeriData = pictures || [];
+    try {
+        const { data: pictures, error } = await supabase
+            .from("Galeri")
+            .select("*")
+            .order("createdAt", { ascending: false });
+
+        if (!error && pictures) {
+            galeriData = pictures;
+        }
+    } catch (e) {
+        console.error("Gagal load galeri:", e);
+    }
 
     return (
         <div className="container py-12 md:py-20 px-4 md:px-6 mx-auto">

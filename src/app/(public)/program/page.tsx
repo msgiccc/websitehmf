@@ -7,13 +7,23 @@ import { id } from "date-fns/locale";
 export const revalidate = 60;
 
 export default async function ProgramKerjaPage() {
-    const { data: prokerList } = await supabase
-        .from("ProgramKerja")
-        .select("*")
-        .order("tanggalPelaksanaan", { ascending: true });
+    let prokerList: any[] = [];
 
-    const activeProkers = prokerList?.filter(p => p.status === 'ONGOING' || p.status === 'PLANNING') || [];
-    const completedProkers = prokerList?.filter(p => p.status === 'COMPLETED') || [];
+    try {
+        const { data, error } = await supabase
+            .from("ProgramKerja")
+            .select("*")
+            .order("tanggalPelaksanaan", { ascending: true });
+
+        if (!error && data) {
+            prokerList = data;
+        }
+    } catch (e) {
+        console.error("Gagal load program kerja:", e);
+    }
+
+    const activeProkers = prokerList.filter(p => p.status === 'ONGOING' || p.status === 'PLANNING');
+    const completedProkers = prokerList.filter(p => p.status === 'COMPLETED');
 
     const RenderTimeline = ({ title, items }: { title: string, items: any[] }) => (
         <div className="space-y-8">

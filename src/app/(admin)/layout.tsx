@@ -10,7 +10,13 @@ export default async function AdminLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const session = await auth();
+    let session = null;
+    try {
+        session = await auth();
+    } catch (e) {
+        console.error("Layout Admin: Gagal memvalidasi session auth()", e);
+        // Biarkan session null agar trigger redirect ke /login
+    }
 
     // Proteksi Route Admin level Server Component (menggantikan Middleware)
     if (!session?.user) {

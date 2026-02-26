@@ -10,13 +10,21 @@ import { id } from "date-fns/locale";
 export const revalidate = 60;
 
 export default async function ArtikelPage() {
-    const { data: articles } = await supabase
-        .from("Artikel")
-        .select("*")
-        .eq("status", "PUBLISHED")
-        .order("createdAt", { ascending: false });
+    let publishedArticles = DUMMY_ARTIKEL;
 
-    const publishedArticles = articles && articles.length > 0 ? articles : DUMMY_ARTIKEL;
+    try {
+        const { data: articles, error } = await supabase
+            .from("Artikel")
+            .select("*")
+            .eq("status", "PUBLISHED")
+            .order("createdAt", { ascending: false });
+
+        if (!error && articles && articles.length > 0) {
+            publishedArticles = articles;
+        }
+    } catch (e) {
+        console.error("Gagal load artikel:", e);
+    }
 
     return (
         <div className="container py-12 md:py-20 px-4 md:px-6 mx-auto">
