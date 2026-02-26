@@ -73,10 +73,27 @@ export default function PublicLayout({
                             </div>
                         </div>
 
+                        {/* Dropdown Program Kerja */}
                         <div className="group relative cursor-pointer py-4">
                             <Link href="/program-kerja" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
                                 Program Kerja <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
                             </Link>
+
+                            {/* Dropdown Menu Content (Mega Menu style for the 10 Bidang) */}
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-[480px] opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
+                                <div className="bg-white rounded-xl shadow-xl border border-gray-100 p-4 grid grid-cols-2 gap-x-4 gap-y-1 mt-2">
+                                    <Link href="/program-kerja/lembaga-kesekretariatan" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">Lembaga Kesekretariatan</Link>
+                                    <Link href="/program-kerja/lembaga-keuangan" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">Lembaga Keuangan</Link>
+                                    <Link href="/program-kerja/bidang-akademik" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">Bidang Akademik</Link>
+                                    <Link href="/program-kerja/bidang-ekonomi-dan-bisnis" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">B. Ekonomi & Bisnis</Link>
+                                    <Link href="/program-kerja/bidang-kaderisasi" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">Bidang Kaderisasi</Link>
+                                    <Link href="/program-kerja/bidang-kerohanian" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">Bidang Kerohanian</Link>
+                                    <Link href="/program-kerja/bidang-komunikasi-dan-media-informasi" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">B. Kominfo</Link>
+                                    <Link href="/program-kerja/bidang-penelitian-dan-pengembangan" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">B. Litbang</Link>
+                                    <Link href="/program-kerja/bidang-pengembangan-minat-dan-bakat" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">B. Minat Bakat</Link>
+                                    <Link href="/program-kerja/bidang-sosial-dan-politik" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#c92020] rounded-lg font-medium transition-colors">Bidang Sospol</Link>
+                                </div>
+                            </div>
                         </div>
                         <div className="group relative cursor-pointer py-4">
                             <Link href="/artikel" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
@@ -119,7 +136,22 @@ export default function PublicLayout({
                                     </div>
                                 </div>
 
-                                <Link href="/program-kerja" className="text-lg font-medium hover:text-[#c92020] transition-colors">Program Kerja</Link>
+                                {/* Mobile Dropdown for Program Kerja */}
+                                <div className="space-y-3">
+                                    <Link href="/program-kerja" className="text-lg font-medium text-white/50 hover:text-white transition-colors block">Program Kerja</Link>
+                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
+                                        <Link href="/program-kerja/lembaga-kesekretariatan" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">L. Kesekretariatan</Link>
+                                        <Link href="/program-kerja/lembaga-keuangan" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">L. Keuangan</Link>
+                                        <Link href="/program-kerja/bidang-akademik" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Akademik</Link>
+                                        <Link href="/program-kerja/bidang-ekonomi-dan-bisnis" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Ekonomi & Bisnis</Link>
+                                        <Link href="/program-kerja/bidang-kaderisasi" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Kaderisasi</Link>
+                                        <Link href="/program-kerja/bidang-kerohanian" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Kerohanian</Link>
+                                        <Link href="/program-kerja/bidang-komunikasi-dan-media-informasi" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Kominfo</Link>
+                                        <Link href="/program-kerja/bidang-penelitian-dan-pengembangan" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Litbang</Link>
+                                        <Link href="/program-kerja/bidang-pengembangan-minat-dan-bakat" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Minat Bakat</Link>
+                                        <Link href="/program-kerja/bidang-sosial-dan-politik" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Sospol</Link>
+                                    </div>
+                                </div>
                                 <Link href="/artikel" className="text-lg font-medium hover:text-[#c92020] transition-colors">Media</Link>
                                 <Link href="/galeri" className="text-lg font-medium hover:text-[#c92020] transition-colors">Social</Link>
                                 <div className="border-t border-white/20 pt-6 mt-4">
