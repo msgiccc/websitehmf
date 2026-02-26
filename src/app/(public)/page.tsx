@@ -89,15 +89,8 @@ export default async function HomePage() {
                   <h2 className="font-serif text-3xl md:text-5xl text-[#2c1469] font-bold tracking-tight">
                     Niskala Cakra
                   </h2>
-                  <p className="text-[#E63946] font-bold tracking-widest text-sm uppercase mt-2">Kabinet 2025-2026</p>
+                  <p className="text-[#E63946] font-bold tracking-widest text-sm uppercase mt-2">Kabinet 2026-2027</p>
                 </div>
-              </div>
-
-              <div className="pl-6 border-l-4 border-[#2c1469]">
-                <p className="text-gray-600 text-lg md:text-xl leading-relaxed italic font-serif">
-                  "Mewujudkan visi kolektif dengan keindahan bagai sayap merak yang terkembang penuh,
-                  mengemban integritas Niskala, dan berwibawa layaknya roda Cakra kehidupan."
-                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
