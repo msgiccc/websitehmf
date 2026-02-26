@@ -119,8 +119,8 @@ export default function PublicLayout({
                             {/* Dropdown Menu Content DPM */}
                             <div className="absolute top-full left-0 mt-0 w-64 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
                                 <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
-                                    <Link href="/dpm/struktur-kepengurusan" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Struktur Kepengurusan DPM</Link>
-                                    <Link href="/dpm/produk-mumas" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Produk Mumas</Link>
+                                    <Link prefetch={false} href="/dpm/struktur-kepengurusan" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Struktur Kepengurusan DPM</Link>
+                                    <Link prefetch={false} href="/dpm/produk-mumas" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Produk Mumas</Link>
                                 </div>
                             </div>
                         </div>
@@ -184,8 +184,8 @@ export default function PublicLayout({
                                 <div className="space-y-3">
                                     <div className="text-lg font-medium text-white/50">DPM</div>
                                     <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
-                                        <Link href="/dpm/struktur-kepengurusan" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Struktur Kepengurusan DPM</Link>
-                                        <Link href="/dpm/produk-mumas" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Produk Mumas</Link>
+                                        <Link prefetch={false} href="/dpm/struktur-kepengurusan" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Struktur Kepengurusan DPM</Link>
+                                        <Link prefetch={false} href="/dpm/produk-mumas" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Produk Mumas</Link>
                                     </div>
                                 </div>
 

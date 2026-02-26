@@ -9,14 +9,22 @@ import { id } from "date-fns/locale";
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const { data: articles } = await supabase
-    .from("Artikel")
-    .select("*")
-    .eq("status", "PUBLISHED")
-    .order("createdAt", { ascending: false })
-    .limit(4);
+  let recentArticles = DUMMY_ARTIKEL;
 
-  const recentArticles = articles && articles.length > 0 ? articles : DUMMY_ARTIKEL;
+  try {
+    const { data: articles, error } = await supabase
+      .from("Artikel")
+      .select("*")
+      .eq("status", "PUBLISHED")
+      .order("createdAt", { ascending: false })
+      .limit(4);
+
+    if (!error && articles && articles.length > 0) {
+      recentArticles = articles;
+    }
+  } catch (err) {
+    console.error("Gagal load artikel untuk homepage:", err);
+  }
 
   // Split articles into 1 headline and up to 3 sub-articles
   const headlineArticle = recentArticles[0];
