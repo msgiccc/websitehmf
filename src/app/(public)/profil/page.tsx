@@ -38,7 +38,7 @@ export default function ProfilPage() {
                     </h1>
 
                     <p className="max-w-2xl text-gray-600 text-lg leading-relaxed mt-4">
-                        Menyelami identitas, sejarah, serta struktur kepengurusan Himpunan Mahasiswa Fisika FPMIPA Universitas Pendidikan Indonesia.
+                        Menyelami identitas, sejarah, serta Unit Kegiatan Khusus di bawah naungan Himpunan Mahasiswa Fisika FPMIPA Universitas Pendidikan Indonesia.
                     </p>
 
                 </div>

@@ -60,6 +60,7 @@ export default function PublicLayout({
                                     <Link href="/profil?tab=sejarah" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Sejarah Singkat</Link>
                                     <Link href="/profil?tab=lambang" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Lambang HMF</Link>
                                     <Link href="/profil?tab=mars" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Mars dan Hymne HMF</Link>
+                                    <Link href="/profil?tab=ukk" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Unit Kegiatan Khusus</Link>
                                 </div>
                             </div>
                         </div>
@@ -130,6 +131,7 @@ export default function PublicLayout({
                                         <Link href="/profil?tab=sejarah" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Sejarah Singkat</Link>
                                         <Link href="/profil?tab=lambang" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Lambang HMF</Link>
                                         <Link href="/profil?tab=mars" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Mars dan Hymne</Link>
+                                        <Link href="/profil?tab=ukk" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Unit Kegiatan Khusus</Link>
                                     </div>
                                 </div>
 
