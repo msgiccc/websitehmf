@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -26,10 +27,16 @@ export default function PublicLayout({
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const pathname = usePathname();
+    const isHomePage = pathname === '/';
+
+    // Jika bukan di Homepage, navbar selalu pakai background solid (non-transparan)
+    const isScrolledOrSolid = scrolled || !isHomePage;
+
     return (
         <div className="flex min-h-screen flex-col">
-            {/* Header / Navbar Interaktif (Transparent -> Solid) */}
-            <header className={`fixed top-0 z-50 w-full text-white transition-all duration-300 ${scrolled ? 'bg-[#1a0b40]/95 backdrop-blur-md shadow-lg border-b border-white/10 py-0' : 'bg-transparent pt-2'}`}>
+            {/* Header / Navbar Interaktif */}
+            <header className={`fixed top-0 z-50 w-full text-white transition-all duration-300 ${isScrolledOrSolid ? 'bg-[#1a0b40]/95 backdrop-blur-md shadow-lg border-b border-white/10 py-0' : 'bg-transparent pt-2'}`}>
                 <div className="container flex h-16 items-center justify-between px-4 md:px-8">
                     <Link href="/" className="flex items-center space-x-3 group">
                         <div className="flex items-center justify-center group-hover:scale-105 transition-transform">
