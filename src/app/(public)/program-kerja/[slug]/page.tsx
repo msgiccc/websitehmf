@@ -1,15 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { KATEGORI_PROGRAM, PROGRAM_DATA } from '@/lib/data-program-kerja';
-import { DUMMY_PENGURUS } from '@/lib/dummy-data';
-import { ChevronLeft, Compass, Target, Sparkles, FolderOpen, Clock, Users } from 'lucide-react';
+import { KATEGORI_PROGRAM } from '@/lib/data-program-kerja';
+import { supabase } from '@/lib/supabase';
+import { ChevronLeft, Compass, Target, Sparkles, FolderOpen, Clock, Users, CheckCircle2, Circle, Timer } from 'lucide-react';
 
-export function generateStaticParams() {
-    return KATEGORI_PROGRAM.map((cat) => ({
-        slug: cat.id,
-    }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
@@ -22,16 +18,35 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
 }
 
+const statusConfig = {
+    PLANNING: { label: 'Perencanaan', icon: Circle, color: 'text-amber-500 bg-amber-50 border-amber-200' },
+    ONGOING: { label: 'Sedang Berjalan', icon: Timer, color: 'text-blue-600 bg-blue-50 border-blue-200' },
+    COMPLETED: { label: 'Selesai', icon: CheckCircle2, color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
+};
+
 export default async function DetailProgramKerjaPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const category = KATEGORI_PROGRAM.find(c => c.id === slug);
-    const programs = PROGRAM_DATA[slug];
 
-    if (!category || !programs) {
+    if (!category) {
         notFound();
     }
 
-    const pengurus = DUMMY_PENGURUS.filter(p => p.divisi === category.name);
+    // Ambil pengurus dari bidang ini
+    const { data: pengurus } = await supabase
+        .from('Pengurus')
+        .select('*')
+        .eq('divisi', category.name)
+        .order('jabatan', { ascending: true });
+
+    // Ambil proker dari DB berdasarkan bidang
+    const { data: prokerFromDB } = await supabase
+        .from('ProgramKerja')
+        .select('*')
+        .eq('bidang', slug)
+        .order('tanggalPelaksanaan', { ascending: true });
+
+    const programs = prokerFromDB || [];
 
     return (
         <div className="min-h-screen bg-[#FAFAFA] flex flex-col pt-24 pb-24 font-sans selection:bg-[#E63946] selection:text-white">
@@ -90,7 +105,7 @@ export default async function DetailProgramKerjaPage({ params }: { params: Promi
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {pengurus.length > 0 ? pengurus.map((p, idx) => (
+                    {pengurus && pengurus.length > 0 ? pengurus.map((p: any, idx: number) => (
                         <div key={idx} className="bg-white rounded-3xl p-6 border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col items-center text-center group">
                             <div className="w-24 h-24 mb-5 rounded-full bg-gray-50 border-4 border-white shadow-sm overflow-hidden relative group-hover:-translate-y-2 transition-transform duration-500">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -108,38 +123,7 @@ export default async function DetailProgramKerjaPage({ params }: { params: Promi
                 </div>
             </section>
 
-            {/* Section: Timeline Program Kerja */}
-            <section className="container px-4 md:px-8 mx-auto relative z-10 mb-20">
-                <div className="flex items-center gap-3 mb-10">
-                    <div className="p-2 bg-[#C9A24D]/10 rounded-lg text-[#C9A24D]">
-                        <Clock className="w-5 h-5" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Linimasa Pelaksanaan</h2>
-                    <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent ml-4"></div>
-                </div>
-
-                <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] p-8 md:p-12">
-                    <div className="relative border-l-2 border-gray-100 pl-8 space-y-12">
-                        {programs.map((prog, idx) => (
-                            <div key={idx} className="relative group">
-                                <div className="absolute -left-[41px] top-1.5 w-5 h-5 rounded-full bg-white border-4 border-gray-200 group-hover:border-[#E63946] transition-colors duration-300"></div>
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
-                                    <span className="inline-block px-3 py-1 bg-[#C9A24D]/10 text-[#C9A24D] rounded-full text-xs font-bold uppercase tracking-wider w-fit">
-                                        Tahap {idx + 1}
-                                    </span>
-                                    <h3 className="text-xl font-bold text-[#0B1F3A] group-hover:text-[#2c1469] transition-colors">{prog.title}</h3>
-                                </div>
-                                {/* Hanya tampilkan kutipan 100 karakter awal untuk timeline */}
-                                <p className="text-gray-500 text-sm leading-relaxed max-w-4xl font-medium">
-                                    {prog.desc.length > 150 ? prog.desc.substring(0, 150) + "..." : prog.desc}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Content Display: Seragam / Equal Cards Grid */}
+            {/* Section: Daftar Program Kerja dari Database */}
             <section className="container px-4 md:px-8 mx-auto relative z-10">
                 <div className="flex items-center gap-3 mb-10">
                     <div className="p-2 bg-[#2c1469]/5 rounded-lg text-[#2c1469]">
@@ -149,40 +133,78 @@ export default async function DetailProgramKerjaPage({ params }: { params: Promi
                     <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent ml-4"></div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {programs.map((prog, idx) => (
-                        <div
-                            key={idx}
-                            className="group relative bg-white border border-gray-100 rounded-3xl p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full overflow-hidden"
-                        >
-                            {/* Background glow hover */}
-                            <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${category.color} rounded-full blur-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                {programs.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {programs.map((prog: any, idx: number) => {
+                            const status = statusConfig[prog.status as keyof typeof statusConfig] || statusConfig.PLANNING;
+                            const StatusIcon = status.icon;
+                            const tgl = prog.tanggalPelaksanaan
+                                ? new Date(prog.tanggalPelaksanaan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
+                                : null;
 
-                            <div className="space-y-6 relative z-10 flex flex-col h-full text-left">
-                                <div className="flex justify-between items-start">
-                                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm bg-gray-50 text-[#E63946] border border-gray-100 group-hover:bg-[#E63946] group-hover:text-white transition-colors duration-300">
-                                        <Target className="w-6 h-6" />
+                            return (
+                                <div
+                                    key={prog.id}
+                                    className="group relative bg-white border border-gray-100 rounded-3xl p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full overflow-hidden"
+                                >
+                                    {/* Background glow hover */}
+                                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${category.color} rounded-full blur-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+
+                                    <div className="space-y-4 relative z-10 flex flex-col h-full text-left">
+                                        <div className="flex justify-between items-start">
+                                            <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm bg-gray-50 text-[#E63946] border border-gray-100 group-hover:bg-[#E63946] group-hover:text-white transition-colors duration-300">
+                                                <Target className="w-6 h-6" />
+                                            </div>
+                                            <span className="text-5xl font-black opacity-5 text-gray-900 leading-none select-none tracking-tighter">
+                                                {(idx + 1).toString().padStart(2, '0')}
+                                            </span>
+                                        </div>
+
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-bold mb-2 leading-tight text-[#0B1F3A] group-hover:text-[#2c1469] transition-colors">
+                                                {prog.nama}
+                                            </h3>
+                                            <p className="text-sm leading-relaxed text-gray-500 mb-3">
+                                                {prog.deskripsi}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex flex-col gap-2 mt-auto">
+                                            {/* Status Badge */}
+                                            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border w-fit ${status.color}`}>
+                                                <StatusIcon className="w-3.5 h-3.5" />
+                                                {status.label}
+                                            </span>
+
+                                            {/* Tanggal & PJ */}
+                                            {tgl && (
+                                                <p className="text-xs text-gray-400 flex items-center gap-1">
+                                                    <Clock className="w-3 h-3" />
+                                                    {tgl}
+                                                </p>
+                                            )}
+                                            {prog.penanggungJawab && (
+                                                <p className="text-xs text-gray-400 flex items-center gap-1">
+                                                    <Users className="w-3 h-3" />
+                                                    PJ: {prog.penanggungJawab}
+                                                </p>
+                                            )}
+                                        </div>
                                     </div>
-                                    <span className="text-5xl font-black opacity-5 text-gray-900 leading-none select-none tracking-tighter">
-                                        {(idx + 1).toString().padStart(2, '0')}
-                                    </span>
-                                </div>
 
-                                <div className="flex-1">
-                                    <h3 className="text-xl font-bold mb-3 leading-tight text-[#0B1F3A] group-hover:text-[#2c1469] transition-colors">
-                                        {prog.title}
-                                    </h3>
-                                    <p className="text-sm leading-relaxed text-gray-600">
-                                        {prog.desc}
-                                    </p>
+                                    {/* Decorative bottom line */}
+                                    <div className="h-1.5 w-1/3 rounded-full mt-6 opacity-0 group-hover:opacity-100 group-hover:w-full transition-all duration-500 bg-gradient-to-r from-[#2c1469] to-[#E63946]"></div>
                                 </div>
-                            </div>
-
-                            {/* Decorative line at bottom for visual weight */}
-                            <div className="h-1.5 w-1/3 rounded-full mt-8 opacity-0 group-hover:opacity-100 group-hover:w-full transition-all duration-500 bg-gradient-to-r from-[#2c1469] to-[#E63946]"></div>
-                        </div>
-                    ))}
-                </div>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
+                        <Sparkles className="w-10 h-10 text-gray-300 mx-auto mb-4" />
+                        <p className="text-gray-500 font-medium">Belum ada program kerja yang ditambahkan untuk bidang ini.</p>
+                        <p className="text-gray-400 text-sm mt-1">Admin dapat menambahkannya melalui dashboard.</p>
+                    </div>
+                )}
             </section>
         </div>
     );

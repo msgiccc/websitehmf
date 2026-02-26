@@ -36,12 +36,13 @@ CREATE TABLE "public"."Artikel" (
     "konten" text NOT NULL,
     "thumbnail" text NOT NULL,
     "author" text NOT NULL,
-    "status" "public"."StatusArtikel" DEFAULT 'DRAFT'::"StatusArtikel" NOT NULL,
+    "status" "public"."StatusArtikel" DEFAULT 'DRAFT'::"public"."StatusArtikel" NOT NULL,
     "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
     PRIMARY KEY ("id")
 );
 
 -- Program Kerja
+-- CATATAN: Kolom "bidang" berisi id dari KATEGORI_PROGRAM (contoh: 'bidang-akademik', 'lembaga-keuangan')
 CREATE TYPE "public"."StatusProker" AS ENUM ('PLANNING', 'ONGOING', 'COMPLETED');
 
 CREATE TABLE "public"."ProgramKerja" (
@@ -49,8 +50,9 @@ CREATE TABLE "public"."ProgramKerja" (
     "nama" text NOT NULL,
     "deskripsi" text NOT NULL,
     "tanggalPelaksanaan" timestamp with time zone NOT NULL,
-    "status" "public"."StatusProker" DEFAULT 'PLANNING'::"StatusProker" NOT NULL,
+    "status" "public"."StatusProker" DEFAULT 'PLANNING'::"public"."StatusProker" NOT NULL,
     "penanggungJawab" text NOT NULL,
+    "bidang" text NOT NULL DEFAULT 'lembaga-kesekretariatan',
     PRIMARY KEY ("id")
 );
 
@@ -66,6 +68,28 @@ CREATE TABLE "public"."Galeri" (
     PRIMARY KEY ("id")
 );
 
--- Buat satu admin default (password: password123, sudah di-hash dengan bcrypt rounds=12)
+-- Kabinet (informasi kabinet aktif: nama, periode, logo, visi, misi)
+CREATE TABLE "public"."Kabinet" (
+    "id" uuid DEFAULT gen_random_uuid() NOT NULL,
+    "namaKabinet" text NOT NULL,
+    "periode" text NOT NULL,
+    "logoUrl" text NOT NULL DEFAULT '/niskala.png',
+    "visi" text NOT NULL,
+    "misi" text NOT NULL,
+    "isAktif" boolean DEFAULT true NOT NULL,
+    "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+    PRIMARY KEY ("id")
+);
+
+-- =============================================
+-- SEED DATA: Admin default
+-- Password: password123 (bcrypt hash, rounds=12)
+-- =============================================
 INSERT INTO "public"."User" ("name", "username", "password") VALUES
 ('Administrator', 'admin', '$2y$12$Kj6j93j1xP95lOQ.m8e4aOoX4O9v7bXZ9.p7h4cW7bN/5XN.Dq2xO');
+
+-- =============================================
+-- MIGRASI (jalankan jika tabel sudah ada):
+-- ALTER TABLE "public"."ProgramKerja"
+--     ADD COLUMN IF NOT EXISTS "bidang" text NOT NULL DEFAULT 'lembaga-kesekretariatan';
+-- =============================================

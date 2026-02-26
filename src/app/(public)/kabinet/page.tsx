@@ -2,11 +2,15 @@ import { Suspense } from "react";
 import { supabase } from "@/lib/supabase";
 import { DUMMY_PENGURUS } from "@/lib/dummy-data";
 import { KabinetTabs } from "@/components/public/kabinet-tabs";
+import { getKabinetAktif } from "@/lib/admin-actions";
+import Image from "next/image";
 
-// Force dynamic rendering to avoid prerender errors when Supabase env vars are not set at build time
 export const dynamic = 'force-dynamic';
 
 export default async function KabinetPage() {
+    // Ambil data kabinet aktif dari database
+    const kabinet = await getKabinetAktif();
+
     // Ambil data pengurus - fallback ke dummy jika gagal
     let groupedPengurus: Record<string, any[]> = {};
 
@@ -26,7 +30,6 @@ export default async function KabinetPage() {
             return acc;
         }, {});
     } catch (e) {
-        // Fallback ke data dummy jika fetch gagal
         groupedPengurus = DUMMY_PENGURUS.reduce((acc: Record<string, any[]>, current: any) => {
             const divisi = current.divisi || "Lainnya";
             if (!acc[divisi]) acc[divisi] = [];
@@ -34,6 +37,18 @@ export default async function KabinetPage() {
             return acc;
         }, {});
     }
+
+    // Fallback values jika kabinet belum diisi di database
+    const namaKabinet = kabinet?.namaKabinet || "Niskala Cakra Murni";
+    const periode = kabinet?.periode || "2025/2026";
+    const logoUrl = kabinet?.logoUrl || "/niskala.png";
+    const visi = kabinet?.visi || "Mewujudkan visi kolektif dengan keindahan bagai sayap merak yang terkembang penuh, mengemban integritas Niskala, dan berwibawa layaknya roda Cakra kehidupan.";
+    const misi = kabinet?.misi || null;
+
+    // Parse misi — pisahkan per baris jika ada
+    const misiList = misi
+        ? misi.split('\n').map((m: string) => m.trim()).filter((m: string) => m.length > 0)
+        : [];
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -44,7 +59,7 @@ export default async function KabinetPage() {
                 <div
                     className="absolute inset-0 z-0 opacity-[0.25]"
                     style={{
-                        backgroundImage: "url('/niskala.png')",
+                        backgroundImage: `url('${logoUrl}')`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundAttachment: 'fixed',
@@ -57,7 +72,7 @@ export default async function KabinetPage() {
 
                     <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#2c1469]/5 border border-[#2c1469]/10 text-[#2c1469] text-xs font-bold tracking-widest uppercase mb-6">
                         <div className="w-1.5 h-1.5 rounded-full bg-[#E63946]"></div>
-                        Niskala Cakra
+                        {namaKabinet}
                     </div>
 
                     <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-[#2c1469] leading-tight tracking-tight mb-4">
@@ -65,10 +80,28 @@ export default async function KabinetPage() {
                         <span className="text-[#E63946]">Keluarga Mahasiswa</span>
                     </h1>
 
-                    <p className="max-w-2xl text-gray-600 text-lg leading-relaxed mt-4">
-                        Mewujudkan visi kolektif dengan keindahan bagai sayap merak yang terkembang penuh, mengemban integritas Niskala, dan berwibawa layaknya roda Cakra kehidupan.
+                    <p className="text-[#2c1469]/70 text-sm font-semibold tracking-wider mb-6">
+                        Periode {periode}
                     </p>
 
+                    <p className="max-w-2xl text-gray-600 text-lg leading-relaxed mt-2">
+                        {visi}
+                    </p>
+
+                    {/* Misi List */}
+                    {misiList.length > 0 && (
+                        <div className="mt-8 max-w-2xl w-full text-left">
+                            <p className="text-xs font-bold tracking-widest uppercase text-[#2c1469]/50 mb-3">Misi</p>
+                            <ul className="space-y-2">
+                                {misiList.map((poin: string, idx: number) => (
+                                    <li key={idx} className="flex items-start gap-3 text-gray-600 text-sm">
+                                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#E63946] flex-shrink-0"></span>
+                                        {poin}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
 
                 {/* Decorative Elements */}

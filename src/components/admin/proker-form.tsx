@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { ProkerSchema } from '@/lib/validations';
 import { createProker, updateProker } from '@/lib/admin-actions';
+import { KATEGORI_PROGRAM } from '@/lib/data-program-kerja';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,22 +30,29 @@ export default function ProkerForm({
 
     const form = useForm<ProkerFormValues>({
         resolver: zodResolver(ProkerSchema),
-        defaultValues: initialData || {
-            nama: '',
-            deskripsi: '',
-            tanggalPelaksanaan: '', // Simplified string format for demo ('yyyy-MM-dd')
-            status: 'PLANNING',
-            penanggungJawab: '',
-        },
+        defaultValues: initialData
+            ? {
+                ...initialData,
+                tanggalPelaksanaan: initialData.tanggalPelaksanaan
+                    ? new Date(initialData.tanggalPelaksanaan).toISOString().split('T')[0]
+                    : '',
+            }
+            : {
+                nama: '',
+                deskripsi: '',
+                tanggalPelaksanaan: '',
+                status: 'PLANNING',
+                penanggungJawab: '',
+                bidang: '',
+            },
     });
 
     const onSubmit = async (values: ProkerFormValues) => {
         setIsSubmitting(true);
         try {
-            // In real scenario, ensure dates are fully ISO strings:
             const payload = {
                 ...values,
-                tanggalPelaksanaan: new Date(values.tanggalPelaksanaan).toISOString()
+                tanggalPelaksanaan: new Date(values.tanggalPelaksanaan).toISOString(),
             };
 
             let result;
@@ -84,6 +92,28 @@ export default function ProkerForm({
                     </div>
 
                     <div className="space-y-2">
+                        <Label>Bidang / Lembaga</Label>
+                        <Select
+                            onValueChange={(val) => form.setValue('bidang', val)}
+                            defaultValue={form.getValues('bidang')}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Pilih Bidang / Lembaga" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {KATEGORI_PROGRAM.map((cat) => (
+                                    <SelectItem key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        {form.formState.errors.bidang && (
+                            <p className="text-sm text-red-500">{form.formState.errors.bidang.message}</p>
+                        )}
+                    </div>
+
+                    <div className="space-y-2">
                         <Label>Penanggung Jawab (Ketua Pelaksana)</Label>
                         <Input {...form.register('penanggungJawab')} placeholder="Budi Santoso" />
                         {form.formState.errors.penanggungJawab && (
@@ -93,7 +123,7 @@ export default function ProkerForm({
 
                     <div className="space-y-2">
                         <Label>Deskripsi</Label>
-                        <Textarea {...form.register('deskripsi')} rows={3} placeholder="Penjelasan mengenai acara..." />
+                        <Textarea {...form.register('deskripsi')} rows={3} placeholder="Penjelasan mengenai program kerja..." />
                         {form.formState.errors.deskripsi && (
                             <p className="text-sm text-red-500">{form.formState.errors.deskripsi.message}</p>
                         )}
