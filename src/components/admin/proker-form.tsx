@@ -21,10 +21,12 @@ export default function ProkerForm({
     isOpen,
     setIsOpen,
     initialData,
+    slugBidang,
 }: {
     isOpen: boolean;
     setIsOpen: (val: boolean) => void;
     initialData?: any;
+    slugBidang: string;
 }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -38,7 +40,7 @@ export default function ProkerForm({
                 nama: '',
                 deskripsi: '',
                 status: 'PLANNING',
-                bidang: '',
+                bidang: slugBidang,
             },
     });
 
@@ -85,26 +87,9 @@ export default function ProkerForm({
                         )}
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 hidden">
                         <Label>Bidang / Lembaga</Label>
-                        <Select
-                            onValueChange={(val) => form.setValue('bidang', val)}
-                            defaultValue={form.getValues('bidang')}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Pilih Bidang / Lembaga" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {KATEGORI_PROGRAM.map((cat) => (
-                                    <SelectItem key={cat.id} value={cat.id}>
-                                        {cat.name}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                        {form.formState.errors.bidang && (
-                            <p className="text-sm text-red-500">{form.formState.errors.bidang.message}</p>
-                        )}
+                        <Input {...form.register('bidang')} type="hidden" />
                     </div>
 
                     <div className="space-y-2">

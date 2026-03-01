@@ -97,7 +97,20 @@ CREATE TABLE IF NOT EXISTS "public"."ProgramKerja" (
 
 
 -- =============================================
--- TABEL 6: Galeri
+-- TABEL 6: BidangLembaga
+-- =============================================
+CREATE TABLE IF NOT EXISTS "public"."BidangLembaga" (
+    "slug"       text NOT NULL,
+    "name"       text NOT NULL,
+    "shortName"  text NOT NULL,
+    "desc"       text NOT NULL,
+    "icon"       text NOT NULL,
+    "color"      text NOT NULL,
+    PRIMARY KEY ("slug")
+);
+
+-- =============================================
+-- TABEL 7: Galeri
 -- =============================================
 CREATE TYPE "public"."KategoriGaleri" AS ENUM ('KEGIATAN', 'PRESTASI');
 

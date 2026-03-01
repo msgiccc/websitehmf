@@ -154,7 +154,18 @@ export async function upsertKabinet(data: any) {
 
     if (error) return response(false, error.message);
     revalidatePath('/admin/kabinet');
-    revalidatePath('/kabinet');
     revalidatePath('/');
     return response(true, 'Data kabinet berhasil disimpan');
+}
+
+// ------------------- BIDANG & LEMBAGA -------------------
+export async function updateBidang(slug: string, data: any) {
+    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    const { error } = await supabase.from('BidangLembaga').update(data).eq('slug', slug);
+    if (error) return response(false, error.message);
+    revalidatePath('/admin/bidang');
+    revalidatePath(`/admin/bidang/${slug}`);
+    revalidatePath('/program-kerja');
+    revalidatePath(`/program-kerja/${slug}`);
+    return response(true, 'Profil Bidang/Lembaga berhasil diperbarui');
 }

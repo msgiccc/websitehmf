@@ -1,14 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
-import { KATEGORI_PROGRAM } from '@/lib/data-program-kerja';
 import { ArrowUpRight } from 'lucide-react';
+import { getAllBidang } from '@/lib/data';
 
 export const metadata = {
     title: 'Program Kerja | HMF FPMIPA UPI',
     description: 'Jelajahi berbagai pergerakan dan inovasi dari setiap bidang/lembaga di Himpunan Mahasiswa Fisika FPMIPA UPI.',
 };
 
-export default function IndeksProgramKerjaPage() {
+export default async function IndeksProgramKerjaPage() {
+    const KATEGORI_PROGRAM = await getAllBidang();
+
     return (
         <div className="min-h-screen bg-[#F4F1EC] flex flex-col pt-24 pb-24 font-sans selection:bg-[#E63946] selection:text-white">
 
@@ -31,7 +33,7 @@ export default function IndeksProgramKerjaPage() {
             <section className="container px-4 md:px-8 mx-auto relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {KATEGORI_PROGRAM.map((cat, idx) => (
-                        <Link href={`/program-kerja/${cat.id}`} key={idx} className="group outline-none">
+                        <Link href={`/program-kerja/${cat.slug}`} key={idx} className="group outline-none">
                             <div className="relative h-full bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col group-focus-visible:ring-4 group-focus-visible:ring-[#2c1469]/30">
 
                                 {/* Ambient Hover Glow */}

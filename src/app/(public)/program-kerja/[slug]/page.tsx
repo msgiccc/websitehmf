@@ -1,15 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { KATEGORI_PROGRAM } from '@/lib/data-program-kerja';
-import { getProkerByBidang, getPengurusByDivisi } from '@/lib/data';
+import { getBidangBySlug, getProkerByBidang, getPengurusByDivisi } from '@/lib/data';
 import { ChevronLeft, Compass, Target, Sparkles, FolderOpen, Clock, Users, CheckCircle2, Circle, Timer } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const category = KATEGORI_PROGRAM.find(c => c.id === slug);
+    const category = await getBidangBySlug(slug);
     if (!category) return { title: 'Program Kerja Tidak Ditemukan' };
 
     return {
@@ -26,7 +25,7 @@ const statusConfig = {
 
 export default async function DetailProgramKerjaPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const category = KATEGORI_PROGRAM.find(c => c.id === slug);
+    const category = await getBidangBySlug(slug);
 
     if (!category) {
         notFound();
@@ -34,7 +33,7 @@ export default async function DetailProgramKerjaPage({ params }: { params: Promi
 
     // Ambil pengurus & proker dari DB via data.ts (tanpa auth dependency)
     const [pengurus, programs] = await Promise.all([
-        getPengurusByDivisi(category!.name),
+        getPengurusByDivisi(category.name),
         getProkerByBidang(slug),
     ]);
 

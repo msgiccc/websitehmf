@@ -60,3 +60,30 @@ export async function getAllPengurus() {
         return null;
     }
 }
+
+export async function getAllBidang() {
+    try {
+        const { data, error } = await supabase
+            .from('BidangLembaga')
+            .select('*')
+            .order('name', { ascending: true });
+        if (error) return [];
+        return data || [];
+    } catch {
+        return [];
+    }
+}
+
+export async function getBidangBySlug(slug: string) {
+    try {
+        const { data, error } = await supabase
+            .from('BidangLembaga')
+            .select('*')
+            .eq('slug', slug)
+            .single();
+        if (error) return null;
+        return data;
+    } catch {
+        return null;
+    }
+}

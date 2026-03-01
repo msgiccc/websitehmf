@@ -30,7 +30,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         { href: '/admin/kabinet', label: 'Kabinet', icon: Shield },
         { href: '/admin/pengurus', label: 'Pengurus', icon: Users },
         { href: '/admin/artikel', label: 'Artikel', icon: FileText },
-        { href: '/admin/proker', label: 'Program Kerja', icon: Briefcase },
+        { href: '/admin/bidang', label: 'Bidang & Lembaga', icon: Briefcase },
         { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon },
     ];
 

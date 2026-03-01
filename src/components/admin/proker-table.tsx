@@ -8,7 +8,7 @@ import ProkerForm from '@/components/admin/proker-form';
 import { deleteProker } from '@/lib/admin-actions';
 import { toast } from 'sonner';
 
-export default function ProkerTable({ initialData }: { initialData: any[] }) {
+export default function ProkerTable({ initialData, slugBidang }: { initialData: any[]; slugBidang: string }) {
     const [data, setData] = useState(initialData);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<any>(null);
@@ -93,7 +93,7 @@ export default function ProkerTable({ initialData }: { initialData: any[] }) {
             </div>
 
             {isFormOpen && (
-                <ProkerForm isOpen={isFormOpen} setIsOpen={setIsFormOpen} initialData={selectedItem} />
+                <ProkerForm isOpen={isFormOpen} setIsOpen={setIsFormOpen} initialData={selectedItem} slugBidang={slugBidang} />
             )}
         </div>
     );
