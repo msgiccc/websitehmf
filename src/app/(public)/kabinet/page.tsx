@@ -53,38 +53,13 @@ export default async function KabinetPage() {
 
                 <div className="container px-4 md:px-8 relative z-10 w-full flex flex-col items-center text-center">
 
-                    <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#2c1469]/5 border border-[#2c1469]/10 text-[#2c1469] text-xs font-bold tracking-widest uppercase mb-6">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#E63946]"></div>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-[#E63946] leading-tight tracking-tight mb-4">
                         {namaKabinet}
-                    </div>
-
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-[#2c1469] leading-tight tracking-tight mb-4">
-                        Kabinet<br />
-                        <span className="text-[#E63946]">Keluarga Mahasiswa</span>
                     </h1>
 
                     <p className="text-[#2c1469]/70 text-sm font-semibold tracking-wider mb-6">
                         Periode {periode}
                     </p>
-
-                    <p className="max-w-2xl text-gray-600 text-lg leading-relaxed mt-2">
-                        {visi}
-                    </p>
-
-                    {/* Misi List */}
-                    {misiList.length > 0 && (
-                        <div className="mt-8 max-w-2xl w-full text-left">
-                            <p className="text-xs font-bold tracking-widest uppercase text-[#2c1469]/50 mb-3">Misi</p>
-                            <ul className="space-y-2">
-                                {misiList.map((poin: string, idx: number) => (
-                                    <li key={idx} className="flex items-start gap-3 text-gray-600 text-sm">
-                                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#E63946] flex-shrink-0"></span>
-                                        {poin}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
                 </div>
 
                 {/* Decorative Elements */}
