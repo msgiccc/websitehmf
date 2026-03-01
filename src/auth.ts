@@ -1,6 +1,15 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
+// --- Vercel Server Actions Patch ---
+// Karena Server Actions tidak melalui /api/auth/route, kita perlu 
+// menambal env var NEXTAUTH_URL secara global di modul auth ini.
+if (process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL) {
+    const origin = `https://${process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL}`;
+    process.env.AUTH_URL = origin;
+    process.env.NEXTAUTH_URL = origin;
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
     secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET ?? 'fallback-change-in-prod-12345678901234567',
     trustHost: true,
