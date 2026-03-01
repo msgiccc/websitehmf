@@ -127,46 +127,48 @@ export default async function DetailProgramKerjaPage({ params }: { params: Promi
                 {programs.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {programs.map((prog: any, idx: number) => {
+                            const status = statusConfig[prog.status as keyof typeof statusConfig] || statusConfig.PLANNING;
                             const StatusIcon = status.icon;
-                            <div
-                                key={prog.id}
-                                className="group relative bg-white border border-gray-100 rounded-3xl p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full overflow-hidden"
-                            >
-                                {/* Background glow hover */}
-                                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${category.color} rounded-full blur-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
 
-                                <div className="space-y-4 relative z-10 flex flex-col h-full text-left">
-                                    <div className="flex justify-between items-start">
-                                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm bg-gray-50 text-[#E63946] border border-gray-100 group-hover:bg-[#E63946] group-hover:text-white transition-colors duration-300">
-                                            <Target className="w-6 h-6" />
+                            return (
+                                <div
+                                    key={prog.id}
+                                    className="group relative bg-white border border-gray-100 rounded-3xl p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full overflow-hidden"
+                                >
+                                    {/* Background glow hover */}
+                                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${category.color || 'from-blue-50 to-indigo-50'} rounded-full blur-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+
+                                    <div className="space-y-4 relative z-10 flex flex-col h-full text-left">
+                                        <div className="flex justify-between items-start">
+                                            <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm bg-gray-50 text-[#E63946] border border-gray-100 group-hover:bg-[#E63946] group-hover:text-white transition-colors duration-300">
+                                                <Target className="w-6 h-6" />
+                                            </div>
+                                            <span className="text-5xl font-black opacity-5 text-gray-900 leading-none select-none tracking-tighter">
+                                                {(idx + 1).toString().padStart(2, '0')}
+                                            </span>
                                         </div>
-                                        <span className="text-5xl font-black opacity-5 text-gray-900 leading-none select-none tracking-tighter">
-                                            {(idx + 1).toString().padStart(2, '0')}
-                                        </span>
+
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-bold mb-2 leading-tight text-[#0B1F3A] group-hover:text-[#2c1469] transition-colors">
+                                                {prog.nama}
+                                            </h3>
+                                            <p className="text-sm leading-relaxed text-gray-500 mb-3 whitespace-pre-line">
+                                                {prog.deskripsi}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex flex-col gap-2 mt-auto">
+                                            {/* Status Badge */}
+                                            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border w-fit ${status.color}`}>
+                                                <StatusIcon className="w-3.5 h-3.5" />
+                                                {status.label}
+                                            </span>
+                                        </div>
                                     </div>
 
-                                    <div className="flex-1">
-                                        <h3 className="text-xl font-bold mb-2 leading-tight text-[#0B1F3A] group-hover:text-[#2c1469] transition-colors">
-                                            {prog.nama}
-                                        </h3>
-                                        <p className="text-sm leading-relaxed text-gray-500 mb-3">
-                                            {prog.deskripsi}
-                                        </p>
-                                    </div>
-
-                                    <div className="flex flex-col gap-2 mt-auto">
-                                        {/* Status Badge */}
-                                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border w-fit ${status.color}`}>
-                                            <StatusIcon className="w-3.5 h-3.5" />
-                                            {status.label}
-                                        </span>
-
-                                    </div>
+                                    {/* Decorative bottom line */}
+                                    <div className="h-1.5 w-1/3 rounded-full mt-6 opacity-0 group-hover:opacity-100 group-hover:w-full transition-all duration-500 bg-gradient-to-r from-[#2c1469] to-[#E63946]"></div>
                                 </div>
-
-                                {/* Decorative bottom line */}
-                                <div className="h-1.5 w-1/3 rounded-full mt-6 opacity-0 group-hover:opacity-100 group-hover:w-full transition-all duration-500 bg-gradient-to-r from-[#2c1469] to-[#E63946]"></div>
-                            </div>
                             );
                         })}
                     </div>
