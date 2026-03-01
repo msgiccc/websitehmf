@@ -21,6 +21,15 @@ export const ArtikelSchema = z.object({
     status: z.enum(["DRAFT", "PUBLISHED"]),
 });
 
+export const BidangSchema = z.object({
+    slug: z.string().min(2, "Slug terlalu pendek"),
+    name: z.string().min(3, "Nama bidang terlalu pendek"),
+    shortName: z.string().min(2, "Singkatan terlalu pendek"),
+    desc: z.string().min(10, "Deskripsi bidang terlalu pendek"),
+    icon: z.string().optional(),
+    color: z.string().optional(),
+});
+
 export const ProkerSchema = z.object({
     nama: z.string().min(3, "Nama proker terlalu pendek"),
     deskripsi: z.string().min(10, "Deskripsi terlalu pendek"),
