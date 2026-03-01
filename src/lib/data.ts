@@ -12,7 +12,7 @@ export async function getKabinetAktif() {
                 *,
                 ProgramUnggulan(*)
             `)
-            .eq('isActive', true)
+            .eq('isAktif', true)
             .order('createdAt', { ascending: false })
             .limit(1)
             .single();

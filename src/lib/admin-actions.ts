@@ -3,6 +3,8 @@
 import { supabase } from './supabase';
 import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
+import { ArtikelSchema, BidangSchema, KabinetSchema, PengurusSchema, ProkerSchema, ProgramUnggulanSchema } from './validations';
+import { z } from 'zod';
 
 // Cek apakah user sudah login sebagai admin
 async function checkAdmin() {
@@ -157,6 +159,35 @@ export async function upsertKabinet(data: any) {
     revalidatePath('/');
     return response(true, 'Data kabinet berhasil disimpan');
 }
+
+// ============== PROGRAM UNGGULAN ==============
+export const upsertProgramUnggulan = async (data: any) => {
+    if (!(await checkAdmin())) return response(false, 'Akses ditolak.');
+    try {
+        const parsed = ProgramUnggulanSchema.parse(data);
+        let error;
+        if (parsed.id) {
+            ({ error } = await supabase.from('ProgramUnggulan').update(parsed).eq('id', parsed.id));
+        } else {
+            ({ error } = await supabase.from('ProgramUnggulan').insert(parsed));
+        }
+        if (error) return response(false, error.message);
+        revalidatePath('/admin/kabinet');
+        revalidatePath('/kabinet');
+        return response(true, 'Data unggulan disimpan.');
+    } catch (err: any) {
+        return response(false, err.message);
+    }
+};
+
+export const deleteProgramUnggulan = async (id: string) => {
+    if (!(await checkAdmin())) return response(false, 'Akses ditolak.');
+    const { error } = await supabase.from('ProgramUnggulan').delete().eq('id', id);
+    if (error) return response(false, error.message);
+    revalidatePath('/admin/kabinet');
+    revalidatePath('/kabinet');
+    return response(true, 'Data unggulan dihapus.');
+};
 
 // ------------------- BIDANG & LEMBAGA -------------------
 export async function updateBidang(slug: string, data: any) {

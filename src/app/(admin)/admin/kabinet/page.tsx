@@ -1,5 +1,6 @@
 import { getKabinetAktif } from '@/lib/admin-actions';
 import KabinetForm from '@/components/admin/kabinet-form';
+import UnggulanTable from '@/components/admin/unggulan-table';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield } from 'lucide-react';
 
@@ -39,6 +40,23 @@ export default async function AdminKabinetPage() {
                     <KabinetForm initialData={kabinet ? JSON.parse(JSON.stringify(kabinet)) : undefined} />
                 </CardContent>
             </Card>
+
+            {kabinet && (
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Program Unggulan</CardTitle>
+                        <CardDescription>
+                            Daftar inovasi atau pergerakan masif unggulan dari Kabinet ini.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <UnggulanTable
+                            initialData={kabinet.ProgramUnggulan ? JSON.parse(JSON.stringify(kabinet.ProgramUnggulan)) : []}
+                            kabinetId={kabinet.id}
+                        />
+                    </CardContent>
+                </Card>
+            )}
         </div>
     );
 }

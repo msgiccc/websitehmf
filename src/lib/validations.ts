@@ -35,9 +35,19 @@ export const GaleriSchema = z.object({
 });
 
 export const KabinetSchema = z.object({
-    namaKabinet: z.string().min(3, "Nama kabinet terlalu pendek"),
-    periode: z.string().min(4, "Periode tidak valid (contoh: 2025/2026)"),
-    logoUrl: z.string().min(1, "Logo URL harus diisi"),
+    id: z.string().optional(),
+    namaKabinet: z.string().min(2, "Nama kabinet tidak valid"),
+    periode: z.string().min(9, "Format periode tidak valid"),
+    logoUrl: z.string().url().or(z.string().startsWith('/')),
     visi: z.string().min(10, "Visi terlalu pendek"),
     misi: z.string().min(10, "Misi terlalu pendek"),
+    isAktif: z.boolean().default(false).optional(),
+});
+
+export const ProgramUnggulanSchema = z.object({
+    id: z.string().optional(),
+    kabinetId: z.string().uuid(),
+    nama: z.string().min(2, "Nama program terlalu pendek"),
+    deskripsi: z.string().min(10, "Deskripsi harus detail dan informatif"),
+    iconSvg: z.string().optional().or(z.literal("")),
 });
