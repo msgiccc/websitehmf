@@ -7,7 +7,7 @@ export default async function AdminProkerPage() {
     const { data: proker } = await supabase
         .from('ProgramKerja')
         .select('*')
-        .order('tanggalPelaksanaan', { ascending: false });
+        .order('nama', { ascending: true });
 
     return (
         <div className="space-y-6">

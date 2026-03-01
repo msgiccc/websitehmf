@@ -24,9 +24,7 @@ export const ArtikelSchema = z.object({
 export const ProkerSchema = z.object({
     nama: z.string().min(3, "Nama proker terlalu pendek"),
     deskripsi: z.string().min(10, "Deskripsi terlalu pendek"),
-    tanggalPelaksanaan: z.string().min(1, "Tanggal harus diisi"),
     status: z.enum(["PLANNING", "ONGOING", "COMPLETED"]),
-    penanggungJawab: z.string().min(2, "Nama penanggung jawab tidak valid"),
     bidang: z.string().min(1, "Bidang harus dipilih"),
 });
 

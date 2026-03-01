@@ -25,8 +25,7 @@ export async function getProkerByBidang(bidang: string) {
         const { data, error } = await supabase
             .from('ProgramKerja')
             .select('*')
-            .eq('bidang', bidang)
-            .order('tanggalPelaksanaan', { ascending: true });
+            .eq('bidang', bidang);
         if (error) return [];
         return data || [];
     } catch {

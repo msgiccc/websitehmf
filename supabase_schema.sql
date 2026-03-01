@@ -90,9 +90,7 @@ CREATE TABLE IF NOT EXISTS "public"."ProgramKerja" (
     "id"                 uuid DEFAULT gen_random_uuid() NOT NULL,
     "nama"               text NOT NULL,
     "deskripsi"          text NOT NULL,
-    "tanggalPelaksanaan" timestamp with time zone NOT NULL,
     "status"             "public"."StatusProker" DEFAULT 'PLANNING' NOT NULL,
-    "penanggungJawab"    text NOT NULL,
     "bidang"             text NOT NULL DEFAULT 'lembaga-kesekretariatan',
     PRIMARY KEY ("id")
 );
@@ -192,77 +190,77 @@ ON CONFLICT ("slug") DO NOTHING;
 -- =============================================
 -- SEED: Sample Program Kerja (per bidang)
 -- =============================================
-INSERT INTO "public"."ProgramKerja" ("nama", "deskripsi", "tanggalPelaksanaan", "status", "penanggungJawab", "bidang")
+INSERT INTO "public"."ProgramKerja" ("nama", "deskripsi", "status", "bidang")
 VALUES
     -- Lembaga Kesekretariatan
     ('Pembaruan Basis Data Mahasiswa Aktif',
      'Pengumpulan dan pembaruan data identitas lengkap mahasiswa aktif 4 angkatan Departemen Pendidikan Fisika.',
-     '2025-03-15 00:00:00+07', 'ONGOING', 'Gilang Baskara', 'lembaga-kesekretariatan'),
+     'ONGOING', 'lembaga-kesekretariatan'),
 
     ('Pembuatan Kalender dan Timeline Program Kerja',
      'Pengumpulan dan publikasi tanggal pelaksanaan program kerja tiap bidang/lembaga setiap bulannya.',
-     '2025-02-01 00:00:00+07', 'COMPLETED', 'Nadia Saphira', 'lembaga-kesekretariatan'),
+     'COMPLETED', 'lembaga-kesekretariatan'),
 
     -- Lembaga Keuangan
     ('Perancangan Anggaran HMF (RAPBO)',
      'Pembuatan Rancangan Anggaran Pendapatan dan Belanja Organisasi untuk semua program kerja.',
-     '2025-02-10 00:00:00+07', 'COMPLETED', 'Reza Rahadian', 'lembaga-keuangan'),
+     'COMPLETED', 'lembaga-keuangan'),
 
     -- Bidang Akademik
     ('Phyfest (Physics Festival)',
      'Program wadah pengembangan potensi keilmuan di bidang fisika melalui perlombaan, webinar, dan informasi keilmuan.',
-     '2025-05-20 00:00:00+07', 'PLANNING', 'Iqbaal Ramadhan', 'bidang-akademik'),
+     'PLANNING', 'bidang-akademik'),
 
     ('BEARR (Bank Soal, E-book, Aplikasi, Responsi, Referensi)',
      'Memfasilitasi mahasiswa dalam memperoleh ilmu dan memperluas wawasan perkuliahan melalui bank soal dan referensi belajar.',
-     '2025-03-01 00:00:00+07', 'ONGOING', 'Iqbaal Ramadhan', 'bidang-akademik'),
+     'ONGOING', 'bidang-akademik'),
 
     -- Bidang Ekonomi dan Bisnis
     ('Dana Usaha',
      'Kegiatan danus harian, bulanan, dan impuls (Instagram, e-commerce, pulsa) untuk pemasukan dana non-IUK.',
-     '2025-02-01 00:00:00+07', 'ONGOING', 'Angga Yunanda', 'bidang-ekonomi-dan-bisnis'),
+     'ONGOING', 'bidang-ekonomi-dan-bisnis'),
 
     -- Bidang Kaderisasi
     ('Restitusi (Registrasi untuk Silaturrahmi)',
      'Kegiatan silaturahmi antara mahasiswa baru dengan panitia dan antar sesama mahasiswa baru angkatan baru.',
-     '2025-08-01 00:00:00+07', 'PLANNING', 'Dian Sastro', 'bidang-kaderisasi'),
+     'PLANNING', 'bidang-kaderisasi'),
 
     ('MABIM (Masa Bimbingan)',
      'Kegiatan bimbingan dan pematerian bagi anggota muda oleh mentor dan pemateri yang ditunjuk.',
-     '2025-09-01 00:00:00+07', 'PLANNING', 'Dian Sastro', 'bidang-kaderisasi'),
+     'PLANNING', 'bidang-kaderisasi'),
 
     -- Bidang Kerohanian
     ('AQUR (Amalan Qur''an)',
      'Program membaca, memahami, dan mengamalkan Al-Qur''an bersama melalui BucinQu dan Jumat Berkah.',
-     '2025-02-07 00:00:00+07', 'ONGOING', 'Chelsea Islan', 'bidang-kerohanian'),
+     'ONGOING', 'bidang-kerohanian'),
 
     -- Bidang Komunikasi dan Media Informasi
     ('Media Desain',
      'Mengolah informasi menjadi multimedia yang menarik untuk disebarluaskan kepada warga fisika dan khalayak umum.',
-     '2025-02-01 00:00:00+07', 'ONGOING', 'Tara Basro', 'bidang-komunikasi-dan-media-informasi'),
+     'ONGOING', 'bidang-komunikasi-dan-media-informasi'),
 
     ('Content Creator',
      'Tim YouTube dan TikTok HMF FPMIPA UPI yang bertugas membuat konten kreatif di platform digital.',
-     '2025-02-01 00:00:00+07', 'ONGOING', 'Arya Saloka', 'bidang-komunikasi-dan-media-informasi'),
+     'ONGOING', 'bidang-komunikasi-dan-media-informasi'),
 
     -- Bidang Penelitian dan Pengembangan
     ('Monitoring dan Evaluasi (MONEV)',
      'Pengumpulan informasi dan analisis kinerja seluruh pengurus HMF secara dua arah melalui format penilaian.',
-     '2025-04-01 00:00:00+07', 'PLANNING', 'Amanda Manopo', 'bidang-penelitian-dan-pengembangan'),
+     'PLANNING', 'bidang-penelitian-dan-pengembangan'),
 
     -- Bidang Pengembangan Minat dan Bakat
     ('Polarisasi (Pekan Olahraga dan Seni Fisika Bumi Siliwangi)',
      'Kompetisi seni dan olahraga untuk warga mahasiswa pendidikan fisika dan fisika UPI.',
-     '2025-06-15 00:00:00+07', 'PLANNING', 'Jefri Nichol', 'bidang-pengembangan-minat-dan-bakat'),
+     'PLANNING', 'bidang-pengembangan-minat-dan-bakat'),
 
     -- Bidang Sosial dan Politik
     ('Advokesma (Advokasi Kesma)',
      'Program membantu mahasiswa dalam masalah Akademik, Keuangan, serta pelayanan Informasi Beasiswa.',
-     '2025-02-01 00:00:00+07', 'ONGOING', 'Aghniny Haque', 'bidang-sosial-dan-politik'),
+     'ONGOING', 'bidang-sosial-dan-politik'),
 
     ('Fisika Mengabdi',
      'Kegiatan pemberdayaan masyarakat di daerah tertentu sebagai wujud kontribusi nyata warga fisika.',
-     '2025-07-01 00:00:00+07', 'PLANNING', 'Aghniny Haque', 'bidang-sosial-dan-politik');
+     'PLANNING', 'bidang-sosial-dan-politik');
 
 
 -- =============================================

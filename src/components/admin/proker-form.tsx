@@ -32,17 +32,12 @@ export default function ProkerForm({
         resolver: zodResolver(ProkerSchema),
         defaultValues: initialData
             ? {
-                ...initialData,
-                tanggalPelaksanaan: initialData.tanggalPelaksanaan
-                    ? new Date(initialData.tanggalPelaksanaan).toISOString().split('T')[0]
-                    : '',
+                ...initialData
             }
             : {
                 nama: '',
                 deskripsi: '',
-                tanggalPelaksanaan: '',
                 status: 'PLANNING',
-                penanggungJawab: '',
                 bidang: '',
             },
     });
@@ -52,7 +47,6 @@ export default function ProkerForm({
         try {
             const payload = {
                 ...values,
-                tanggalPelaksanaan: new Date(values.tanggalPelaksanaan).toISOString(),
             };
 
             let result;
@@ -114,14 +108,6 @@ export default function ProkerForm({
                     </div>
 
                     <div className="space-y-2">
-                        <Label>Penanggung Jawab (Ketua Pelaksana)</Label>
-                        <Input {...form.register('penanggungJawab')} placeholder="Budi Santoso" />
-                        {form.formState.errors.penanggungJawab && (
-                            <p className="text-sm text-red-500">{form.formState.errors.penanggungJawab.message}</p>
-                        )}
-                    </div>
-
-                    <div className="space-y-2">
                         <Label>Deskripsi</Label>
                         <Textarea {...form.register('deskripsi')} rows={3} placeholder="Penjelasan mengenai program kerja..." />
                         {form.formState.errors.deskripsi && (
@@ -129,15 +115,7 @@ export default function ProkerForm({
                         )}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label>Tanggal Pelaksanaan</Label>
-                            <Input type="date" {...form.register('tanggalPelaksanaan')} />
-                            {form.formState.errors.tanggalPelaksanaan && (
-                                <p className="text-sm text-red-500">{form.formState.errors.tanggalPelaksanaan.message}</p>
-                            )}
-                        </div>
-
+                    <div className="space-y-2">
                         <div className="space-y-2">
                             <Label>Status</Label>
                             <Select

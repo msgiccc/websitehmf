@@ -12,8 +12,7 @@ export default async function ProgramKerjaPage() {
     try {
         const { data, error } = await supabase
             .from("ProgramKerja")
-            .select("*")
-            .order("tanggalPelaksanaan", { ascending: true });
+            .select("*");
 
         if (!error && data) {
             prokerList = data;
@@ -45,10 +44,6 @@ export default async function ProgramKerjaPage() {
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                         <div>
                                             <CardTitle className="text-xl mb-1">{proker.nama}</CardTitle>
-                                            <div className="flex items-center text-sm text-muted-foreground gap-1.5">
-                                                <Calendar className="h-4 w-4" />
-                                                <span>{format(new Date(proker.tanggalPelaksanaan), 'dd MMMM yyyy', { locale: id })}</span>
-                                            </div>
                                         </div>
                                         <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase shrink-0 w-fit
                         ${proker.status === 'COMPLETED' ? 'bg-green-100 text-green-700 border border-green-200' :
@@ -60,10 +55,6 @@ export default async function ProgramKerjaPage() {
                                 <CardContent className="pt-4">
                                     <p className="text-muted-foreground leading-relaxed">{proker.deskripsi}</p>
                                 </CardContent>
-                                <CardFooter className="bg-muted/10 border-t py-3 px-6 text-sm font-medium text-primary flex items-center gap-2">
-                                    <User className="h-4 w-4" />
-                                    Penanggung Jawab: {proker.penanggungJawab}
-                                </CardFooter>
                             </Card>
                         </div>
                     ))}

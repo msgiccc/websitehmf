@@ -21,7 +21,7 @@ export const DUMMY_ARTIKEL = [
 ];
 
 export const DUMMY_PROKER = [
-    { id: '1', nama: 'LDKM 2024', deskripsi: 'Latihan Dasar Kepemimpinan', tanggalPelaksanaan: new Date().toISOString(), status: 'PLANNING', penanggungJawab: 'Budi' }
+    { id: '1', nama: 'LDKM 2024', deskripsi: 'Latihan Dasar Kepemimpinan', status: 'PLANNING' }
 ];
 
 export const DUMMY_GALERI = [

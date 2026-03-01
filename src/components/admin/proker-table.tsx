@@ -16,10 +16,8 @@ export default function ProkerTable({ initialData }: { initialData: any[] }) {
     const [selectedItem, setSelectedItem] = useState<any>(null);
 
     const handleEdit = (item: any) => {
-        // Convert timestamp to YYYY-MM-DD for native date input
         const formattedItem = {
-            ...item,
-            tanggalPelaksanaan: new Date(item.tanggalPelaksanaan).toISOString().split('T')[0]
+            ...item
         };
         setSelectedItem(formattedItem);
         setIsFormOpen(true);
@@ -56,16 +54,14 @@ export default function ProkerTable({ initialData }: { initialData: any[] }) {
                     <TableHeader>
                         <TableRow>
                             <TableHead>Nama Program</TableHead>
-                            <TableHead>Penanggung Jawab</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead>Tgl. Pelaksanaan</TableHead>
                             <TableHead className="text-right">Aksi</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {data.length === 0 ? (
                             <TableRow>
-                                <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
+                                <TableCell colSpan={3} className="text-center py-6 text-muted-foreground">
                                     Belum ada Proker.
                                 </TableCell>
                             </TableRow>
@@ -73,16 +69,12 @@ export default function ProkerTable({ initialData }: { initialData: any[] }) {
                             data.map((item) => (
                                 <TableRow key={item.id}>
                                     <TableCell className="font-medium">{item.nama}</TableCell>
-                                    <TableCell>{item.penanggungJawab}</TableCell>
                                     <TableCell>
                                         <span className={`px-2 py-1 rounded-full text-xs font-medium 
                       ${item.status === 'COMPLETED' ? 'bg-green-100 text-green-700' :
                                                 item.status === 'ONGOING' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'}`}>
                                             {item.status}
                                         </span>
-                                    </TableCell>
-                                    <TableCell>
-                                        {format(new Date(item.tanggalPelaksanaan), 'dd MMM yyyy', { locale: id })}
                                     </TableCell>
                                     <TableCell className="text-right space-x-2">
                                         <Button variant="outline" size="icon" onClick={() => handleEdit(item)}>
