@@ -7,6 +7,7 @@ type KabinetTabsProps = {
     groupedPengurus: Record<string, any[]>;
     visi: string;
     misiList: string[];
+    unggulan: any[];
 };
 
 // Sub-component to handle search params safely within Suspense
@@ -23,7 +24,7 @@ function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
     return null;
 }
 
-export function KabinetTabs({ groupedPengurus, visi, misiList }: KabinetTabsProps) {
+export function KabinetTabs({ groupedPengurus, visi, misiList, unggulan }: KabinetTabsProps) {
     const [activeTab, setActiveTab] = useState("visi-misi");
 
     const tabs = [
@@ -96,18 +97,25 @@ export function KabinetTabs({ groupedPengurus, visi, misiList }: KabinetTabsProp
                             <div className="w-16 h-1 bg-[#E63946] mx-auto mt-6 rounded-full"></div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-2xl mx-auto">
-                            <div className="bg-gray-50 p-10 rounded-3xl border border-gray-100 shadow-lg hover:shadow-xl transition-shadow group flex flex-col items-center text-center">
-                                <div className="w-20 h-20 bg-[#2c1469]/10 rounded-full flex items-center justify-center text-[#2c1469] mb-8 group-hover:scale-110 group-hover:bg-[#2c1469] group-hover:text-white transition-all duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                                    </svg>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                            {unggulan.length > 0 ? (
+                                unggulan.map((prog, idx) => (
+                                    <div key={idx} className="bg-gray-50 p-10 rounded-3xl border border-gray-100 shadow-lg hover:shadow-xl transition-shadow group flex flex-col items-center text-center">
+                                        <div
+                                            className="w-20 h-20 bg-[#2c1469]/10 rounded-full flex items-center justify-center text-[#2c1469] mb-8 group-hover:scale-110 group-hover:bg-[#2c1469] group-hover:text-white transition-all duration-300"
+                                            dangerouslySetInnerHTML={{ __html: prog.iconSvg || '<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>' }}
+                                        />
+                                        <h3 className="text-2xl font-bold text-[#0B1F3A] mb-4">{prog.nama}</h3>
+                                        <p className="text-gray-600 leading-relaxed text-sm max-w-xs mx-auto">
+                                            {prog.deskripsi}
+                                        </p>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="col-span-full text-center py-12 text-gray-400 border border-dashed rounded-3xl">
+                                    Belum ada Program Unggulan pada kabinet ini.
                                 </div>
-                                <h3 className="text-3xl font-bold text-[#0B1F3A] mb-4">Pelatihan Kewirausahaan</h3>
-                                <p className="text-gray-600 leading-relaxed text-base max-w-lg mx-auto">
-                                    Program inisiatif pengembangan skill berwirausaha bagi anggota untuk menciptakan ekosistem bisnis mahasiswa yang inovatif, mandiri, dan berdaya saing tinggi dalam menghadapi tantangan industri kreatif.
-                                </p>
-                            </div>
+                            )}
                         </div>
 
                     </div>
@@ -152,17 +160,17 @@ export function KabinetTabs({ groupedPengurus, visi, misiList }: KabinetTabsProp
                                         </h3>
                                     </div>
 
-                                    <div className="flex flex-wrap justify-center gap-10 md:gap-16 relative z-10">
+                                    <div className="flex flex-wrap justify-center gap-6 md:gap-10 relative z-10">
                                         {pimpinan.map(person => (
-                                            <div key={person.id} className="w-full flex flex-col items-center">
-                                                <div className="relative w-full aspect-[3/4.2] max-w-[320px] bg-gray-50 rounded-2xl shadow-xl overflow-hidden group hover:-translate-y-2 hover:shadow-2xl transition-all duration-500">
+                                            <div key={person.id} className="w-full sm:w-1/3 md:w-1/4 lg:w-1/5 flex flex-col items-center">
+                                                <div className="relative w-full aspect-[4/5] max-w-[200px] bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                    <img src={person.fotoUrl} alt={person.nama} className="w-full h-full object-contain md:object-cover group-hover:scale-105 transition-transform duration-500" />
+                                                    <img src={person.fotoUrl} alt={person.nama} className="w-full h-full object-contain md:object-cover group-hover:scale-110 transition-transform duration-500" />
                                                 </div>
 
-                                                <div className="text-center mt-6">
-                                                    <h4 className="text-xl md:text-2xl font-bold text-[#0B1F3A]">{person.jabatan}</h4>
-                                                    <p className="font-semibold text-gray-500 mt-1">{person.nama}</p>
+                                                <div className="text-center mt-4">
+                                                    <h4 className="text-sm md:text-base font-bold text-[#0B1F3A] leading-tight">{person.jabatan}</h4>
+                                                    <p className="text-xs font-semibold text-gray-500 mt-1">{person.nama}</p>
                                                 </div>
                                             </div>
                                         ))}
@@ -183,17 +191,17 @@ export function KabinetTabs({ groupedPengurus, visi, misiList }: KabinetTabsProp
                                                 <div className="w-12 h-1 bg-[#C9A24D] rounded-full mt-4"></div>
                                             </div>
 
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 p-4 max-w-5xl mx-auto">
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-10 p-2 max-w-6xl mx-auto">
                                                 {members.map(person => (
                                                     <div key={person.id} className="w-full flex flex-col items-center">
-                                                        <div className="relative w-full aspect-[3/4.2] max-w-[320px] bg-gray-50 rounded-2xl shadow-xl overflow-hidden group hover:-translate-y-2 hover:shadow-2xl transition-all duration-500">
+                                                        <div className="relative w-full aspect-[4/5] max-w-[180px] bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
                                                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                            <img src={person.fotoUrl} alt={person.nama} className="w-full h-full object-contain md:object-cover group-hover:scale-105 transition-transform duration-500" />
+                                                            <img src={person.fotoUrl} alt={person.nama} className="w-full h-full object-contain md:object-cover group-hover:scale-110 transition-transform duration-500" />
                                                         </div>
 
-                                                        <div className="text-center mt-6">
-                                                            <h4 className="text-lg font-bold text-[#0B1F3A]">{person.jabatan}</h4>
-                                                            <p className="font-semibold text-gray-500 mt-1">{person.nama}</p>
+                                                        <div className="text-center mt-4 px-2">
+                                                            <h4 className="text-xs md:text-sm font-bold text-[#0B1F3A] leading-tight">{person.jabatan}</h4>
+                                                            <p className="text-[11px] md:text-xs font-semibold text-gray-500 mt-1 truncate w-full">{person.nama}</p>
                                                         </div>
                                                     </div>
                                                 ))}

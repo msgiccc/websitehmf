@@ -40,7 +40,7 @@ export default async function KabinetPage() {
 
                 {/* Background Image with Blue Tone Overlay */}
                 <div
-                    className="absolute inset-0 z-0 opacity-[0.25]"
+                    className="absolute inset-0 z-0 opacity-[0.10]"
                     style={{
                         backgroundImage: `url('${logoUrl}')`,
                         backgroundSize: 'cover',
@@ -54,6 +54,7 @@ export default async function KabinetPage() {
                 <div className="container px-4 md:px-8 relative z-10 w-full flex flex-col items-center text-center">
 
                     <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-[#E63946] leading-tight tracking-tight mb-4">
+                        <span className="block text-2xl md:text-3xl text-[#2c1469] mb-2">Kabinet</span>
                         {namaKabinet}
                     </h1>
 
@@ -70,7 +71,7 @@ export default async function KabinetPage() {
             {/* Interactive Tabs Section */}
             <section className="w-full pb-24">
                 <Suspense fallback={<div className="container px-4 text-center py-20 text-gray-500">Memuat data kabinet...</div>}>
-                    <KabinetTabs groupedPengurus={groupedPengurus} visi={visi} misiList={misiList} />
+                    <KabinetTabs groupedPengurus={groupedPengurus} visi={visi} misiList={misiList} unggulan={kabinet?.ProgramUnggulan || []} />
                 </Suspense>
             </section>
         </div>

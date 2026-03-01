@@ -8,8 +8,11 @@ export async function getKabinetAktif() {
     try {
         const { data, error } = await supabase
             .from('Kabinet')
-            .select('*')
-            .eq('isAktif', true)
+            .select(`
+                *,
+                ProgramUnggulan(*)
+            `)
+            .eq('isActive', true)
             .order('createdAt', { ascending: false })
             .limit(1)
             .single();

@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 type KabinetFormValues = z.infer<typeof KabinetSchema>;
 
@@ -21,12 +22,20 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
         resolver: zodResolver(KabinetSchema),
         defaultValues: initialData || {
             namaKabinet: '',
-            periode: '',
+            periode: `${new Date().getFullYear()}/${new Date().getFullYear() + 1}`,
             logoUrl: '',
             visi: '',
             misi: '',
         },
     });
+
+    const watchPeriode = form.watch('periode') || `${new Date().getFullYear()}/${new Date().getFullYear() + 1}`;
+    const watchLogoUrl = form.watch('logoUrl');
+
+    // Pecah jadi 2 bagian
+    const [startYearStr, endYearStr] = watchPeriode.split('/');
+    const currentYear = new Date().getFullYear();
+    const yearOptions = Array.from({ length: 10 }, (_, i) => currentYear - 3 + i);
 
     const onSubmit = async (values: KabinetFormValues) => {
         setIsSubmitting(true);
@@ -59,32 +68,76 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
                     )}
                 </div>
 
-                <div className="space-y-2">
-                    <Label htmlFor="periode">Periode</Label>
-                    <Input
-                        id="periode"
-                        {...form.register('periode')}
-                        placeholder="2025/2026"
-                    />
+                <div className="space-y-4">
+                    <Label htmlFor="periode">Periode Kepengurusan</Label>
+                    <div className="flex items-center gap-3">
+                        <Select
+                            value={startYearStr}
+                            onValueChange={(val) => {
+                                form.setValue('periode', `${val}/${endYearStr}`);
+                            }}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Tahun Awal" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {yearOptions.map(y => (
+                                    <SelectItem key={y} value={y.toString()}>{y}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+
+                        <span className="text-muted-foreground font-bold">/</span>
+
+                        <Select
+                            value={endYearStr}
+                            onValueChange={(val) => {
+                                form.setValue('periode', `${startYearStr}/${val}`);
+                            }}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Tahun Akhir" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {yearOptions.map(y => (
+                                    <SelectItem key={y} value={y.toString()}>{y}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
                     {form.formState.errors.periode && (
                         <p className="text-sm text-red-500">{form.formState.errors.periode.message}</p>
                     )}
                 </div>
             </div>
 
-            <div className="space-y-2">
-                <Label htmlFor="logoUrl">URL Logo Kabinet</Label>
-                <Input
-                    id="logoUrl"
-                    {...form.register('logoUrl')}
-                    placeholder="/niskala.png atau https://..."
-                />
-                <p className="text-xs text-muted-foreground">
-                    Bisa path lokal (contoh: /niskala.png) atau URL eksternal (https://...)
-                </p>
-                {form.formState.errors.logoUrl && (
-                    <p className="text-sm text-red-500">{form.formState.errors.logoUrl.message}</p>
-                )}
+            <div className="space-y-4">
+                <Label htmlFor="logoUrl">Logo Kabinet (URL atau Label Path)</Label>
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                    <div className="flex-1 w-full space-y-2">
+                        <Input
+                            id="logoUrl"
+                            {...form.register('logoUrl')}
+                            placeholder="/niskala.png atau https://..."
+                        />
+                        <p className="text-xs text-muted-foreground">
+                            Bisa path lokal (contoh: /niskala.png) atau URL eksternal (https://...)
+                        </p>
+                        {form.formState.errors.logoUrl && (
+                            <p className="text-sm text-red-500">{form.formState.errors.logoUrl.message}</p>
+                        )}
+                    </div>
+
+                    {/* Live Preview Box */}
+                    <div className="w-full md:w-32 aspect-square rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center p-2 text-center text-xs text-muted-foreground overflow-hidden shrink-0 group">
+                        {watchLogoUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={watchLogoUrl} alt="Preview Logo" className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-300" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = 'Image tidak<br/>valid' }} />
+                        ) : (
+                            <span>Pratinjau<br />Logo</span>
+                        )}
+                    </div>
+                </div>
             </div>
 
             <div className="space-y-2">
