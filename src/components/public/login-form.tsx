@@ -33,9 +33,8 @@ export default function LoginForm() {
             if (result?.error) {
                 setError('Username atau password salah.');
             } else if (result?.ok) {
-                // Login berhasil — redirect ke admin
-                router.push('/admin');
-                router.refresh();
+                // Login berhasil — hard redirect untuk memastikan Vercel Edge Server membaca Cookie Authentication
+                window.location.href = '/admin';
             } else {
                 setError('Terjadi kesalahan tidak terduga. Coba lagi.');
             }
