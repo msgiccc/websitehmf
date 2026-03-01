@@ -1,12 +1,12 @@
-import { auth } from "@/auth";
+import NextAuth from "next-auth";
+import { authConfig } from "@/auth.config";
 
-export default auth((req) => {
-    // Middleware kosong ini penting untuk NextAuth v5 di Vercel Edge.
-    // Tanpa ini, React Server Components (seperti layout.tsx admin) 
-    // sesudah `router.push()` sering gagal membaca Cookie Header hasil signIn() Client.
+export default NextAuth(authConfig).auth((req) => {
+    // Middleware kosong penghubung Auth.js v5 pada Vercel App Router.
+    // Ini menangkap dan meneruskan JWT Header ke Server Components dengan selamat.
 });
 
-// Hanya jalankan middleware ini pada route admin dan auth
+// Jalankan middleware ini pada route selain aset statis/API
 export const config = {
     matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$).*)'],
 };
