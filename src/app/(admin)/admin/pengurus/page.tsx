@@ -7,7 +7,8 @@ export default async function AdminPengurusPage() {
     const { data: pengurus, error } = await supabase
         .from('Pengurus')
         .select('*')
-        .order('createdAt', { ascending: false });
+        .order('divisi', { ascending: true })
+        .order('nama', { ascending: true });
 
     return (
         <div className="space-y-6">
