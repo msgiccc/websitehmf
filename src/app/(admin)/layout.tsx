@@ -1,26 +1,28 @@
+'use client';
+
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield } from "lucide-react";
-import { auth } from "@/auth";
-import { logoutAction } from "@/lib/logout-action";
+import { SessionProvider, useSession, signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
 
-export default async function AdminLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    let session = null;
-    try {
-        session = await auth();
-    } catch (e) {
-        console.error("Layout Admin: Gagal memvalidasi session auth()", e);
-        // Biarkan session null agar trigger redirect ke /login
+function AdminLayoutContent({ children }: { children: React.ReactNode }) {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.replace('/login');
+        }
+    }, [status, router]);
+
+    if (status === 'loading') {
+        return <div className="min-h-screen flex items-center justify-center bg-muted/40 text-muted-foreground">Memuat sesi admin...</div>;
     }
 
-    // Proteksi Route Admin level Server Component (menggantikan Middleware)
-    if (!session?.user) {
-        redirect('/login');
+    if (status === 'unauthenticated') {
+        return null; // Akan diredirect oleh useEffect
     }
 
     const navLinks = [
@@ -31,6 +33,10 @@ export default async function AdminLayout({
         { href: '/admin/proker', label: 'Program Kerja', icon: Briefcase },
         { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon },
     ];
+
+    const handleLogout = async () => {
+        await signOut({ callbackUrl: '/login' });
+    };
 
     return (
         <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
@@ -64,12 +70,10 @@ export default async function AdminLayout({
                                 <p className="text-xs text-muted-foreground">Administrator</p>
                             </div>
                         )}
-                        <form action={logoutAction}>
-                            <Button variant="outline" className="w-full gap-2" type="submit">
-                                <LogOut className="h-4 w-4" />
-                                Logout
-                            </Button>
-                        </form>
+                        <Button variant="outline" className="w-full gap-2" onClick={handleLogout}>
+                            <LogOut className="h-4 w-4" />
+                            Logout
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -94,5 +98,17 @@ export default async function AdminLayout({
                 </main>
             </div>
         </div>
+    );
+}
+
+export default function AdminLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <SessionProvider>
+            <AdminLayoutContent>{children}</AdminLayoutContent>
+        </SessionProvider>
     );
 }
