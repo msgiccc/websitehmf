@@ -11,7 +11,7 @@ export default async function AdminProkerPage() {
 
     return (
         <div className="space-y-6">
-            <ProkerTable initialData={proker || []} />
+            <ProkerTable initialData={proker ? JSON.parse(JSON.stringify(proker)) : []} />
         </div>
     );
 }

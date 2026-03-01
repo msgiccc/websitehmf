@@ -36,7 +36,7 @@ export default async function AdminKabinetPage() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <KabinetForm initialData={kabinet} />
+                    <KabinetForm initialData={kabinet ? JSON.parse(JSON.stringify(kabinet)) : undefined} />
                 </CardContent>
             </Card>
         </div>

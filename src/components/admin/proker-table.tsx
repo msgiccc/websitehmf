@@ -1,19 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Edit, Trash2, Plus } from 'lucide-react';
 import ProkerForm from '@/components/admin/proker-form';
 import { deleteProker } from '@/lib/admin-actions';
 import { toast } from 'sonner';
-import { format } from 'date-fns';
-import { id } from 'date-fns/locale';
 
 export default function ProkerTable({ initialData }: { initialData: any[] }) {
     const [data, setData] = useState(initialData);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<any>(null);
+
+    // Sync state if initialData changes after server revalidation
+    useEffect(() => {
+        setData(initialData);
+    }, [initialData]);
 
     const handleEdit = (item: any) => {
         const formattedItem = {
