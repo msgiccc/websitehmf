@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Menu, Home, User, Landmark, Briefcase, Calendar, FolderOpen, Newspaper, ImageIcon, Lock } from "lucide-react";
 
 export default function PublicLayout({
     children,
@@ -161,86 +162,134 @@ export default function PublicLayout({
                                 <span className="sr-only">Toggle menu</span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="right" className="bg-[#1a0b40] text-white border-l-[#2c1469]">
-                            <nav className="flex flex-col space-y-6 mt-12 w-full h-full overflow-y-auto pb-20">
-                                <Link href="/" className="text-lg font-medium hover:text-[#c92020] transition-colors">Beranda</Link>
+                        <SheetContent side="right" className="bg-gradient-to-br from-[#071324]/95 to-[#1A2C4D]/95 backdrop-blur-2xl text-white border-l border-white/10 p-0 overflow-hidden">
+                            {/* Ambient Glow */}
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-[#E63946]/20 rounded-full blur-[80px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
 
-                                {/* Mobile Dropdown for Profil */}
-                                <div className="space-y-3">
-                                    <div className="text-lg font-medium text-white/50">Profil HMF</div>
-                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
-                                        <Link href="/profil?tab=sejarah" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Sejarah Singkat</Link>
-                                        <Link href="/profil?tab=lambang" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Lambang HMF</Link>
-                                        <Link href="/profil?tab=mars" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Mars dan Hymne</Link>
-                                        <Link href="/profil?tab=ukk" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Unit Kegiatan Khusus</Link>
-                                    </div>
-                                </div>
+                            <div className="flex flex-col h-full w-full py-6 px-6 relative z-10 overflow-y-auto">
+                                <Link href="/" className="flex items-center space-x-3 mb-8">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img src="/logo.png" alt="Logo HMF" className="w-8 h-8 object-contain" />
+                                    <span className="font-bold text-xl tracking-wide uppercase drop-shadow-sm">Niskala Cakra</span>
+                                </Link>
 
-                                {/* Mobile Dropdown for Kabinet */}
-                                <div className="space-y-3">
-                                    <div className="text-lg font-medium text-white/50">Kabinet Niskala Cakra</div>
-                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
-                                        <Link href="/kabinet?tab=visi-misi" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Visi & Misi</Link>
-                                        <Link href="/kabinet?tab=program-unggulan" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Program Unggulan</Link>
-                                        <Link href="/kabinet?tab=profil" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Profil Kabinet</Link>
-                                    </div>
-                                </div>
+                                <nav className="flex flex-col space-y-1 mt-4 flex-1">
+                                    <Link href="/" className="flex items-center gap-4 py-3 px-3 rounded-xl hover:bg-white/10 text-lg font-medium transition-colors">
+                                        <Home className="w-5 h-5 text-[#C9A24D]" /> Beranda
+                                    </Link>
 
-                                {/* Mobile Dropdown for Program Kerja */}
-                                <div className="space-y-3">
-                                    <Link href="/program-kerja" className="text-lg font-medium text-white/50 hover:text-white transition-colors block">Program Kerja</Link>
-                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
-                                        <Link href="/program-kerja/lembaga-kesekretariatan" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">L. Kesekretariatan</Link>
-                                        <Link href="/program-kerja/lembaga-keuangan" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">L. Keuangan</Link>
-                                        <Link href="/program-kerja/bidang-akademik" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Akademik</Link>
-                                        <Link href="/program-kerja/bidang-ekonomi-dan-bisnis" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Ekonomi & Bisnis</Link>
-                                        <Link href="/program-kerja/bidang-kaderisasi" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Kaderisasi</Link>
-                                        <Link href="/program-kerja/bidang-kerohanian" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Kerohanian</Link>
-                                        <Link href="/program-kerja/bidang-komunikasi-dan-media-informasi" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Kominfo</Link>
-                                        <Link href="/program-kerja/bidang-penelitian-dan-pengembangan" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Litbang</Link>
-                                        <Link href="/program-kerja/bidang-pengembangan-minat-dan-bakat" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Minat Bakat</Link>
-                                        <Link href="/program-kerja/bidang-sosial-dan-politik" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Sospol</Link>
-                                    </div>
-                                </div>
-                                {/* Mobile Dropdown for Events */}
-                                <div className="space-y-3">
-                                    <div className="text-lg font-medium text-white/50">Events</div>
-                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
-                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Physics Festival</Link>
-                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Pelatihan Kewirausahaan</Link>
-                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Pakumpul Sosonoan...</Link>
-                                    </div>
-                                </div>
+                                    <Accordion type="single" collapsible className="w-full space-y-1">
+                                        {/* Accordion Profil */}
+                                        <AccordionItem value="profil" className="border-b-0 space-y-1">
+                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                                <div className="flex items-center gap-4 text-lg font-medium">
+                                                    <User className="w-5 h-5 text-[#C9A24D]" /> Profil HMF
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                                <Link href="/profil?tab=sejarah" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Sejarah Singkat</Link>
+                                                <Link href="/profil?tab=lambang" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Lambang HMF</Link>
+                                                <Link href="/profil?tab=mars" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Mars dan Hymne</Link>
+                                                <Link href="/profil?tab=ukk" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Unit Kegiatan Khusus</Link>
+                                            </AccordionContent>
+                                        </AccordionItem>
 
-                                {/* Mobile Dropdown for Content */}
-                                <div className="space-y-3">
-                                    <div className="text-lg font-medium text-white/50">Content</div>
-                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
-                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">BEARR Akademik</Link>
-                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">S.I.G.M.A</Link>
-                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Physics Spin</Link>
-                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">PHet</Link>
-                                    </div>
-                                </div>
+                                        {/* Accordion Kabinet */}
+                                        <AccordionItem value="kabinet" className="border-b-0 space-y-1">
+                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                                <div className="flex items-center gap-4 text-lg font-medium">
+                                                    <Landmark className="w-5 h-5 text-[#C9A24D]" /> Kabinet
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                                <Link href="/kabinet?tab=visi-misi" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Visi & Misi</Link>
+                                                <Link href="/kabinet?tab=program-unggulan" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Program Unggulan</Link>
+                                                <Link href="/kabinet?tab=profil" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Profil Kabinet</Link>
+                                            </AccordionContent>
+                                        </AccordionItem>
 
-                                {/* Mobile Dropdown for DPM */}
-                                <div className="space-y-3">
-                                    <div className="text-lg font-medium text-white/50">DPM</div>
-                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
-                                        <Link prefetch={false} href="/dpm/struktur-kepengurusan" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Struktur Kepengurusan DPM</Link>
-                                        <Link prefetch={false} href="/dpm/produk-mumas" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Produk Mumas</Link>
-                                    </div>
-                                </div>
+                                        {/* Accordion Program Kerja */}
+                                        <AccordionItem value="proker" className="border-b-0 space-y-1">
+                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                                <div className="flex items-center gap-4 text-lg font-medium">
+                                                    <Briefcase className="w-5 h-5 text-[#C9A24D]" /> Program Kerja
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                                <Link href="/program-kerja" className="block py-2 text-sm font-bold text-white mb-2">Lihat Semua Proker →</Link>
+                                                <Link href="/program-kerja/lembaga-kesekretariatan" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">L. Kesekretariatan</Link>
+                                                <Link href="/program-kerja/lembaga-keuangan" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">L. Keuangan</Link>
+                                                <Link href="/program-kerja/bidang-akademik" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">B. Akademik</Link>
+                                                <Link href="/program-kerja/bidang-ekonomi-dan-bisnis" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">B. Ekonomi Bisnis</Link>
+                                                <Link href="/program-kerja/bidang-kaderisasi" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">B. Kaderisasi</Link>
+                                                <Link href="/program-kerja/bidang-kerohanian" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">B. Kerohanian</Link>
+                                                <Link href="/program-kerja/bidang-komunikasi-dan-media-informasi" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">B. Kominfo</Link>
+                                                <Link href="/program-kerja/bidang-penelitian-dan-pengembangan" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">B. Litbang</Link>
+                                                <Link href="/program-kerja/bidang-pengembangan-minat-dan-bakat" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">B. Minat Bakat</Link>
+                                                <Link href="/program-kerja/bidang-sosial-dan-politik" className="block py-1.5 text-sm text-gray-300 hover:text-white transition-colors">B. Sospol</Link>
+                                            </AccordionContent>
+                                        </AccordionItem>
 
-                                <Link href="/galeri" className="text-lg font-medium hover:text-[#c92020] transition-colors">Galeri</Link>
-                                <div className="border-t border-white/20 pt-6 mt-4">
-                                    <Link href="/login" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Login Admin</Link>
-                                </div>
-                            </nav>
-                        </SheetContent>
-                    </Sheet>
-                </div>
-            </header>
+                                        {/* Accordion Events */}
+                                        <AccordionItem value="events" className="border-b-0 space-y-1">
+                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                                <div className="flex items-center gap-4 text-lg font-medium">
+                                                    <Calendar className="w-5 h-5 text-[#C9A24D]" /> Events
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Physics Festival</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Pelatihan Kewirausahaan</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors leading-tight">Pakumpul Sosonoan jeung Social Project Rame-rame</Link>
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        {/* Accordion Content */}
+                                        <AccordionItem value="content" className="border-b-0 space-y-1">
+                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                                <div className="flex items-center gap-4 text-lg font-medium">
+                                                    <FolderOpen className="w-5 h-5 text-[#C9A24D]" /> Content
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">BEARR Akademik</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">S.I.G.M.A</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Physics Spin</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">PHet</Link>
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        {/* Accordion DPM */}
+                                        <AccordionItem value="dpm" className="border-b-0 space-y-1">
+                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                                <div className="flex items-center gap-4 text-lg font-medium">
+                                                    <Newspaper className="w-5 h-5 text-[#C9A24D]" /> DPM
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                                <Link prefetch={false} href="/dpm/struktur-kepengurusan" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Struktur DPM</Link>
+                                                <Link prefetch={false} href="/dpm/produk-mumas" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Produk Mumas</Link>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    </Accordion>
+
+                                    <Link href="/galeri" className="flex items-center gap-4 py-3 px-3 rounded-xl hover:bg-white/10 text-lg font-medium transition-colors">
+                                        <ImageIcon className="w-5 h-5 text-[#C9A24D]" /> Galeri
+                                    </Link>
+
+                                    {/* Link Admin Terpisah jadi Tombol Menonjol */}
+                                    <div className="pt-8 pb-4 mt-auto">
+                                        <Link href="/login" className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-[#E63946] hover:bg-[#c92020] text-white rounded-2xl font-bold shadow-[0_4px_20px_rgba(230,57,70,0.4)] transition-all hover:-translate-y-1">
+                                            <Lock className="w-5 h-5" /> Login Portal Admin
+                                        </Link>
+                                    </div>
+                                </nav>
+                            </div>
+                        </nav>
+                    </SheetContent>
+                </Sheet>
+        </div>
+            </header >
 
             <main className="flex-1 shrink-0 bg-gray-50">{children}</main>
 
@@ -251,6 +300,6 @@ export default function PublicLayout({
                     </p>
                 </div>
             </footer>
-        </div>
+        </div >
     );
 }
