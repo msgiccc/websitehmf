@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 
 type KabinetTabsProps = {
     groupedPengurus: Record<string, any[]>;
+    visi: string;
+    misiList: string[];
 };
 
 // Sub-component to handle search params safely within Suspense
@@ -21,7 +23,7 @@ function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
     return null;
 }
 
-export function KabinetTabs({ groupedPengurus }: KabinetTabsProps) {
+export function KabinetTabs({ groupedPengurus, visi, misiList }: KabinetTabsProps) {
     const [activeTab, setActiveTab] = useState("visi-misi");
 
     const tabs = [
@@ -63,64 +65,23 @@ export function KabinetTabs({ groupedPengurus }: KabinetTabsProps) {
                                 <h2 className="text-4xl md:text-5xl font-serif font-black text-[#2c1469]">Visi Utama</h2>
                                 <div className="w-16 h-1.5 bg-[#E63946] rounded-full mx-auto"></div>
                                 <p className="text-gray-600 text-xl font-medium pt-6 leading-relaxed bg-[#F4F1EC]/50 p-8 rounded-2xl border border-gray-100">
-                                    "Mewujudkan HMF FPMIPA UPI sebagai tempat pengembangan yang unggul, inovatif, strategis, dan efisien."
+                                    "{visi}"
                                 </p>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div className="space-y-6">
-                                    <h3 className="text-3xl font-serif font-bold text-[#0B1F3A] flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-[#E63946] text-white flex items-center justify-center text-sm">M</div>
-                                        Misi Prioritas
-                                    </h3>
-                                    <ul className="space-y-4">
-                                        <li className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-50">
+                            <div className="max-w-3xl mx-auto space-y-6">
+                                <h3 className="text-3xl font-serif font-bold text-[#0B1F3A] flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded-full bg-[#E63946] text-white flex items-center justify-center text-sm">M</div>
+                                    Misi Prioritas
+                                </h3>
+                                <ul className="space-y-4">
+                                    {misiList.map((misiItem, idx) => (
+                                        <li key={idx} className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-50">
                                             <div className="w-6 h-6 rounded-full bg-[#2c1469]/10 text-[#2c1469] flex-shrink-0 flex items-center justify-center mt-0.5">•</div>
-                                            <span className="text-gray-700 leading-relaxed font-medium">Mendorong Prestasi Mahasiswa di Bidang Akademik dan Non-Akademik.</span>
+                                            <span className="text-gray-700 leading-relaxed font-medium">{misiItem}</span>
                                         </li>
-                                        <li className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-50">
-                                            <div className="w-6 h-6 rounded-full bg-[#2c1469]/10 text-[#2c1469] flex-shrink-0 flex items-center justify-center mt-0.5">•</div>
-                                            <span className="text-gray-700 leading-relaxed font-medium">Mengembangkan kapasitas mahasiswa fisika yang adaptif dan profesional.</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-50">
-                                            <div className="w-6 h-6 rounded-full bg-[#2c1469]/10 text-[#2c1469] flex-shrink-0 flex items-center justify-center mt-0.5">•</div>
-                                            <span className="text-gray-700 leading-relaxed font-medium">Mengembangkan SDM yang Kompeten, Adaptif, dan Berkarakter.</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-50">
-                                            <div className="w-6 h-6 rounded-full bg-[#2c1469]/10 text-[#2c1469] flex-shrink-0 flex items-center justify-center mt-0.5">•</div>
-                                            <span className="text-gray-700 leading-relaxed font-medium">Meningkatkan eksistensi HMF FPMIPA UPI di internal maupun di eksternal kampus.</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-50">
-                                            <div className="w-6 h-6 rounded-full bg-[#2c1469]/10 text-[#2c1469] flex-shrink-0 flex items-center justify-center mt-0.5">•</div>
-                                            <span className="text-gray-700 leading-relaxed font-medium">Mempererat Kekeluargaan dan kenyamanan di organisasi.</span>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div className="space-y-6">
-                                    <h3 className="text-3xl font-serif font-bold text-[#0B1F3A] flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-[#C9A24D] text-white flex items-center justify-center text-sm">N</div>
-                                        Nilai Niskala
-                                    </h3>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="bg-[#2c1469] text-white p-6 rounded-2xl flex flex-col items-center text-center justify-center aspect-square shadow-lg">
-                                            <span className="text-2xl font-bold mb-2">Adaptif</span>
-                                            <p className="text-sm text-gray-300 font-light">Responsif terhadap perubahan zaman</p>
-                                        </div>
-                                        <div className="bg-[#E63946] text-white p-6 rounded-2xl flex flex-col items-center text-center justify-center aspect-square shadow-lg">
-                                            <span className="text-2xl font-bold mb-2">Inklusif</span>
-                                            <p className="text-sm text-white/80 font-light">Merangkul semua elemen yang ada</p>
-                                        </div>
-                                        <div className="bg-[#1E6F5C] text-white p-6 rounded-2xl flex flex-col items-center text-center justify-center aspect-square shadow-lg">
-                                            <span className="text-2xl font-bold mb-2">Sinergis</span>
-                                            <p className="text-sm text-white/80 font-light">Kolaborasi dan kerjasama tim solid</p>
-                                        </div>
-                                        <div className="bg-[#C9A24D] text-white p-6 rounded-2xl flex flex-col items-center text-center justify-center aspect-square shadow-lg">
-                                            <span className="text-2xl font-bold mb-2">Progresif</span>
-                                            <p className="text-sm text-white/80 font-light">Berorientasi pada masa depan</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                    ))}
+                                </ul>
                             </div>
 
                         </div>

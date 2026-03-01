@@ -95,7 +95,7 @@ export default async function KabinetPage() {
             {/* Interactive Tabs Section */}
             <section className="w-full pb-24">
                 <Suspense fallback={<div className="container px-4 text-center py-20 text-gray-500">Memuat data kabinet...</div>}>
-                    <KabinetTabs groupedPengurus={groupedPengurus} />
+                    <KabinetTabs groupedPengurus={groupedPengurus} visi={visi} misiList={misiList} />
                 </Suspense>
             </section>
         </div>
