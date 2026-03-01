@@ -19,9 +19,7 @@ export default function ProkerTable({ initialData }: { initialData: any[] }) {
     }, [initialData]);
 
     const handleEdit = (item: any) => {
-        const formattedItem = {
-            ...item
-        };
+        const formattedItem = JSON.parse(JSON.stringify(item));
         setSelectedItem(formattedItem);
         setIsFormOpen(true);
     };
