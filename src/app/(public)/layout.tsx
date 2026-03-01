@@ -285,11 +285,10 @@ export default function PublicLayout({
                                     </div>
                                 </nav>
                             </div>
-                        </nav>
-                    </SheetContent>
-                </Sheet>
-        </div>
-            </header >
+                        </SheetContent>
+                    </Sheet>
+                </div>
+            </header>
 
             <main className="flex-1 shrink-0 bg-gray-50">{children}</main>
 
