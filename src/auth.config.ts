@@ -5,5 +5,7 @@ export const authConfig = {
     pages: {
         signIn: '/login',
     },
+    basePath: '/api/auth',
+    trustHost: true,
     providers: [],
 } satisfies NextAuthConfig;
