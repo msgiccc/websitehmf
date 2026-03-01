@@ -38,11 +38,13 @@ export default function UnggulanTable({ initialData, kabinetId }: { initialData:
             <div className="flex items-center justify-between">
                 <div>
                     <h3 className="text-lg font-medium">Top Program Kerja</h3>
-                    <p className="text-sm text-muted-foreground">Kelola highlight program unggulan untuk Kabinet ini.</p>
+                    <p className="text-sm text-muted-foreground">Satu program kerja maskot yang mewakili Kabinet ini.</p>
                 </div>
-                <Button onClick={handleAdd}>
-                    <Plus className="mr-2 h-4 w-4" /> Tambah Baru
-                </Button>
+                {initialData.length === 0 && (
+                    <Button onClick={handleAdd}>
+                        <Plus className="mr-2 h-4 w-4" /> Tambah Baru
+                    </Button>
+                )}
             </div>
 
             <div className="border rounded-md">

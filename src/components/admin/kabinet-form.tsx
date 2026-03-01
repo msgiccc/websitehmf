@@ -26,11 +26,19 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
             logoUrl: '',
             visi: '',
             misi: '',
+            heroPhoto1: '',
+            heroPhoto2: '',
+            heroPhoto3: '',
+            heroPhoto4: '',
         },
     });
 
     const watchPeriode = form.watch('periode') || `${new Date().getFullYear()}/${new Date().getFullYear() + 1}`;
     const watchLogoUrl = form.watch('logoUrl');
+    const watchHero1 = form.watch('heroPhoto1');
+    const watchHero2 = form.watch('heroPhoto2');
+    const watchHero3 = form.watch('heroPhoto3');
+    const watchHero4 = form.watch('heroPhoto4');
 
     // Pecah jadi 2 bagian
     const [startYearStr, endYearStr] = watchPeriode.split('/');
@@ -167,6 +175,50 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
                 {form.formState.errors.misi && (
                     <p className="text-sm text-red-500">{form.formState.errors.misi.message}</p>
                 )}
+            </div>
+
+            {/* FOTO LANDING PAGE */}
+            <div className="space-y-4 pt-4 border-t">
+                <div>
+                    <Label className="text-lg font-bold">Foto Pahlawan (Landing Page)</Label>
+                    <p className="text-xs text-muted-foreground mt-1">
+                        4 Ekstra foto vertikal/persegi yang akan muncul di layar utama (berjejer ke samping). Gunakan link gambar eksternal atau gambar lokal.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {[1, 2, 3, 4].map((num) => {
+                        const formKey = `heroPhoto${num}` as keyof KabinetFormValues;
+                        // Pilih watch variabel
+                        const previewVal = num === 1 ? watchHero1 : num === 2 ? watchHero2 : num === 3 ? watchHero3 : watchHero4;
+
+                        return (
+                            <div key={num} className="space-y-4 border rounded-xl p-4 bg-gray-50/50">
+                                <Label htmlFor={formKey}>Foto Nomor Ke-{num}</Label>
+                                <div className="flex flex-col xl:flex-row gap-4 items-start">
+                                    <div className="flex-1 w-full space-y-2">
+                                        <Input
+                                            id={formKey}
+                                            {...form.register(formKey)}
+                                            placeholder="https://images.unsplash..."
+                                        />
+                                        {form.formState.errors[formKey] && (
+                                            <p className="text-sm text-red-500">{form.formState.errors[formKey]?.message}</p>
+                                        )}
+                                    </div>
+                                    <div className="w-full xl:w-24 aspect-[3/4] rounded-lg border-2 border-dashed border-gray-300 bg-white flex flex-col items-center justify-center p-1 text-center text-[10px] text-muted-foreground overflow-hidden shrink-0 group">
+                                        {previewVal ? (
+                                            // eslint-disable-next-line @next/next/no-img-element
+                                            <img src={previewVal as string} alt={`Hero ${num}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = 'Image tidak<br/>valid' }} />
+                                        ) : (
+                                            <span>Belum Ada<br />Foto</span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
 
             <Button type="submit" className="w-full md:w-auto" disabled={isSubmitting}>

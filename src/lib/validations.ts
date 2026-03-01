@@ -51,6 +51,10 @@ export const KabinetSchema = z.object({
     visi: z.string().min(10, "Visi terlalu pendek"),
     misi: z.string().min(10, "Misi terlalu pendek"),
     isAktif: z.boolean().default(false).optional(),
+    heroPhoto1: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
+    heroPhoto2: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
+    heroPhoto3: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
+    heroPhoto4: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
 });
 
 export const ProgramUnggulanSchema = z.object({

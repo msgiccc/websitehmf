@@ -77,7 +77,10 @@ export default function UnggulanForm({
 
                     <div className="space-y-2">
                         <Label>SVG Icon (Opsional)</Label>
-                        <Textarea {...form.register('iconSvg')} rows={3} placeholder="Paste kode <svg> di sini, opsional..." />
+                        <Textarea {...form.register('iconSvg')} rows={3} placeholder="Paste kode <svg> di sini..." className="font-mono text-xs" />
+                        <p className="text-[11px] text-muted-foreground mt-1">
+                            Salin kode SVG (ukuran 24x24) dari <a href="https://heroicons.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Heroicons</a> dan tempelkan di kotak ini.
+                        </p>
                     </div>
 
                     <div className="flex justify-end gap-3 pt-4">

@@ -3,6 +3,7 @@ import { PlayCircle, GraduationCap, Users, Calendar, Newspaper, ImageIcon, Arrow
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { DUMMY_ARTIKEL } from "@/lib/dummy-data";
+import { getKabinetAktif } from "@/lib/data";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
 
@@ -25,6 +26,23 @@ export default async function HomePage() {
   } catch (err) {
     console.error("Gagal load artikel untuk homepage:", err);
   }
+
+  // 1. Dapatkan Kabinet Aktif
+  const kabinet = await getKabinetAktif();
+  const namaKabinet = kabinet?.namaKabinet || "Niskala Cakra Murni";
+  const periode = kabinet?.periode || "2026-2027";
+  const logoUrl = kabinet?.logoUrl || "/niskala.png";
+  const visi = kabinet?.visi || "Mewujudkan HMF FPMIPA UPI sebagai tempat pengembangan yang unggul, inovatif, strategis, dan efisien.";
+  const misiRaw = kabinet?.misi || "";
+  const misiList = misiRaw
+    ? misiRaw.split('\n').map((m: string) => m.trim()).filter((m: string) => m.length > 0)
+    : ["Mendorong Prestasi Mahasiswa di Bidang Akademik dan Non-Akademik.", "Mengembangkan kapasitas mahasiswa fisika yang adaptif dan profesional.", "Mengembangkan SDM yang Kompeten, Adaptif, dan Berkarakter.", "Meningkatkan eksistensi HMF FPMIPA UPI di internal maupun di eksternal kampus.", "Mempererat Kekeluargaan dan kenyamanan di organisasi."];
+
+  // Foto Default Jika Kosong
+  const h1 = kabinet?.heroPhoto1 || "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000";
+  const h2 = kabinet?.heroPhoto2 || "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2000";
+  const h3 = kabinet?.heroPhoto3 || "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2000";
+  const h4 = kabinet?.heroPhoto4 || "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2000";
 
   // Split articles into 1 headline and up to 3 sub-articles
   const headlineArticle = recentArticles[0];
@@ -91,13 +109,13 @@ export default async function HomePage() {
               <div className="flex items-center gap-6">
                 <div className="w-20 h-20 md:w-28 md:h-28 shrink-0 drop-shadow-md bg-white rounded-full p-2 border border-white/50 shadow-xl shadow-[#2c1469]/5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/niskala.png" alt="Logo Niskala Cakra" className="w-full h-full object-contain" />
+                  <img src={logoUrl} alt="Logo Kabinet" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <h2 className="font-serif text-3xl md:text-5xl text-[#2c1469] font-bold tracking-tight">
-                    Niskala Cakra
+                    {namaKabinet}
                   </h2>
-                  <p className="text-[#E63946] font-bold tracking-widest text-sm uppercase mt-2">Kabinet 2026-2027</p>
+                  <p className="text-[#E63946] font-bold tracking-widest text-sm uppercase mt-2">Kabinet {periode}</p>
                 </div>
               </div>
 
@@ -111,7 +129,7 @@ export default async function HomePage() {
                     <h3 className="font-bold text-[#2c1469] text-lg">Visi Utama</h3>
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed text-justify">
-                    Mewujudkan HMF FPMIPA UPI sebagai tempat pengembangan yang unggul, inovatif, strategis, dan efisien.
+                    {visi}
                   </p>
                 </div>
 
@@ -124,11 +142,9 @@ export default async function HomePage() {
                     <h3 className="font-bold text-[#2c1469] text-lg">Misi Prioritas</h3>
                   </div>
                   <ul className="text-gray-600 text-sm leading-relaxed text-justify space-y-2 list-disc pl-4">
-                    <li>Mendorong Prestasi Mahasiswa di Bidang Akademik dan Non-Akademik.</li>
-                    <li>Mengembangkan kapasitas mahasiswa fisika yang adaptif dan profesional.</li>
-                    <li>Mengembangkan SDM yang Kompeten, Adaptif, dan Berkarakter.</li>
-                    <li>Meningkatkan eksistensi HMF FPMIPA UPI di internal maupun di eksternal kampus.</li>
-                    <li>Mempererat Kekeluargaan dan kenyamanan di organisasi.</li>
+                    {misiList.map((m: string, idx: number) => (
+                      <li key={idx}>{m}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -149,11 +165,11 @@ export default async function HomePage() {
                 <div className="space-y-4 pt-12">
                   <div className="w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000" alt="Pemimpin 1" className="w-full h-full object-cover" />
+                    <img src={h1} alt="Hero 1" className="w-full h-full object-cover" />
                   </div>
                   <div className="w-full aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2000" alt="Rapat Divisi" className="w-full h-full object-cover" />
+                    <img src={h2} alt="Hero 2" className="w-full h-full object-cover" />
                   </div>
                 </div>
 
@@ -161,14 +177,14 @@ export default async function HomePage() {
                 <div className="space-y-4 -mt-4">
                   <div className="w-full aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200 relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2000" alt="Kaderisasi" className="w-full h-full object-cover" />
+                    <img src={h3} alt="Hero 3" className="w-full h-full object-cover" />
                     {/* Overlay Accent */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#2c1469]/60 to-transparent"></div>
                     <span className="absolute bottom-4 left-4 text-white font-bold text-sm bg-[#E63946] px-3 py-1 rounded-full">Solid</span>
                   </div>
                   <div className="w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2000" alt="Pemimpin 2" className="w-full h-full object-cover" />
+                    <img src={h4} alt="Hero 4" className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
