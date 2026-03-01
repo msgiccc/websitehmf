@@ -46,17 +46,20 @@ export default function LoginForm() {
     };
 
     return (
-        <Card className="w-full max-w-sm mx-auto shadow-lg">
-            <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl font-bold text-center">Login Admin</CardTitle>
-                <CardDescription className="text-center">
+        <Card className="w-full max-w-sm mx-auto shadow-[0_8px_30px_rgb(0,0,0,0.5)] bg-[#1a0b40]/80 backdrop-blur-xl border-white/10 text-white overflow-hidden relative">
+            {/* Ambient Lighting di dalam Card */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#E63946]/20 rounded-full blur-[40px] pointer-events-none"></div>
+
+            <CardHeader className="space-y-1 relative z-10">
+                <CardTitle className="text-2xl font-bold text-center font-serif text-white">Login Admin</CardTitle>
+                <CardDescription className="text-center text-gray-400">
                     Masukkan username dan password admin Anda
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="username">Username</Label>
+                    <div className="space-y-2 relative z-10">
+                        <Label htmlFor="username" className="text-gray-300">Username</Label>
                         <Input
                             id="username"
                             type="text"
@@ -64,10 +67,11 @@ export default function LoginForm() {
                             placeholder="admin"
                             required
                             disabled={isLoading}
+                            className="bg-white/5 border-white/20 text-white placeholder:text-gray-500 focus-visible:ring-[#E63946]"
                         />
                     </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="password">Password</Label>
+                    <div className="space-y-2 relative z-10">
+                        <Label htmlFor="password" className="text-gray-300">Password</Label>
                         <Input
                             id="password"
                             type="password"
@@ -76,6 +80,7 @@ export default function LoginForm() {
                             required
                             minLength={6}
                             disabled={isLoading}
+                            className="bg-white/5 border-white/20 text-white placeholder:text-gray-500 focus-visible:ring-[#E63946]"
                         />
                     </div>
 
@@ -88,13 +93,13 @@ export default function LoginForm() {
                         )}
                     </div>
 
-                    <Button type="submit" className="w-full" disabled={isLoading}>
+                    <Button type="submit" className="w-full bg-[#E63946] hover:bg-[#c92020] text-white shadow-[0_0_15px_rgba(230,57,70,0.4)] border-none font-bold" disabled={isLoading}>
                         {isLoading ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                 Memproses...
                             </>
-                        ) : 'Login'}
+                        ) : 'Login Perangkat'}
                     </Button>
                 </form>
             </CardContent>

@@ -103,11 +103,35 @@ export default function PublicLayout({
                                 </div>
                             </div>
                         </div>
-                        {/* Menu Content (Eks Media - Disabled temporarily) */}
+                        {/* Dropdown Events */}
                         <div className="group relative cursor-pointer py-4">
                             <Link href="#" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
-                                Content
+                                Events <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
                             </Link>
+
+                            <div className="absolute top-full left-0 mt-0 w-80 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
+                                <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Physics Festival</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Pelatihan Kewirausahaan</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Pakumpul Sosonoan jeung Social Project Rame-rame</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Dropdown Content */}
+                        <div className="group relative cursor-pointer py-4">
+                            <Link href="#" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
+                                Content <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
+                            </Link>
+
+                            <div className="absolute top-full left-0 mt-0 w-56 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
+                                <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">BEARR Akademik</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">S.I.G.M.A</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Physics Spin</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">PHet</Link>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Dropdown DPM */}
@@ -125,8 +149,8 @@ export default function PublicLayout({
                             </div>
                         </div>
 
-                        <Link href="/galeri" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Social</Link>
-                        <Link href="/login" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Partner</Link>
+                        <Link href="/galeri" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Galeri</Link>
+                        <Link href="/login" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Login</Link>
                     </nav>
 
                     {/* Mobile Navigation */}
@@ -178,7 +202,26 @@ export default function PublicLayout({
                                         <Link href="/program-kerja/bidang-sosial-dan-politik" className="text-sm font-medium text-gray-300 hover:text-[#c92020] transition-colors">B. Sospol</Link>
                                     </div>
                                 </div>
-                                <div className="text-lg font-medium text-white/50 block">Content</div>
+                                {/* Mobile Dropdown for Events */}
+                                <div className="space-y-3">
+                                    <div className="text-lg font-medium text-white/50">Events</div>
+                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
+                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Physics Festival</Link>
+                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Pelatihan Kewirausahaan</Link>
+                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Pakumpul Sosonoan...</Link>
+                                    </div>
+                                </div>
+
+                                {/* Mobile Dropdown for Content */}
+                                <div className="space-y-3">
+                                    <div className="text-lg font-medium text-white/50">Content</div>
+                                    <div className="flex flex-col space-y-3 pl-4 border-l-2 border-white/10">
+                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">BEARR Akademik</Link>
+                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">S.I.G.M.A</Link>
+                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Physics Spin</Link>
+                                        <Link href="#" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">PHet</Link>
+                                    </div>
+                                </div>
 
                                 {/* Mobile Dropdown for DPM */}
                                 <div className="space-y-3">
@@ -189,9 +232,9 @@ export default function PublicLayout({
                                     </div>
                                 </div>
 
-                                <Link href="/galeri" className="text-lg font-medium hover:text-[#c92020] transition-colors">Social</Link>
+                                <Link href="/galeri" className="text-lg font-medium hover:text-[#c92020] transition-colors">Galeri</Link>
                                 <div className="border-t border-white/20 pt-6 mt-4">
-                                    <Link href="/login" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Admin/Partner</Link>
+                                    <Link href="/login" className="text-base font-medium text-gray-300 hover:text-[#c92020] transition-colors">Login Admin</Link>
                                 </div>
                             </nav>
                         </SheetContent>
