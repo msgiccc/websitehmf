@@ -54,33 +54,31 @@ export default async function DetailProgramKerjaPage({ params }: { params: Promi
 
             {/* Editorial Hero Section */}
             <section className="container px-4 md:px-8 mx-auto mb-20">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+                <div className="max-w-4xl relative space-y-6">
 
-                    {/* Left Typography Block */}
-                    <div className="lg:col-span-7 space-y-6 relative">
-                        {/* Decorative background typography */}
-                        <div className="absolute -top-16 -left-8 text-[120px] lg:text-[180px] font-bold text-gray-100/50 pointer-events-none tracking-tighter leading-none select-none -z-10">
-                            {category.shortName.toUpperCase()}
-                        </div>
-
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm text-[#E63946] text-xs font-bold tracking-widest uppercase relative z-10">
-                            <Compass className="w-3.5 h-3.5" />
-                            Ruang Lingkup
-                        </div>
-
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-black text-[#0B1F3A] leading-[1.1] tracking-tight relative z-10">
-                            {category.name}
-                        </h1>
+                    {/* Decorative background typography */}
+                    <div className="absolute -top-16 -left-8 text-[120px] lg:text-[180px] font-bold text-gray-100/50 pointer-events-none tracking-tighter leading-none select-none -z-10">
+                        {category.shortName.toUpperCase()}
                     </div>
 
-                    {/* Right Intro Block */}
-                    <div className="lg:col-span-5 relative z-10">
-                        <div className="pl-0 lg:pl-10 border-l-0 lg:border-l-2 border-[#2c1469]/20 pt-4 lg:pt-0">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm text-[#E63946] text-xs font-bold tracking-widest uppercase relative z-10">
+                        <Compass className="w-3.5 h-3.5" />
+                        Ruang Lingkup
+                    </div>
+
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-black text-[#0B1F3A] leading-[1.1] tracking-tight relative z-10 pb-4">
+                        {category.name}
+                    </h1>
+
+                    {/* Intro Block (Description) */}
+                    <div className="relative z-10">
+                        <div className="pl-6 border-l-4 border-[#2c1469]/30 py-2">
                             <p className="text-xl md:text-2xl text-gray-600 font-medium leading-relaxed">
                                 {category.desc}
                             </p>
                         </div>
                     </div>
+
                 </div>
             </section>
 
