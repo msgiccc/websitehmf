@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import { ArtikelSchema, BidangSchema, KabinetSchema, PengurusSchema, ProkerSchema, ProgramUnggulanSchema } from './validations';
 import { z } from 'zod';
+import bcrypt from 'bcryptjs';
 
 // Cek apakah user sudah login sebagai admin
 async function checkAdmin() {
@@ -45,6 +46,55 @@ async function checkBidangAccess(targetSlug: string) {
 // Reusable function to standardized error/success responses
 function response(success: boolean, message: string, data?: any) {
     return { success, message, data };
+}
+
+// ------------------- PENGUBAHAN PASSWORD -------------------
+export async function changePassword(data: any) {
+    try {
+        const session = await auth();
+        if (!session?.user) return response(false, 'Anda harus login untuk mengubah password.');
+
+        const userId = session.user.id;
+        const { oldPassword, newPassword } = data;
+
+        if (!oldPassword || !newPassword) return response(false, 'Mohon isi password lama dan password baru.');
+        if (newPassword.length < 6) return response(false, 'Password baru harus minimal 6 karakter.');
+
+        // 1. Ambil data user dari database (termasuk password lama yg di-hash)
+        const { data: userData, error: fetchError } = await supabase
+            .from('User')
+            .select('password')
+            .eq('id', userId)
+            .single();
+
+        if (fetchError || !userData) return response(false, 'Pengguna tidak ditemukan di database.');
+
+        // 2. Verifikasi apakah password lama cocok
+        const isMatch = await bcrypt.compare(oldPassword, userData.password);
+        if (!isMatch) {
+            // Cek kondisi fallback hardcode khusus admin jika bcrypt fail (mirip di authorize)
+            const isAdminFallback = (session.user as any)?.username === 'admin' && oldPassword === 'password123';
+            if (!isAdminFallback) {
+                return response(false, 'Password lama yang Anda masukkan salah.');
+            }
+        }
+
+        // 3. Hash password baru
+        const salt = await bcrypt.genSalt(10);
+        const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+
+        // 4. Update data pengguna
+        const { error: updateError } = await supabase
+            .from('User')
+            .update({ password: hashedNewPassword })
+            .eq('id', userId);
+
+        if (updateError) return response(false, 'Gagal menyimpan password baru: ' + updateError.message);
+
+        return response(true, 'Password berhasil diubah. Silakan gunakan password baru pada login berikutnya.');
+    } catch (e: any) {
+        return response(false, 'Terjadi kesalahan sistem: ' + e.message);
+    }
 }
 
 // ------------------- PENGURUS -------------------

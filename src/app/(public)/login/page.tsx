@@ -2,7 +2,7 @@ import LoginForm from '@/components/public/login-form';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Login Admin | HMF FPMIPA UPI',
+    title: 'Login Pengurus | HMF FPMIPA UPI',
 };
 
 export default function LoginPage() {

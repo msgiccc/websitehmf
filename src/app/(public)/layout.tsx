@@ -8,12 +8,15 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Menu, Home, User, Landmark, Briefcase, Calendar, FolderOpen, Newspaper, ImageIcon, Lock } from "lucide-react";
 
-export default function PublicLayout({
+import { SessionProvider, useSession } from "next-auth/react";
+
+function PublicLayoutContent({
     children,
 }: {
     children: React.ReactNode;
 }) {
     const [scrolled, setScrolled] = useState(false);
+    const { data: session } = useSession();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -152,7 +155,11 @@ export default function PublicLayout({
                         </div>
 
                         <Link href="/galeri" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Galeri</Link>
-                        <Link href="/login" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Login</Link>
+                        {session?.user ? (
+                            <Link href="/admin" className="py-2 px-4 bg-[#E63946] text-white rounded-md text-sm font-semibold tracking-wide transition-all hover:bg-[#c92020] shadow-md">Dashboard</Link>
+                        ) : (
+                            <Link href="/login" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Login</Link>
+                        )}
                     </nav>
 
                     {/* Mobile Navigation */}
@@ -281,9 +288,15 @@ export default function PublicLayout({
 
                                     {/* Link Admin Terpisah jadi Tombol Menonjol */}
                                     <div className="pt-8 pb-4 mt-auto">
-                                        <Link href="/login" className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-[#E63946] hover:bg-[#c92020] text-white rounded-2xl font-bold shadow-[0_4px_20px_rgba(230,57,70,0.4)] transition-all hover:-translate-y-1">
-                                            <Lock className="w-5 h-5" /> Login Portal Admin
-                                        </Link>
+                                        {session?.user ? (
+                                            <Link href="/admin" className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-[#E63946] hover:bg-[#c92020] text-white rounded-2xl font-bold shadow-[0_4px_20px_rgba(230,57,70,0.4)] transition-all hover:-translate-y-1">
+                                                <Home className="w-5 h-5" /> Buka Dashboard
+                                            </Link>
+                                        ) : (
+                                            <Link href="/login" className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-[#E63946] hover:bg-[#c92020] text-white rounded-2xl font-bold shadow-[0_4px_20px_rgba(230,57,70,0.4)] transition-all hover:-translate-y-1">
+                                                <Lock className="w-5 h-5" /> Login Portal Admin
+                                            </Link>
+                                        )}
                                     </div>
                                 </nav>
                             </div>
@@ -302,5 +315,17 @@ export default function PublicLayout({
                 </div>
             </footer>
         </div >
+    );
+}
+
+export default function PublicLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <SessionProvider>
+            <PublicLayoutContent>{children}</PublicLayoutContent>
+        </SessionProvider>
     );
 }

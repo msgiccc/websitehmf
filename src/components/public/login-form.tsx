@@ -51,9 +51,9 @@ export default function LoginForm() {
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#E63946]/20 rounded-full blur-[40px] pointer-events-none"></div>
 
             <CardHeader className="space-y-1 relative z-10">
-                <CardTitle className="text-2xl font-bold text-center font-serif text-white">Login Admin</CardTitle>
+                <CardTitle className="text-2xl font-bold text-center font-serif text-white">Login Pengurus</CardTitle>
                 <CardDescription className="text-center text-gray-400">
-                    Masukkan username dan password admin Anda
+                    Sistem informasi untuk Pengurus Bidang dan Administrator.
                 </CardDescription>
             </CardHeader>
             <CardContent>

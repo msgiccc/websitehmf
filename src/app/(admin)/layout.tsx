@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield, Home } from "lucide-react";
 import { SessionProvider, useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import ChangePasswordDialog from "@/components/admin/change-password-dialog";
 
 function AdminLayoutContent({ children }: { children: React.ReactNode }) {
     const { data: session, status } = useSession();
@@ -75,6 +76,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                                 <p className="text-xs text-muted-foreground capitalize">{isAdmin ? 'Administrator' : 'Pengurus Bidang'}</p>
                             </div>
                         )}
+                        <ChangePasswordDialog />
                         <Button variant="outline" className="w-full justify-start gap-2" asChild>
                             <Link href="/">
                                 <Home className="h-4 w-4" />
