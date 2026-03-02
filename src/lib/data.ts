@@ -131,3 +131,17 @@ export async function getShortLinkBySlug(slug: string) {
         return null;
     }
 }
+
+export async function getShortLinksByUserId(userId: string) {
+    try {
+        const { data, error } = await supabase
+            .from('ShortLink')
+            .select('*')
+            .eq('userId', userId)
+            .order('createdAt', { ascending: false });
+        if (error) return [];
+        return data || [];
+    } catch {
+        return [];
+    }
+}

@@ -203,9 +203,23 @@ export async function updateBidang(slug: string, data: any) {
 
 // ------------------- SHORTLINK -------------------
 export async function createShortLink(data: any) {
-    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    const session = await auth();
+    if (!session?.user) return response(false, 'Sesi ditolak. Silahkan Login.');
 
-    // validasi apakah slug sudah ada (Supabase Unique akan menangkapnya, tapi baiknya error handling jelas)
+    const userId = session.user.id;
+
+    // Cek batas kuota (Maks 5) per User
+    const { count } = await supabase.from('ShortLink')
+        .select('*', { count: 'exact', head: true })
+        .eq('userId', userId);
+
+    if (count !== null && count >= 5) {
+        return response(false, 'Batas Kuota Tercapai! Akun Anda hanya dapat membuat maksimal 5 Tautan Pendek.');
+    }
+
+    // Set Owner ID
+    data.userId = userId;
+
     const { error } = await supabase.from('ShortLink').insert(data);
     if (error) {
         if (error.code === '23505') return response(false, 'Tautan pendek (slug) ini sudah digunakan. Silakan pilih yang lain.');
@@ -218,12 +232,21 @@ export async function createShortLink(data: any) {
 }
 
 export async function updateShortLink(id: string, data: any) {
-    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    const session = await auth();
+    if (!session?.user) return response(false, 'Sesi ditolak. Silahkan Login.');
+
+    // Validasi kepemilikan
+    const { data: curr } = await supabase.from('ShortLink').select('userId').eq('id', id).single();
+    if (curr?.userId !== session.user.id && session.user.name !== 'Administrator') {
+        return response(false, 'Anda tidak memiliki akses untuk mengubah tautan ini.');
+    }
+
     const { error } = await supabase.from('ShortLink').update(data).eq('id', id);
     if (error) {
-        if (error.code === '23505') return response(false, 'Tautan pendek (slug) ini sudah digunakan. Silakan pilih yang lain.');
+        if (error.code === '23505') return response(false, 'Tautan pendek (slug) ini sudah digunakan.');
         return response(false, error.message);
     }
+
     revalidatePath('/admin/shortlink');
     revalidatePath('/link-shortener');
     return response(true, 'Shortlink berhasil diubah');

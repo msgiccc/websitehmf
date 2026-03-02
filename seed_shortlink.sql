@@ -8,14 +8,16 @@ CREATE TABLE IF NOT EXISTS "public"."ShortLink" (
     "url_asli"    text NOT NULL,
     "jumlah_klik" integer DEFAULT 0 NOT NULL,
     "isPublic"    boolean DEFAULT true NOT NULL,
+    "userId"      uuid REFERENCES "public"."User"("id") ON DELETE CASCADE,
     "createdAt"   timestamp with time zone DEFAULT now() NOT NULL,
     PRIMARY KEY ("id")
 );
 
--- Tambahkan sample data awal
-INSERT INTO "public"."ShortLink" ("slug", "url_asli", "jumlah_klik", "isPublic")
+-- Tambahkan sample data awal (dikaitkan ke NULL jika tidak diketahui, atau dikaitkan ke owner pertama).
+-- Disini saya kaitkan ke userID NULL untuk sementara.
+INSERT INTO "public"."ShortLink" ("slug", "url_asli", "jumlah_klik", "isPublic", "userId")
 VALUES 
-    ('oprec', 'https://docs.google.com/forms/d/e/1FAIpQLSfx...', 12, true),
-    ('ig', 'https://instagram.com/hmf_fpmipaupi', 105, true),
-    ('mabim2024', 'https://drive.google.com/drive/folders/...', 45, false)
+    ('oprec', 'https://docs.google.com/forms/d/e/1FAIpQLSfx...', 12, true, NULL),
+    ('ig', 'https://instagram.com/hmf_fpmipaupi', 105, true, NULL),
+    ('mabim2024', 'https://drive.google.com/drive/folders/...', 45, false, NULL)
 ON CONFLICT ("slug") DO NOTHING;
