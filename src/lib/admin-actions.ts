@@ -200,3 +200,53 @@ export async function updateBidang(slug: string, data: any) {
     revalidatePath(`/program-kerja/${slug}`);
     return response(true, 'Profil Bidang/Lembaga berhasil diperbarui');
 }
+
+// ------------------- SHORTLINK -------------------
+export async function createShortLink(data: any) {
+    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+
+    // validasi apakah slug sudah ada (Supabase Unique akan menangkapnya, tapi baiknya error handling jelas)
+    const { error } = await supabase.from('ShortLink').insert(data);
+    if (error) {
+        if (error.code === '23505') return response(false, 'Tautan pendek (slug) ini sudah digunakan. Silakan pilih yang lain.');
+        return response(false, error.message);
+    }
+
+    revalidatePath('/admin/shortlink');
+    revalidatePath('/link-shortener');
+    return response(true, 'Shortlink berhasil dibuat');
+}
+
+export async function updateShortLink(id: string, data: any) {
+    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    const { error } = await supabase.from('ShortLink').update(data).eq('id', id);
+    if (error) {
+        if (error.code === '23505') return response(false, 'Tautan pendek (slug) ini sudah digunakan. Silakan pilih yang lain.');
+        return response(false, error.message);
+    }
+    revalidatePath('/admin/shortlink');
+    revalidatePath('/link-shortener');
+    return response(true, 'Shortlink berhasil diubah');
+}
+
+export async function deleteShortLink(id: string) {
+    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    const { error } = await supabase.from('ShortLink').delete().eq('id', id);
+    if (error) return response(false, error.message);
+    revalidatePath('/admin/shortlink');
+    revalidatePath('/link-shortener');
+    return response(true, 'Shortlink berhasil dihapus');
+}
+
+// Fungsi Increment Klik berjalan publik (tanpa checkAdmin), dipanggil dari Route Handler / Middleware
+export async function incrementShortLinkClick(id: string) {
+    const { error } = await supabase.rpc('increment_shortlink_click', { p_id: id });
+    if (error) {
+        // Jika RPC belum ada, fallback pakai cara standar (bisa race condition)
+        const { data: curr } = await supabase.from('ShortLink').select('jumlah_klik').eq('id', id).single();
+        if (curr) {
+            await supabase.from('ShortLink').update({ jumlah_klik: curr.jumlah_klik + 1 }).eq('id', id);
+        }
+    }
+    return true;
+}

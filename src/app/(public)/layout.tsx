@@ -131,6 +131,7 @@ export default function PublicLayout({
                                     <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">S.I.G.M.A</Link>
                                     <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Physics Spin</Link>
                                     <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">PHet</Link>
+                                    <Link href="/link-shortener" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Link Shortener</Link>
                                 </div>
                             </div>
                         </div>
@@ -256,6 +257,7 @@ export default function PublicLayout({
                                                 <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">S.I.G.M.A</Link>
                                                 <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Physics Spin</Link>
                                                 <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">PHet</Link>
+                                                <Link href="/link-shortener" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Link Shortener</Link>
                                             </AccordionContent>
                                         </AccordionItem>
 

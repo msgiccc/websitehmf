@@ -32,6 +32,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         { href: '/admin/artikel', label: 'Artikel', icon: FileText },
         { href: '/admin/bidang', label: 'Bidang & Lembaga', icon: Briefcase },
         { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon },
+        { href: '/admin/shortlink', label: 'Link Shortener', icon: Shield }, // asumsikan pakai Shield (sementara) - nanti saya ganti ikon
     ];
 
     const handleLogout = async () => {

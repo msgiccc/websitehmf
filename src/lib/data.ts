@@ -90,3 +90,44 @@ export async function getBidangBySlug(slug: string) {
         return null;
     }
 }
+
+export async function getAllShortLinks() {
+    try {
+        const { data, error } = await supabase
+            .from('ShortLink')
+            .select('*')
+            .order('createdAt', { ascending: false });
+        if (error) return [];
+        return data || [];
+    } catch {
+        return [];
+    }
+}
+
+export async function getPublicShortLinks() {
+    try {
+        const { data, error } = await supabase
+            .from('ShortLink')
+            .select('*')
+            .eq('isPublic', true)
+            .order('createdAt', { ascending: false });
+        if (error) return [];
+        return data || [];
+    } catch {
+        return [];
+    }
+}
+
+export async function getShortLinkBySlug(slug: string) {
+    try {
+        const { data, error } = await supabase
+            .from('ShortLink')
+            .select('*')
+            .eq('slug', slug)
+            .single();
+        if (error) return null;
+        return data;
+    } catch {
+        return null;
+    }
+}

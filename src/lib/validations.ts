@@ -64,3 +64,10 @@ export const ProgramUnggulanSchema = z.object({
     deskripsi: z.string().min(10, "Deskripsi harus detail dan informatif"),
     iconSvg: z.string().optional().or(z.literal("")),
 });
+
+export const ShortLinkSchema = z.object({
+    id: z.string().optional(),
+    slug: z.string().min(2, "Slug/Kata Kunci terlalu pendek").regex(/^[a-zA-Z0-9_-]+$/, "Hanya boleh huruf, angka, strip (-), dan underscore (_)"),
+    url_asli: z.string().url("URL asli harus valid (berawalan http:// atau https://)"),
+    isPublic: z.boolean().default(true).optional(),
+});
