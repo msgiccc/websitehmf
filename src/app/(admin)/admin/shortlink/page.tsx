@@ -1,11 +1,36 @@
 import { Suspense } from 'react';
 import { getAllShortLinks } from '@/lib/data';
 import ShortLinkTable from '@/components/admin/shortlink-table';
-import { Activity, ShieldCheck, Link2 } from 'lucide-react';
+import { Activity, ShieldCheck, Link2, ExternalLink } from 'lucide-react';
+import { auth } from '@/auth';
+import Link from 'next/link';
 
 export const revalidate = 0; // Pastikan data selalu fress
 
 export default async function AdminShortLinkPage() {
+    const session = await auth();
+    const isAdmin = (session?.user as any)?.username === 'admin';
+
+    if (!isAdmin) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6">
+                <div className="w-20 h-20 bg-muted/50 rounded-full flex items-center justify-center">
+                    <Link2 className="w-10 h-10 text-primary" />
+                </div>
+                <div>
+                    <h2 className="text-2xl font-bold mb-2">Manajemen Link Shortener</h2>
+                    <p className="text-muted-foreground max-w-sm mx-auto">
+                        Pengelolaan Link Shortener dengan kuota kini tersedia di Dashboard Publik.
+                    </p>
+                </div>
+                <Link href="/link-shortener" className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-8 py-2 gap-2">
+                    Pergi ke /link-shortener
+                    <ExternalLink className="w-4 h-4" />
+                </Link>
+            </div>
+        );
+    }
+
     const links = await getAllShortLinks();
 
     // Kalkulasi statistik singkat

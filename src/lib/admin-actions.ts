@@ -10,10 +10,33 @@ import { z } from 'zod';
 async function checkAdmin() {
     try {
         const session = await auth();
-        if (!session?.user) {
-            return false;
-        }
-        return true;
+        if (!session?.user) return false;
+        return (session.user as any).username === 'admin';
+    } catch {
+        return false;
+    }
+}
+
+const USER_BIDANG_MAP: Record<string, string> = {
+    'kesek': 'lembaga-kesekretariatan',
+    'keuangan': 'lembaga-keuangan',
+    'akademik': 'bidang-akademik',
+    'ekbis': 'bidang-ekonomi-dan-bisnis',
+    'kaderisasi': 'bidang-kaderisasi',
+    'kerohanian': 'bidang-kerohanian',
+    'kominfo': 'bidang-komunikasi-dan-media-informasi',
+    'litbang': 'bidang-penelitian-dan-pengembangan',
+    'mikat': 'bidang-pengembangan-minat-dan-bakat',
+    'sospol': 'bidang-sosial-dan-politik',
+};
+
+async function checkBidangAccess(targetSlug: string) {
+    try {
+        const session = await auth();
+        if (!session?.user) return false;
+        const username = (session.user as any).username;
+        if (username === 'admin') return true;
+        return USER_BIDANG_MAP[username] === targetSlug;
     } catch {
         return false;
     }
@@ -81,7 +104,7 @@ export async function deleteArtikel(id: string) {
 
 // ------------------- PROKER -------------------
 export async function createProker(data: any) {
-    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    if (!(await checkBidangAccess(data.bidang))) return response(false, 'Akses Ditolak: Anda bukan pengurus bidang ini.');
     const { error } = await supabase.from('ProgramKerja').insert(data);
     if (error) return response(false, error.message);
     revalidatePath('/admin/proker');
@@ -90,7 +113,7 @@ export async function createProker(data: any) {
     return response(true, 'Proker berhasil dibuat');
 }
 export async function updateProker(id: string, data: any) {
-    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    if (!(await checkBidangAccess(data.bidang))) return response(false, 'Akses Ditolak: Anda bukan pengurus bidang ini.');
     const { error } = await supabase.from('ProgramKerja').update(data).eq('id', id);
     if (error) return response(false, error.message);
     revalidatePath('/admin/proker');
@@ -99,7 +122,9 @@ export async function updateProker(id: string, data: any) {
     return response(true, 'Proker berhasil diubah');
 }
 export async function deleteProker(id: string) {
-    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    const { data: curr } = await supabase.from('ProgramKerja').select('bidang').eq('id', id).single();
+    if (!curr || !(await checkBidangAccess(curr.bidang))) return response(false, 'Akses ditolak.');
+
     const { error } = await supabase.from('ProgramKerja').delete().eq('id', id);
     if (error) return response(false, error.message);
     revalidatePath('/admin/proker');
@@ -191,7 +216,7 @@ export const deleteProgramUnggulan = async (id: string) => {
 
 // ------------------- BIDANG & LEMBAGA -------------------
 export async function updateBidang(slug: string, data: any) {
-    if (!(await checkAdmin())) return response(false, 'Sesi admin tertolak oleh Server. Silahkan Logout dan Login kembali.');
+    if (!(await checkBidangAccess(slug))) return response(false, 'Akses Ditolak: Anda tidak dapat mengedit profil bidang lain.');
     const { error } = await supabase.from('BidangLembaga').update(data).eq('slug', slug);
     if (error) return response(false, error.message);
     revalidatePath('/admin/bidang');

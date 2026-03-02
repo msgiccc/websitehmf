@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield, Home } from "lucide-react";
 import { SessionProvider, useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -25,15 +25,19 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         return null; // Akan diredirect oleh useEffect
     }
 
+    const isAdmin = (session?.user as any)?.username === 'admin';
+
     const navLinks = [
-        { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-        { href: '/admin/kabinet', label: 'Kabinet', icon: Shield },
-        { href: '/admin/pengurus', label: 'Pengurus', icon: Users },
-        { href: '/admin/artikel', label: 'Artikel', icon: FileText },
-        { href: '/admin/bidang', label: 'Bidang & Lembaga', icon: Briefcase },
-        { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon },
-        { href: '/admin/shortlink', label: 'Link Shortener', icon: Shield }, // asumsikan pakai Shield (sementara) - nanti saya ganti ikon
+        { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, adminOnly: false },
+        { href: '/admin/kabinet', label: 'Kabinet', icon: Shield, adminOnly: true },
+        { href: '/admin/pengurus', label: 'Pengurus', icon: Users, adminOnly: true },
+        { href: '/admin/artikel', label: 'Artikel', icon: FileText, adminOnly: true },
+        { href: '/admin/bidang', label: 'Bidang & Lembaga', icon: Briefcase, adminOnly: false },
+        { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon, adminOnly: true },
+        { href: '/admin/shortlink', label: 'Link Shortener', icon: Shield, adminOnly: false },
     ];
+
+    const filteredLinks = isAdmin ? navLinks : navLinks.filter(l => !l.adminOnly);
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: '/login' });
@@ -52,11 +56,11 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                     </div>
                     <div className="flex-1 overflow-auto py-2">
                         <nav className="grid items-start px-4 text-sm font-medium">
-                            {navLinks.map((link) => (
+                            {filteredLinks.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-muted"
                                 >
                                     <link.icon className="h-4 w-4" />
                                     {link.label}
@@ -68,10 +72,16 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                         {session?.user?.name && (
                             <div className="px-3 py-2">
                                 <p className="font-medium text-sm text-foreground">{session.user.name}</p>
-                                <p className="text-xs text-muted-foreground">Administrator</p>
+                                <p className="text-xs text-muted-foreground capitalize">{isAdmin ? 'Administrator' : 'Pengurus Bidang'}</p>
                             </div>
                         )}
-                        <Button variant="outline" className="w-full gap-2" onClick={handleLogout}>
+                        <Button variant="outline" className="w-full justify-start gap-2" asChild>
+                            <Link href="/">
+                                <Home className="h-4 w-4" />
+                                Kembali ke Website
+                            </Link>
+                        </Button>
+                        <Button variant="destructive" className="w-full justify-start gap-2" onClick={handleLogout}>
                             <LogOut className="h-4 w-4" />
                             Logout
                         </Button>

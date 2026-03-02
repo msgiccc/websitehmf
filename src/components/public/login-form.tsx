@@ -64,7 +64,7 @@ export default function LoginForm() {
                             id="username"
                             type="text"
                             name="username"
-                            placeholder="admin"
+                            placeholder="username"
                             required
                             disabled={isLoading}
                             className="bg-white/5 border-white/20 text-white placeholder:text-gray-500 focus-visible:ring-[#E63946]"
