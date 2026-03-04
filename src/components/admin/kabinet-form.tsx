@@ -37,9 +37,15 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
 
     const formatDriveLink = (url?: string) => {
         if (!url) return url;
-        const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-        if (match && match[1]) {
-            return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+        // Pattern 1: Tautan sharing langsung (file/d/ID)
+        const matchFile = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (matchFile && matchFile[1]) {
+            return `https://lh3.googleusercontent.com/d/${matchFile[1]}`;
+        }
+        // Pattern 2: URL uc legacy yang terlanjur tersimpan di Database
+        const matchUc = url.match(/id=([a-zA-Z0-9_-]+)/);
+        if (matchUc && matchUc[1] && url.includes('drive.google.com/uc')) {
+            return `https://lh3.googleusercontent.com/d/${matchUc[1]}`;
         }
         return url;
     };
