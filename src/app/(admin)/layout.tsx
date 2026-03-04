@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield, Home } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield, Home, Target } from "lucide-react";
 import { SessionProvider, useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import ChangePasswordDialog from "@/components/admin/change-password-dialog";
@@ -35,7 +35,8 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         { href: '/admin/artikel', label: 'Artikel', icon: FileText, adminOnly: true },
         { href: '/admin/bidang', label: 'Bidang & Lembaga', icon: Briefcase, adminOnly: false },
         { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon, adminOnly: true },
-        { href: '/admin/shortlink', label: 'Link Shortener', icon: Shield, adminOnly: false },
+        { href: '/admin/shortlink', label: 'LASER', icon: Shield, adminOnly: false },
+        { href: '/admin/laser-quota', label: 'Pengaturan Kuota LASER', icon: Target, adminOnly: true },
     ];
 
     const filteredLinks = isAdmin ? navLinks : navLinks.filter(l => !l.adminOnly);

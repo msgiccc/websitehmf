@@ -45,7 +45,7 @@ export default function ShortLinkTable({ initialData }: { initialData: any[] }) 
         <div className="space-y-4">
             <div className="flex items-center justify-between flex-wrap gap-4">
                 <div>
-                    <h3 className="text-xl font-bold">Daftar Link Shortener</h3>
+                    <h3 className="text-xl font-bold">Daftar LASER</h3>
                     <p className="text-sm text-muted-foreground mt-1">Kelola URL/tautan pendek untuk keperluan publikasi dan pendaftaran.</p>
                 </div>
                 <Button onClick={handleAdd}>

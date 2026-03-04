@@ -283,13 +283,16 @@ export async function createShortLink(data: any) {
 
     const userId = session.user.id;
 
-    // Cek batas kuota (Maks 5) per User
+    // Cek kuota statis dari DB User
+    const { data: userData } = await supabase.from('User').select('shortlink_quota').eq('id', userId).single();
+    const quota = userData?.shortlink_quota ?? 5; // Fallback ke 5 jika tidak ditemukan
+
     const { count } = await supabase.from('ShortLink')
         .select('*', { count: 'exact', head: true })
         .eq('userId', userId);
 
-    if (count !== null && count >= 5) {
-        return response(false, 'Batas Kuota Tercapai! Akun Anda hanya dapat membuat maksimal 5 Tautan Pendek.');
+    if (count !== null && count >= quota) {
+        return response(false, `Batas Kuota Tercapai! Akun Anda hanya dapat membuat maksimal ${quota} Tautan Pendek/LASER.`);
     }
 
     // Set Owner ID
@@ -303,6 +306,7 @@ export async function createShortLink(data: any) {
 
     revalidatePath('/admin/shortlink');
     revalidatePath('/link-shortener');
+    revalidatePath('/laser');
     return response(true, 'Shortlink berhasil dibuat');
 }
 
@@ -347,4 +351,19 @@ export async function incrementShortLinkClick(id: string) {
         }
     }
     return true;
+}
+
+// ------------------- USER QUOTA (Admin Only) -------------------
+export async function updateUserQuota(userId: string, newQuota: number) {
+    if (!(await checkAdmin())) return response(false, 'Hanya Admin Utama yang dapat mengubah kuota Akun Bidang.');
+
+    // Minimal kuota 0 (tidak boleh negatif)
+    if (newQuota < 0) return response(false, 'Kuota tidak valid.');
+
+    const { error } = await supabase.from('User').update({ shortlink_quota: newQuota }).eq('id', userId);
+
+    if (error) return response(false, error.message);
+
+    revalidatePath('/admin/laser-quota');
+    return response(true, 'Kuota LASER berhasil diperbarui.');
 }

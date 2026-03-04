@@ -94,7 +94,7 @@ export default function ShortLinkForm({
                                 Tampilkan di Etalase Publik
                             </Label>
                             <p className="text-sm text-muted-foreground">
-                                Jika diaktifkan, link ini akan muncul di halaman direktori publik Link Shortener.
+                                Jika diaktifkan, link ini akan muncul di halaman direktori publik LASER.
                             </p>
                         </div>
                     </div>

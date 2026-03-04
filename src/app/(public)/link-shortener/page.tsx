@@ -8,8 +8,8 @@ import ShortLinkTable from '@/components/admin/shortlink-table';
 export const revalidate = 0;
 
 export const metadata = {
-    title: 'Manajemen Tautan | HMF FPMIPA UPI',
-    description: 'Dashboard pengelolaan tautan pendek untuk pengurus aktif HMF FPMIPA UPI.',
+    title: 'Manajemen LASER | HMF FPMIPA UPI',
+    description: 'Dashboard pengelolaan Layanan Akses Shortlink Efektif dan Responsif (LASER) untuk pengurus aktif HMF FPMIPA UPI.',
 };
 
 export default async function LinkShortenerDashboard() {
@@ -33,7 +33,7 @@ export default async function LinkShortenerDashboard() {
                     </h1>
 
                     <p className="text-gray-600 text-lg leading-relaxed mb-10 font-medium">
-                        Fitur Link Shortener kini menjadi perangkat eksklusif bagi pengurus aktif tiap bidang HMF FPMIPA UPI. Silakan masuk menggunakan akun bidang Anda untuk mengelola tautan.
+                        Fitur <strong className="text-gray-900">LASER (Layanan Akses Shortlink Efektif dan Responsif)</strong> kini menjadi perangkat eksklusif bagi pengurus aktif tiap bidang HMF FPMIPA UPI. Silakan masuk menggunakan akun bidang Anda untuk mengelola tautan.
                     </p>
 
                     <Link href="/login?callbackUrl=/link-shortener">
@@ -74,10 +74,11 @@ export default async function LinkShortenerDashboard() {
                             Dashboard Bidang
                         </div>
                         <h1 className="text-3xl md:text-5xl font-black tracking-tight drop-shadow-sm pb-1 text-gray-900">
-                            Manajemen <span className="text-[#E63946]">Tautan</span>
+                            LASER <span className="text-[#E63946]">HMF</span>
                         </h1>
-                        <p className="mt-2 text-gray-600 text-lg">
-                            Halo <strong className="text-gray-900 capitalize">{session.user.name}</strong>, atur tautan pendek untuk kebutuhan publikasi program kerjamu.
+                        <p className="mt-2 text-gray-600 text-lg flex flex-col gap-1">
+                            <span className="font-bold text-[#E63946]">Layanan Akses Shortlink Efektif dan Responsif</span>
+                            <span>Halo <strong className="text-gray-900 capitalize">{session.user.name}</strong>, satukan URL berantakan menjadi satu berkas lurus yang fokus dan terarah layaknya sebuah LASER.</span>
                         </p>
                     </div>
 
@@ -132,7 +133,7 @@ export default async function LinkShortenerDashboard() {
                     <ShortLinkTable initialData={links} />
                     {/* Himbauan Bawah Table */}
                     <div className="mt-8 text-center text-sm text-gray-500 bg-gray-50 border border-gray-100 py-3 rounded-xl">
-                        Tautan yang ditandai <b>Terbuka (Publik)</b> akan dirujuk jika ada menu direktori publik.
+                        Tautan yang ditandai <b>Terbuka (Publik)</b> akan dirujuk jika ada menu direktori publik khusus LASER.
                     </div>
                 </div>
 

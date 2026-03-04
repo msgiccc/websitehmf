@@ -145,3 +145,16 @@ export async function getShortLinksByUserId(userId: string) {
         return [];
     }
 }
+
+export async function getAllUsers() {
+    try {
+        const { data, error } = await supabase
+            .from('User')
+            .select('*')
+            .order('name', { ascending: true });
+        if (error) return [];
+        return data || [];
+    } catch {
+        return [];
+    }
+}
