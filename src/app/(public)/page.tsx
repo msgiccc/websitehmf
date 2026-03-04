@@ -163,11 +163,11 @@ export default async function HomePage() {
               <div className="grid grid-cols-2 gap-4 relative z-10">
                 {/* Column 1 (Moved Down slightly) */}
                 <div className="space-y-4 pt-12">
-                  <div className="w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
+                  <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={h1} alt="Hero 1" className="w-full h-full object-cover" />
                   </div>
-                  <div className="w-full aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
+                  <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={h2} alt="Hero 2" className="w-full h-full object-cover" />
                   </div>
@@ -175,14 +175,14 @@ export default async function HomePage() {
 
                 {/* Column 2 (Moved Up slightly) */}
                 <div className="space-y-4 -mt-4">
-                  <div className="w-full aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200 relative">
+                  <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200 relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={h3} alt="Hero 3" className="w-full h-full object-cover" />
                     {/* Overlay Accent */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#2c1469]/60 to-transparent"></div>
                     <span className="absolute bottom-4 left-4 text-white font-bold text-sm bg-[#E63946] px-3 py-1 rounded-full">Solid</span>
                   </div>
-                  <div className="w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
+                  <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={h4} alt="Hero 4" className="w-full h-full object-cover" />
                   </div>

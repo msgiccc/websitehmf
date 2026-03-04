@@ -34,11 +34,21 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
     });
 
     const watchPeriode = form.watch('periode') || `${new Date().getFullYear()}/${new Date().getFullYear() + 1}`;
-    const watchLogoUrl = form.watch('logoUrl');
-    const watchHero1 = form.watch('heroPhoto1');
-    const watchHero2 = form.watch('heroPhoto2');
-    const watchHero3 = form.watch('heroPhoto3');
-    const watchHero4 = form.watch('heroPhoto4');
+
+    const formatDriveLink = (url?: string) => {
+        if (!url) return url;
+        const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (match && match[1]) {
+            return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+        }
+        return url;
+    };
+
+    const watchLogoUrl = formatDriveLink(form.watch('logoUrl'));
+    const watchHero1 = formatDriveLink(form.watch('heroPhoto1'));
+    const watchHero2 = formatDriveLink(form.watch('heroPhoto2'));
+    const watchHero3 = formatDriveLink(form.watch('heroPhoto3'));
+    const watchHero4 = formatDriveLink(form.watch('heroPhoto4'));
 
     // Pecah jadi 2 bagian
     const [startYearStr, endYearStr] = watchPeriode.split('/');
@@ -47,8 +57,17 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
 
     const onSubmit = async (values: KabinetFormValues) => {
         setIsSubmitting(true);
+        const processedValues = {
+            ...values,
+            logoUrl: formatDriveLink(values.logoUrl) || '',
+            heroPhoto1: formatDriveLink(values.heroPhoto1) || '',
+            heroPhoto2: formatDriveLink(values.heroPhoto2) || '',
+            heroPhoto3: formatDriveLink(values.heroPhoto3) || '',
+            heroPhoto4: formatDriveLink(values.heroPhoto4) || '',
+        };
+
         try {
-            const result = await upsertKabinet(values);
+            const result = await upsertKabinet(processedValues);
             if (result.success) {
                 toast.success(result.message);
             } else {
@@ -182,7 +201,7 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
                 <div>
                     <Label className="text-lg font-bold">Foto Pahlawan (Landing Page)</Label>
                     <p className="text-xs text-muted-foreground mt-1">
-                        4 Ekstra foto vertikal/persegi yang akan muncul di layar utama (berjejer ke samping). Gunakan link gambar eksternal atau gambar lokal.
+                        4 Ekstra foto horizontal/lanskap yang akan muncul di layar utama (berjejer ke samping). Gunakan link gambar eksternal (termasuk link Google Drive) atau gambar lokal.
                     </p>
                 </div>
 
@@ -206,7 +225,7 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
                                             <p className="text-sm text-red-500">{form.formState.errors[formKey]?.message}</p>
                                         )}
                                     </div>
-                                    <div className="w-full xl:w-24 aspect-[3/4] rounded-lg border-2 border-dashed border-gray-300 bg-white flex flex-col items-center justify-center p-1 text-center text-[10px] text-muted-foreground overflow-hidden shrink-0 group">
+                                    <div className="w-full xl:w-32 aspect-[4/3] rounded-lg border-2 border-dashed border-gray-300 bg-white flex flex-col items-center justify-center p-1 text-center text-[10px] text-muted-foreground overflow-hidden shrink-0 group">
                                         {previewVal ? (
                                             // eslint-disable-next-line @next/next/no-img-element
                                             <img src={previewVal as string} alt={`Hero ${num}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = 'Image tidak<br/>valid' }} />
