@@ -38,11 +38,20 @@ export default async function HomePage() {
     ? misiRaw.split('\n').map((m: string) => m.trim()).filter((m: string) => m.length > 0)
     : ["Mendorong Prestasi Mahasiswa di Bidang Akademik dan Non-Akademik.", "Mengembangkan kapasitas mahasiswa fisika yang adaptif dan profesional.", "Mengembangkan SDM yang Kompeten, Adaptif, dan Berkarakter.", "Meningkatkan eksistensi HMF FPMIPA UPI di internal maupun di eksternal kampus.", "Mempererat Kekeluargaan dan kenyamanan di organisasi."];
 
+  const formatDriveLink = (url?: string | null) => {
+    if (!url) return url;
+    const matchFile = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (matchFile && matchFile[1]) return `https://lh3.googleusercontent.com/d/${matchFile[1]}`;
+    const matchUc = url.match(/id=([a-zA-Z0-9_-]+)/);
+    if (matchUc && matchUc[1] && url.includes('drive.google.com/uc')) return `https://lh3.googleusercontent.com/d/${matchUc[1]}`;
+    return url;
+  };
+
   // Foto Default Jika Kosong
-  const h1 = kabinet?.heroPhoto1 || "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000";
-  const h2 = kabinet?.heroPhoto2 || "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2000";
-  const h3 = kabinet?.heroPhoto3 || "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2000";
-  const h4 = kabinet?.heroPhoto4 || "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2000";
+  const h1 = formatDriveLink(kabinet?.heroPhoto1) || "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000";
+  const h2 = formatDriveLink(kabinet?.heroPhoto2) || "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2000";
+  const h3 = formatDriveLink(kabinet?.heroPhoto3) || "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2000";
+  const h4 = formatDriveLink(kabinet?.heroPhoto4) || "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2000";
 
   // Split articles into 1 headline and up to 3 sub-articles
   const headlineArticle = recentArticles[0];
@@ -178,9 +187,6 @@ export default async function HomePage() {
                   <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200 relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={h3} alt="Hero 3" className="w-full h-full object-cover" />
-                    {/* Overlay Accent */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#2c1469]/60 to-transparent"></div>
-                    <span className="absolute bottom-4 left-4 text-white font-bold text-sm bg-[#E63946] px-3 py-1 rounded-full">Solid</span>
                   </div>
                   <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border-4 border-white hover:z-20 hover:scale-105 transition-transform duration-500 bg-gray-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
