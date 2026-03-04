@@ -85,6 +85,21 @@ function PublicLayoutContent({
                             </div>
                         </div>
 
+                        {/* Dropdown Parlemen */}
+                        <div className="group relative cursor-pointer py-4">
+                            <Link href="#" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
+                                Parlemen <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
+                            </Link>
+
+                            {/* Dropdown Menu Content Parlemen */}
+                            <div className="absolute top-full left-0 mt-0 w-64 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
+                                <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
+                                    <Link prefetch={false} href="/dpm/struktur-kepengurusan" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Struktur Kepengurusan Parlemen</Link>
+                                    <Link prefetch={false} href="/dpm/produk-mumas" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Produk Mumas</Link>
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Dropdown Program Kerja */}
                         <div className="group relative cursor-pointer py-4">
                             <Link href="/program-kerja" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
@@ -107,10 +122,10 @@ function PublicLayoutContent({
                                 </div>
                             </div>
                         </div>
-                        {/* Dropdown Events */}
+                        {/* Dropdown Acara */}
                         <div className="group relative cursor-pointer py-4">
                             <Link href="#" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
-                                Events <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
+                                Acara <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
                             </Link>
 
                             <div className="absolute top-full left-0 mt-0 w-80 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
@@ -122,10 +137,10 @@ function PublicLayoutContent({
                             </div>
                         </div>
 
-                        {/* Dropdown Content */}
+                        {/* Dropdown Konten */}
                         <div className="group relative cursor-pointer py-4">
                             <Link href="#" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
-                                Content <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
+                                Konten <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
                             </Link>
 
                             <div className="absolute top-full left-0 mt-0 w-56 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
@@ -139,22 +154,23 @@ function PublicLayoutContent({
                             </div>
                         </div>
 
-                        {/* Dropdown DPM */}
+                        {/* Dropdown Media */}
                         <div className="group relative cursor-pointer py-4">
-                            <Link href="#" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
-                                DPM <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
+                            <Link href="/galeri" className="text-sm font-semibold tracking-wide transition-all hover:text-[#c92020] flex items-center gap-1">
+                                Media <span className="text-[10px] group-hover:rotate-180 transition-transform">▼</span>
                             </Link>
 
-                            {/* Dropdown Menu Content DPM */}
-                            <div className="absolute top-full left-0 mt-0 w-64 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
+                            <div className="absolute top-full left-0 mt-0 w-56 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
                                 <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
-                                    <Link prefetch={false} href="/dpm/struktur-kepengurusan" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Struktur Kepengurusan DPM</Link>
-                                    <Link prefetch={false} href="/dpm/produk-mumas" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Produk Mumas</Link>
+                                    <Link href="/galeri" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Galeri</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Prestasi</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Rangers Talk</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Laporan Keuangan</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Berita HMF</Link>
+                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Awardee PH</Link>
                                 </div>
                             </div>
                         </div>
-
-                        <Link href="/galeri" className="py-4 text-sm font-semibold tracking-wide transition-all hover:text-[#c92020]">Galeri</Link>
                         {session?.user ? (
                             <Link href="/admin" className="py-2 px-4 bg-[#E63946] text-white rounded-md text-sm font-semibold tracking-wide transition-all hover:bg-[#c92020] shadow-md">Dashboard</Link>
                         ) : (
@@ -216,6 +232,19 @@ function PublicLayoutContent({
                                             </AccordionContent>
                                         </AccordionItem>
 
+                                        {/* Accordion Parlemen */}
+                                        <AccordionItem value="parlemen" className="border-b-0 space-y-1">
+                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                                <div className="flex items-center gap-4 text-lg font-medium">
+                                                    <Newspaper className="w-5 h-5 text-[#C9A24D]" /> Parlemen
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                                <Link prefetch={false} href="/dpm/struktur-kepengurusan" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Struktur Kepengurusan Parlemen</Link>
+                                                <Link prefetch={false} href="/dpm/produk-mumas" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Produk Mumas</Link>
+                                            </AccordionContent>
+                                        </AccordionItem>
+
                                         {/* Accordion Program Kerja */}
                                         <AccordionItem value="proker" className="border-b-0 space-y-1">
                                             <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
@@ -238,11 +267,11 @@ function PublicLayoutContent({
                                             </AccordionContent>
                                         </AccordionItem>
 
-                                        {/* Accordion Events */}
-                                        <AccordionItem value="events" className="border-b-0 space-y-1">
+                                        {/* Accordion Acara */}
+                                        <AccordionItem value="acara" className="border-b-0 space-y-1">
                                             <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
                                                 <div className="flex items-center gap-4 text-lg font-medium">
-                                                    <Calendar className="w-5 h-5 text-[#C9A24D]" /> Events
+                                                    <Calendar className="w-5 h-5 text-[#C9A24D]" /> Acara
                                                 </div>
                                             </AccordionTrigger>
                                             <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
@@ -252,11 +281,11 @@ function PublicLayoutContent({
                                             </AccordionContent>
                                         </AccordionItem>
 
-                                        {/* Accordion Content */}
-                                        <AccordionItem value="content" className="border-b-0 space-y-1">
+                                        {/* Accordion Konten */}
+                                        <AccordionItem value="konten" className="border-b-0 space-y-1">
                                             <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
                                                 <div className="flex items-center gap-4 text-lg font-medium">
-                                                    <FolderOpen className="w-5 h-5 text-[#C9A24D]" /> Content
+                                                    <FolderOpen className="w-5 h-5 text-[#C9A24D]" /> Konten
                                                 </div>
                                             </AccordionTrigger>
                                             <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
@@ -267,24 +296,24 @@ function PublicLayoutContent({
                                                 <Link href="/link-shortener" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">LASER</Link>
                                             </AccordionContent>
                                         </AccordionItem>
-
-                                        {/* Accordion DPM */}
-                                        <AccordionItem value="dpm" className="border-b-0 space-y-1">
-                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
-                                                <div className="flex items-center gap-4 text-lg font-medium">
-                                                    <Newspaper className="w-5 h-5 text-[#C9A24D]" /> DPM
-                                                </div>
-                                            </AccordionTrigger>
-                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
-                                                <Link prefetch={false} href="/dpm/struktur-kepengurusan" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Struktur DPM</Link>
-                                                <Link prefetch={false} href="/dpm/produk-mumas" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Produk Mumas</Link>
-                                            </AccordionContent>
-                                        </AccordionItem>
                                     </Accordion>
 
-                                    <Link href="/galeri" className="flex items-center gap-4 py-3 px-3 rounded-xl hover:bg-white/10 text-lg font-medium transition-colors">
-                                        <ImageIcon className="w-5 h-5 text-[#C9A24D]" /> Galeri
-                                    </Link>
+                                    {/* Accordion Media */}
+                                    <AccordionItem value="media" className="border-b-0 space-y-1">
+                                        <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                            <div className="flex items-center gap-4 text-lg font-medium">
+                                                <ImageIcon className="w-5 h-5 text-[#C9A24D]" /> Media
+                                            </div>
+                                        </AccordionTrigger>
+                                        <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                            <Link href="/galeri" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Galeri</Link>
+                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Prestasi</Link>
+                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Rangers Talk</Link>
+                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Laporan Keuangan</Link>
+                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Berita HMF</Link>
+                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Awardee PH</Link>
+                                        </AccordionContent>
+                                    </AccordionItem>
 
                                     {/* Link Admin Terpisah jadi Tombol Menonjol */}
                                     <div className="pt-8 pb-4 mt-auto">
