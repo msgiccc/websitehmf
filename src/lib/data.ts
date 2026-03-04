@@ -158,3 +158,18 @@ export async function getAllUsers() {
         return [];
     }
 }
+
+export async function getProfilAktif() {
+    try {
+        const { data, error } = await supabase
+            .from('Profil')
+            .select('*')
+            .eq('isAktif', true)
+            .limit(1)
+            .single();
+        if (error) return null;
+        return data;
+    } catch {
+        return null;
+    }
+}

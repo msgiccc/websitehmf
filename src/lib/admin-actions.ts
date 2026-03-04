@@ -367,3 +367,34 @@ export async function updateUserQuota(userId: string, newQuota: number) {
     revalidatePath('/admin/laser-quota');
     return response(true, 'Kuota LASER berhasil diperbarui.');
 }
+
+export async function upsertProfil(data: any) {
+    if (!(await checkAdmin())) return response(false, 'Hanya Admin Utama yang dapat merubah Profil Himpunan.');
+
+    const { data: existing } = await supabase
+        .from('Profil')
+        .select('id')
+        .eq('isAktif', true)
+        .limit(1)
+        .single();
+
+    let error;
+    if (existing) {
+        const { error: errUpdate } = await supabase
+            .from('Profil')
+            .update(data)
+            .eq('id', existing.id);
+        error = errUpdate;
+    } else {
+        const { error: errInsert } = await supabase
+            .from('Profil')
+            .insert([{ ...data, isAktif: true }]);
+        error = errInsert;
+    }
+
+    if (error) return response(false, error.message);
+
+    revalidatePath('/admin/profil');
+    revalidatePath('/profil');
+    return response(true, 'Data profil berhasil diganti');
+}

@@ -30,6 +30,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
 
     const navLinks = [
         { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, adminOnly: false },
+        { href: '/admin/profil', label: 'Profil Himpunan', icon: FileText, adminOnly: true },
         { href: '/admin/kabinet', label: 'Kabinet', icon: Shield, adminOnly: true },
         { href: '/admin/pengurus', label: 'Pengurus', icon: Users, adminOnly: true },
         { href: '/admin/artikel', label: 'Artikel', icon: FileText, adminOnly: true },

@@ -1,12 +1,13 @@
 import { Suspense } from "react";
-import { supabase } from "@/lib/supabase";
-import { DUMMY_PENGURUS } from "@/lib/dummy-data";
+import { getProfilAktif } from "@/lib/data";
 import { ProfileTabs } from "@/components/public/profile-tabs";
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
 
-export default function ProfilPage() {
+export default async function ProfilPage() {
+    const profilData = await getProfilAktif();
+
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
             {/* 1. Hero Section (Clean/White Layout sesuai referensi "Identitas Visual") */}
@@ -16,9 +17,9 @@ export default function ProfilPage() {
                 <div
                     className="absolute inset-0 z-0 opacity-[0.25]"
                     style={{
-                        backgroundImage: "url('/niskala.png')",
+                        backgroundImage: "url('/logo.png')",
                         backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        backgroundPosition: '100% center', // Make logo not stretched
                         backgroundAttachment: 'fixed',
                     }}
                 />
@@ -51,7 +52,7 @@ export default function ProfilPage() {
             {/* 2. Interactive Tabs Section (Sejarah, Lambang, Mars) */}
             <section className="w-full pb-24">
                 <Suspense fallback={<div className="container px-4 text-center py-20 text-gray-500">Memuat informasi profil...</div>}>
-                    <ProfileTabs />
+                    <ProfileTabs profil={profilData} />
                 </Suspense>
             </section>
         </div>

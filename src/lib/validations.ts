@@ -44,17 +44,36 @@ export const GaleriSchema = z.object({
 });
 
 export const KabinetSchema = z.object({
-    id: z.string().optional(),
-    namaKabinet: z.string().min(2, "Nama kabinet tidak valid"),
-    periode: z.string().min(9, "Format periode tidak valid"),
-    logoUrl: z.string().url().or(z.string().startsWith('/')),
+    namaKabinet: z.string().min(3, "Nama kabinet minimal 3 karakter"),
+    periode: z.string().regex(/^\d{4}\/\d{4}$/, "Format periode harus YYYY/YYYY"),
+    logoUrl: z.string().url("Path URL Logo tidak valid").or(z.string().startsWith('/')).optional().or(z.literal("")),
     visi: z.string().min(10, "Visi terlalu pendek"),
     misi: z.string().min(10, "Misi terlalu pendek"),
-    isAktif: z.boolean().default(false).optional(),
     heroPhoto1: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
     heroPhoto2: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
     heroPhoto3: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
     heroPhoto4: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
+});
+
+export const ProfilSchema = z.object({
+    sejarah_p1: z.string().min(10, "Teks terlalu pendek"),
+    sejarah_p2: z.string().min(10, "Teks terlalu pendek"),
+    sejarah_card1: z.string().min(10, "Teks terlalu pendek"),
+    sejarah_card2: z.string().min(10, "Teks terlalu pendek"),
+    lambang_desc: z.string().min(10, "Teks terlalu pendek"),
+    lambang_tulisan: z.string().min(10, "Teks terlalu pendek"),
+    lambang_mahkota: z.string().min(10, "Teks terlalu pendek"),
+    lambang_lingkaran: z.string().min(10, "Teks terlalu pendek"),
+    lambang_sayap: z.string().min(10, "Teks terlalu pendek"),
+    lambang_elektron: z.string().min(10, "Teks terlalu pendek"),
+    lambang_segitiga: z.string().min(10, "Teks terlalu pendek"),
+    warna_biru: z.string().min(10, "Teks terlalu pendek"),
+    warna_merah: z.string().min(10, "Teks terlalu pendek"),
+    warna_putih: z.string().min(10, "Teks terlalu pendek"),
+    mars_ciptaan: z.string().min(2, "Teks terlalu pendek"),
+    mars_lirik: z.string().min(10, "Teks terlalu pendek"),
+    hymne_ciptaan: z.string().min(2, "Teks terlalu pendek"),
+    hymne_lirik: z.string().min(10, "Teks terlalu pendek"),
 });
 
 export const ProgramUnggulanSchema = z.object({

@@ -19,7 +19,7 @@ function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
     return null;
 }
 
-export function ProfileTabs() {
+export function ProfileTabs({ profil }: { profil: any }) {
     const [activeTab, setActiveTab] = useState("sejarah");
     const [activeUkkTab, setActiveUkkTab] = useState("khauf");
 
@@ -68,11 +68,11 @@ export function ProfileTabs() {
                                 <div className="w-16 h-1.5 bg-gradient-to-r from-[#E63946] to-[#C9A24D] rounded-full mb-6"></div>
 
                                 <div className="space-y-4 text-gray-700 leading-relaxed text-left text-sm md:text-base text-justify">
-                                    <p>
-                                        Himpunan Mahasiswa Fisika yang sekarang dikenal ternyata memiliki sejarah yang menarik dan patut kita ketahui. Tanggal pasti berdirinya masih dalam pembicaraan, namun dari beberapa sumber dan alumni maka sejarah singkat berdirinya HMF adalah sebagai berikut.
+                                    <p className="whitespace-pre-wrap">
+                                        {profil?.sejarah_p1 || "Himpunan Mahasiswa Fisika yang sekarang dikenal ternyata memiliki sejarah yang menarik dan patut kita ketahui. Tanggal pasti berdirinya masih dalam pembicaraan, namun dari beberapa sumber dan alumni maka sejarah singkat berdirinya HMF adalah sebagai berikut."}
                                     </p>
-                                    <p>
-                                        Himpunan pertama kali lahir dilatar belakangi oleh sekumpulan mahasiswa fisika yang melaksanakan aktifitas positif selain aktifitas kuliah. Dari beberapa pemikiran, akhirnya dibentuklah sebuah wadah yang disebut <strong className="text-[#0B1F3A]">Persatuan Mahasiswa Fisika</strong> yang disingkat <strong className="text-[#E63946]">PERMAF</strong> pada tanggal <strong className="bg-[#0B1F3A] text-[#F0C14B] px-1.5 py-0.5 rounded">30 Juni 1954</strong>. Organisasi ini memiliki tujuan yang mulia yaitu untuk mewadahi mahasiswa fisika dan membantu mahasiswa fisika baik dalam bidang akademik maupun sosial.
+                                    <p className="whitespace-pre-wrap">
+                                        {profil?.sejarah_p2 || "Himpunan pertama kali lahir dilatar belakangi oleh sekumpulan mahasiswa fisika yang melaksanakan aktifitas positif selain aktifitas kuliah. Dari beberapa pemikiran, akhirnya dibentuklah sebuah wadah yang disebut Persatuan Mahasiswa Fisika yang disingkat PERMAF pada tanggal 30 Juni 1954. Organisasi ini memiliki tujuan yang mulia yaitu untuk mewadahi mahasiswa fisika dan membantu mahasiswa fisika baik dalam bidang akademik maupun sosial."}
                                     </p>
                                 </div>
                             </div>
@@ -82,16 +82,16 @@ export function ProfileTabs() {
                                 {/* Card 1 */}
                                 <div className="bg-[#F4F1EC]/50 p-8 md:p-10 rounded-2xl shadow-sm relative overflow-hidden border border-gray-100">
                                     <div className="absolute top-0 left-0 w-1.5 h-full bg-[#E63946]"></div>
-                                    <p className="text-gray-600 leading-relaxed text-sm md:text-base text-justify">
-                                        Dari tahun-ketahun organisasi ini menunjukkan eksistensinya sebagai organisasi yang lahir dari penjelmaan aspirasi mahasiswa dan melaksanakan kegiatan untuk mahasiswa. Akhirnya dari PERMAF berubah nama menjadi <strong>Himpunan Mahasiswa Fisika Jurusan Pendidikan Fisika</strong> dan akhirnya berubah lagi menjadi <strong>Himpunan Mahasiswa Fisika</strong> yang disingkat menjadi <strong>HMF</strong>. HMF FPMIPA UPI menjadi salah satu himpunan yang eksis berjuang untuk mahasiswa dan itu dibuktikan sampai sekarang.
+                                    <p className="text-gray-600 leading-relaxed text-sm md:text-base text-justify whitespace-pre-wrap">
+                                        {profil?.sejarah_card1 || "Dari tahun-ketahun organisasi ini menunjukkan eksistensinya sebagai organisasi yang lahir dari penjelmaan aspirasi mahasiswa dan melaksanakan kegiatan untuk mahasiswa."}
                                     </p>
                                 </div>
 
                                 {/* Card 2 (Navy Accent) */}
                                 <div className="bg-[#0B1F3A] text-white p-8 md:p-10 rounded-2xl shadow-xl relative overflow-hidden">
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#1E6F5C]/30 rounded-full blur-2xl -mr-10 -mt-10"></div>
-                                    <p className="text-gray-300 leading-relaxed text-sm relative z-10 text-justify font-light">
-                                        Untuk mengetahui perkembangan HMF FPMIPA UPI masa kini, dapat dilihat melalui website dan akun media sosial aktifnya. Termasuk profil kabinet terbarukan dapat dilihat di menu navigasi bagian atas website ini.
+                                    <p className="text-gray-300 leading-relaxed text-sm relative z-10 text-justify font-light whitespace-pre-wrap">
+                                        {profil?.sejarah_card2 || "Untuk mengetahui perkembangan HMF FPMIPA UPI masa kini, dapat dilihat melalui website dan akun media sosial aktifnya."}
                                     </p>
                                 </div>
                             </div>
@@ -106,8 +106,8 @@ export function ProfileTabs() {
                         <div className="text-center mb-16">
                             <span className="inline-block py-1.5 px-4 rounded-full bg-[#C9A24D]/10 text-[#0B1F3A] text-xs font-bold tracking-widest uppercase mb-4">Identitas Visual</span>
                             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#0B1F3A] mb-4">Makna Lambang <span className="text-[#E63946]">HMF</span></h2>
-                            <p className="text-gray-600 max-w-2xl mx-auto text-lg text-center mt-2">
-                                Lambang HMF FPMIPA UPI terdiri dari berbagai bagian yang mempunyai maksud sebagai berikut :
+                            <p className="text-gray-600 max-w-2xl mx-auto text-lg text-center mt-2 whitespace-pre-wrap">
+                                {profil?.lambang_desc || "Lambang HMF FPMIPA UPI terdiri dari berbagai bagian yang mempunyai maksud sebagai berikut :"}
                             </p>
                         </div>
 
@@ -137,37 +137,37 @@ export function ProfileTabs() {
 
                                     <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Tulisan & Lingkaran</h3>
-                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10">Tulisan Himpunan Mahasiswa Fisika FPMIPA UPI dan singkatan HMF dalam lingkaran biru menunjukan nama organisasi.</p>
+                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10 whitespace-pre-wrap">{profil?.lambang_tulisan || "Tulisan Himpunan Mahasiswa Fisika FPMIPA UPI dan singkatan HMF dalam lingkaran biru menunjukan nama organisasi."}</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
                                     <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Mahkota Segilima</h3>
-                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10">Mahkota segilima warna putih bertepikan biru pada bentuk luar melambangkan menjalankan kegiatan berdasarkan Pancasila, UUD 1945, serta Tridharma PT.</p>
+                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10 whitespace-pre-wrap">{profil?.lambang_mahkota || "Mahkota segilima warna putih bertepikan biru pada bentuk luar melambangkan menjalankan kegiatan berdasarkan Pancasila, UUD 1945, serta Tridharma PT."}</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
                                     <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Lingkaran Biru Dalam</h3>
-                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10">Mempunyai arti bahwa kegiatan berlandaskan asas kekeluargaan, segala aspek pemecahan masalah diselesaikan secara musyawarah mufakat.</p>
+                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10 whitespace-pre-wrap">{profil?.lambang_lingkaran || "Mempunyai arti bahwa kegiatan berlandaskan asas kekeluargaan, segala aspek pemecahan masalah diselesaikan secara musyawarah mufakat."}</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
                                     <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Sepasang Sayap</h3>
-                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10">Berwarna putih berarti memiliki bidang-bidang dengan tugasnya masing-masing akan tetapi saling membantu mencapai tujuan.</p>
+                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10 whitespace-pre-wrap">{profil?.lambang_sayap || "Berwarna putih berarti memiliki bidang-bidang dengan tugasnya masing-masing akan tetapi saling membantu mencapai tujuan."}</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
                                     <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Lintasan Elektron Merah</h3>
-                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10">Berarti HMF memiliki sifat dinamis dan aktif sesuai dengan peraturan dan hukum yang berlaku dan dapat dipertanggungjawabkan.</p>
+                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10 whitespace-pre-wrap">{profil?.lambang_elektron || "Berarti HMF memiliki sifat dinamis dan aktif sesuai dengan peraturan dan hukum yang berlaku dan dapat dipertanggungjawabkan."}</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
                                     <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all hover:-translate-y-1 relative overflow-hidden group">
                                         <h3 className="font-bold text-[#E63946] text-xl mb-3 relative z-10 group-hover:text-[#c92020] transition-colors">Segitiga Terbalik Merah</h3>
-                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10">Mengarah ke bawah berarti HMF memiliki dasar yang kuat dengan akar yang kokoh sehingga mantap walaupun mendapat tantangan.</p>
+                                        <p className="text-gray-600 leading-relaxed text-sm relative z-10 whitespace-pre-wrap">{profil?.lambang_segitiga || "Mengarah ke bawah berarti HMF memiliki dasar yang kuat dengan akar yang kokoh sehingga mantap walaupun mendapat tantangan."}</p>
                                         <div className="absolute -bottom-4 -right-4 text-[#F4F1EC] opacity-50 font-serif font-bold text-7xl select-none mix-blend-multiply border-gray-100/50">”</div>
                                     </div>
 
@@ -182,17 +182,17 @@ export function ProfileTabs() {
                                         <div className="flex flex-col items-center text-center group">
                                             <div className="w-12 h-12 rounded-full bg-[#0B1F3A] mb-4 shadow-lg group-hover:scale-110 transition-transform"></div>
                                             <h4 className="font-bold text-gray-900 mb-2">Biru</h4>
-                                            <p className="text-gray-600 text-sm leading-relaxed">HMF dijiwai semangat pengabdian yang tinggi untuk mencapai tujuan mulia.</p>
+                                            <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap">{profil?.warna_biru || "HMF dijiwai semangat pengabdian yang tinggi untuk mencapai tujuan mulia."}</p>
                                         </div>
                                         <div className="flex flex-col items-center text-center group">
                                             <div className="w-12 h-12 rounded-full bg-[#E63946] mb-4 shadow-lg group-hover:scale-110 transition-transform"></div>
                                             <h4 className="font-bold text-gray-900 mb-2">Merah</h4>
-                                            <p className="text-gray-600 text-sm leading-relaxed">Berarti HMF FPMIPA UPI memiliki energi yang sangat besar sebagai modal dalam beraktifitas.</p>
+                                            <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap">{profil?.warna_merah || "Berarti HMF FPMIPA UPI memiliki energi yang sangat besar sebagai modal dalam beraktifitas."}</p>
                                         </div>
                                         <div className="flex flex-col items-center text-center group">
                                             <div className="w-12 h-12 rounded-full bg-white border-4 border-gray-200 mb-4 shadow-md group-hover:scale-110 transition-transform"></div>
                                             <h4 className="font-bold text-gray-900 mb-2">Putih</h4>
-                                            <p className="text-gray-600 text-sm leading-relaxed">Memiliki keragaman potensi anggota yang berpadu untuk mencapai tujuan organisasi yang sama.</p>
+                                            <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap">{profil?.warna_putih || "Memiliki keragaman potensi anggota yang berpadu untuk mencapai tujuan organisasi yang sama."}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -219,19 +219,10 @@ export function ProfileTabs() {
                                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" /></svg>
                                     </div>
                                     <h3 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1F3A] mb-2">Mars HMF</h3>
-                                    <p className="text-xs md:text-sm font-bold text-gray-400 mb-6 uppercase tracking-widest">Ciptaan : Doni Nurdiansyah</p>
+                                    <p className="text-xs md:text-sm font-bold text-gray-400 mb-6 uppercase tracking-widest">Ciptaan : {profil?.mars_ciptaan || "Doni Nurdiansyah"}</p>
 
                                     <div className="text-base md:text-lg font-serif italic text-gray-700 leading-loose flex-1 mb-8">
-                                        <p>Kibarkan bakti di jiwa</p>
-                                        <p>Membangun HMF tercinta</p>
-                                        <p>Semangatkan tekad dihati</p>
-                                        <p>Untuk fisika UPI</p>
-                                        <br />
-                                        <p>Ayo bergerak</p>
-                                        <p>Ayo membangun</p>
-                                        <p>Wujudkan cita cinta mu untuk fisika</p>
-                                        <p>Bulatkan hati tuk raih prestasi</p>
-                                        <p>Bersama di fisika UPI</p>
+                                        <p className="whitespace-pre-wrap">{profil?.mars_lirik || `Kibarkan bakti di jiwa\nMembangun HMF tercinta\nSemangatkan tekad dihati\nUntuk fisika UPI\n\nAyo bergerak\nAyo membangun\nWujudkan cita cinta mu untuk fisika\nBulatkan hati tuk raih prestasi\nBersama di fisika UPI`}</p>
                                     </div>
 
                                     <a href="https://youtu.be/xTKOQEZwEgg" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-[#0B1F3A] text-white rounded-full font-bold text-sm tracking-wide hover:bg-[#E63946] transition-colors self-start shadow-md hover:shadow-lg hover:-translate-y-0.5 group/btn">
@@ -249,18 +240,10 @@ export function ProfileTabs() {
                                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" /></svg>
                                     </div>
                                     <h3 className="text-3xl md:text-4xl font-serif font-bold text-[#E63946] mb-2">Hymne HMF</h3>
-                                    <p className="text-xs md:text-sm font-bold text-gray-400 mb-6 uppercase tracking-widest">Ciptaan : Doni Nurdiansyah</p>
+                                    <p className="text-xs md:text-sm font-bold text-gray-400 mb-6 uppercase tracking-widest">Ciptaan : {profil?.hymne_ciptaan || "Doni Nurdiansyah"}</p>
 
                                     <div className="text-base md:text-lg font-serif italic text-gray-700 leading-loose flex-1 mb-8">
-                                        <p>Fisika bumi siliwangi</p>
-                                        <p>Tempat ku bernaung dan berdiri</p>
-                                        <p>Cerahkan negeri bakti ibu pertiwi</p>
-                                        <p>Fisika jayalah dihati</p>
-                                        <br />
-                                        <p>Fisika bumi siliwangi</p>
-                                        <p>Tempatku meraih prestasi</p>
-                                        <p>Kibarkan panji harumkan negeri</p>
-                                        <p>Fisika Jayalah di hati</p>
+                                        <p className="whitespace-pre-wrap">{profil?.hymne_lirik || `Fisika bumi siliwangi\nTempat ku bernaung dan berdiri\nCerahkan negeri bakti ibu pertiwi\nFisika jayalah dihati\n\nFisika bumi siliwangi\nTempatku meraih prestasi\nKibarkan panji harumkan negeri\nFisika Jayalah di hati`}</p>
                                     </div>
 
                                     <a href="https://youtu.be/jCrs_U4pZr4" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-[#E63946] text-white rounded-full font-bold text-sm tracking-wide hover:bg-[#0B1F3A] transition-colors self-start shadow-md hover:shadow-lg hover:-translate-y-0.5 group/btn">
