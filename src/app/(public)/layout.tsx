@@ -147,7 +147,7 @@ function PublicLayoutContent({
                                 <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
                                     <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">BEARR Akademik</Link>
                                     <Link href="/kinetik" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors flex items-center gap-2">
-                                        KINETIK <span className="text-[9px] bg-[#E63946] text-white px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Baru!</span>
+                                        KINETIK
                                     </Link>
                                     <Link href="/link-shortener" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">LASER</Link>
                                 </div>
@@ -292,7 +292,6 @@ function PublicLayoutContent({
                                                 <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">BEARR Akademik</Link>
                                                 <div className="flex items-center gap-2">
                                                     <Link href="/kinetik" className="block py-2 text-base text-[#F0C14B] hover:text-white transition-colors font-medium">KINETIK</Link>
-                                                    <span className="text-[9px] bg-[#E63946] text-white px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Baru!</span>
                                                 </div>
                                                 <Link href="/link-shortener" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">LASER</Link>
                                             </AccordionContent>

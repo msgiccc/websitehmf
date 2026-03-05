@@ -202,14 +202,13 @@ export default function KinetikClient({ initialData }: { initialData: MataKuliah
                         <Target className="w-8 h-8 text-[#F0C14B]" />
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 flex justify-center items-center gap-3">
-                        KINETIK V3.0
-                        <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-xs px-2.5 py-1 rounded-md uppercase tracking-widest align-middle shadow-md border border-green-400/50">Free Planner + Live DB</span>
+                        KINETIK
                     </h1>
                     <p className="text-xl md:text-2xl font-light text-blue-100 mb-4 tracking-wide">
                         Kalkulator Indeks Nilai dan Evaluasi Target IPK Kampus
                     </p>
                     <p className="text-sm md:text-base text-gray-400 leading-relaxed max-w-2xl mx-auto">
-                        Alat bantu *Study Planner* interaktif mahasiswa Fisika UPI. Rangkai matkul bersumber dari <strong>Database Himafi</strong> secara bebas lintas semester, atur nilai imajiner, dan lihat lonjakan IPK gabungan Anda!
+                        Alat bantu *Study Planner* interaktif mahasiswa Fisika UPI. Rangkai matkul bersumber dari <strong>HMF</strong> secara bebas lintas semester, atur nilai imajiner, dan lihat lonjakan IPK gabungan Anda!
                     </p>
                 </div>
             </div>
