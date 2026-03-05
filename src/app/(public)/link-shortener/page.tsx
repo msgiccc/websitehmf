@@ -57,36 +57,37 @@ export default async function LinkShortenerDashboard() {
     const quotaPercentage = (links.length / MAX_LINKS) * 100;
 
     return (
-        <div className="min-h-screen bg-white text-gray-900 relative selection:bg-red-100 selection:text-red-900 pb-24 overflow-hidden pt-36">
+        <div className="min-h-screen bg-[#F8FAFC] pb-24 pt-20">
+            {/* Header LASER */}
+            <div className="bg-[#0B1F3A] text-white py-12 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#E63946]/20 rounded-full blur-3xl -mr-20 -mt-20"></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#C9A24D]/20 rounded-full blur-3xl -ml-10 -mb-10"></div>
 
-            {/* Light Cinematic Background Lines & Glow */}
-            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
-            <div className="absolute top-0 left-1/2 -ml-[40rem] w-[80rem] h-[40rem] opacity-30 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 via-white to-transparent pointer-events-none -z-10"></div>
-            <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-[#E63946]/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
-
-            <main className="container px-4 md:px-8 mx-auto relative z-10 max-w-6xl">
-
-                {/* Header Welcome & Quota Meter */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-8 mb-12">
-                    <div className="text-center lg:text-left">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-100 text-red-600 text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
-                            <LayoutDashboard className="w-3.5 h-3.5 text-[#E63946]" />
-                            Dashboard Bidang
-                        </div>
-                        <h1 className="text-3xl md:text-5xl font-black tracking-tight drop-shadow-sm pb-1 text-gray-900">
-                            LASER <span className="text-[#E63946]">HMF</span>
-                        </h1>
-                        <p className="mt-2 text-gray-600 text-lg flex flex-col gap-1">
-                            <span className="font-bold text-[#E63946]">Layanan Akses Shortlink Efektif dan Responsif</span>
-                            <span>Halo <strong className="text-gray-900 capitalize">{session.user.name}</strong>, satukan URL berantakan menjadi satu berkas lurus yang fokus dan terarah layaknya sebuah LASER.</span>
-                        </p>
+                <div className="container px-4 md:px-8 relative z-10 text-center max-w-4xl mx-auto">
+                    <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-2xl backdrop-blur-md mb-6 border border-white/20 shadow-lg">
+                        <Link2 className="w-8 h-8 text-[#E63946]" />
                     </div>
+                    <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 flex justify-center items-center gap-3">
+                        LASER
+                        <span className="bg-gradient-to-r from-red-500 to-rose-500 text-xs px-2.5 py-1 rounded-md uppercase tracking-widest align-middle shadow-md border border-red-400/50">HMF</span>
+                    </h1>
+                    <p className="text-xl md:text-2xl font-light text-blue-100 mb-4 tracking-wide">
+                        Layanan Akses Shortlink Efektif dan Responsif
+                    </p>
+                    <p className="text-sm md:text-base text-gray-400 leading-relaxed max-w-2xl mx-auto">
+                        Halo <strong className="text-white capitalize">{session.user.name}</strong>, satukan URL berantakan menjadi satu berkas lurus yang fokus dan terarah layaknya sebuah LASER.
+                    </p>
+                </div>
+            </div>
 
-                    {/* Quota High-Contrast Card */}
-                    <div className="w-full lg:w-96 p-6 rounded-2xl bg-white border border-gray-100 shadow-xl relative overflow-hidden group">
+            {/* CONTAINER KONTEN */}
+            <div className="container px-4 md:px-8 py-8 mt-4 mx-auto max-w-6xl">
+                {/* Info Cards Row */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-md relative overflow-hidden group flex flex-col justify-center">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-[#E63946] blur-[80px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
                         <div className="flex justify-between items-center mb-3">
-                            <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">Kuota Tautan</span>
+                            <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">Kuota</span>
                             <span className={`text-xl font-black ${isQuotaFull ? 'text-[#E63946]' : 'text-emerald-600'}`}>
                                 {links.length} / {MAX_LINKS}
                             </span>
@@ -100,14 +101,11 @@ export default async function LinkShortenerDashboard() {
                         </div>
                         {isQuotaFull && (
                             <p className="mt-4 text-xs text-[#E63946] font-medium animate-pulse flex items-center gap-1.5 justify-center">
-                                <ShieldAlert className="w-3.5 h-3.5" /> Kuota penuh! Hapus tautan lama untuk membuat baru.
+                                <ShieldAlert className="w-3.5 h-3.5" /> Kuota penuh!
                             </p>
                         )}
                     </div>
-                </div>
 
-                {/* Info Cards Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-md flex items-center gap-5">
                         <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100 shadow-sm">
                             <Link2 className="w-6 h-6" />
@@ -117,6 +115,7 @@ export default async function LinkShortenerDashboard() {
                             <h4 className="text-3xl font-black text-gray-900">{links.length}</h4>
                         </div>
                     </div>
+
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-md flex items-center gap-5">
                         <div className="w-14 h-14 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 border border-orange-100 shadow-sm">
                             <MousePointerClick className="w-6 h-6" />
@@ -136,8 +135,7 @@ export default async function LinkShortenerDashboard() {
                         Tautan yang ditandai <b>Terbuka (Publik)</b> akan dirujuk jika ada menu direktori publik khusus LASER.
                     </div>
                 </div>
-
-            </main>
+            </div>
         </div>
     );
 }
