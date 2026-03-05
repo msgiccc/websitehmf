@@ -69,7 +69,6 @@ export default async function LinkShortenerDashboard() {
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 flex justify-center items-center gap-3">
                         LASER
-                        <span className="bg-gradient-to-r from-red-500 to-rose-500 text-xs px-2.5 py-1 rounded-md uppercase tracking-widest align-middle shadow-md border border-red-400/50">HMF</span>
                     </h1>
                     <p className="text-xl md:text-2xl font-light text-blue-100 mb-4 tracking-wide">
                         Layanan Akses Shortlink Efektif dan Responsif
