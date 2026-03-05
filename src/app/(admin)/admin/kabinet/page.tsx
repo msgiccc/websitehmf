@@ -1,6 +1,6 @@
 import { getKabinetAktif } from '@/lib/admin-actions';
 import KabinetForm from '@/components/admin/kabinet-form';
-import UnggulanTable from '@/components/admin/unggulan-table';
+import UnggulanInlineForm from '@/components/admin/unggulan-inline-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield } from 'lucide-react';
 
@@ -44,14 +44,19 @@ export default async function AdminKabinetPage() {
             {kabinet && (
                 <Card>
                     <CardHeader>
-                        <CardTitle>Program Unggulan</CardTitle>
+                        <CardTitle>Top Program Kerja</CardTitle>
                         <CardDescription>
-                            Daftar inovasi atau pergerakan masif unggulan dari Kabinet ini.
+                            Satu program kerja maskot yang mewakili dan menonjol pada Kabinet ini.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <UnggulanTable
-                            initialData={kabinet.ProgramUnggulan ? JSON.parse(JSON.stringify(kabinet.ProgramUnggulan)) : []}
+                        {/* Mengambil entitas pertama saja karena aturannya "satu maskot" */}
+                        <UnggulanInlineForm
+                            initialData={
+                                kabinet.ProgramUnggulan && kabinet.ProgramUnggulan.length > 0
+                                    ? JSON.parse(JSON.stringify(kabinet.ProgramUnggulan[0]))
+                                    : undefined
+                            }
                             kabinetId={kabinet.id}
                         />
                     </CardContent>
