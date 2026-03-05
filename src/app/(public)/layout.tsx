@@ -145,7 +145,7 @@ function PublicLayoutContent({
 
                             <div className="absolute top-full left-0 mt-0 w-56 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
                                 <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
-                                    <Link href="#" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">BEARR Akademik</Link>
+                                    <Link href="/bearr" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">BEARR</Link>
                                     <Link href="/kinetik" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors flex items-center gap-2">
                                         KINETIK
                                     </Link>
@@ -289,7 +289,7 @@ function PublicLayoutContent({
                                                 </div>
                                             </AccordionTrigger>
                                             <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
-                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">BEARR Akademik</Link>
+                                                <Link href="/bearr" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">BEARR</Link>
                                                 <div className="flex items-center gap-2">
                                                     <Link href="/kinetik" className="block py-2 text-base text-[#F0C14B] hover:text-white transition-colors font-medium">KINETIK</Link>
                                                 </div>

@@ -195,3 +195,46 @@ export async function getAllMataKuliah() {
         return [];
     }
 }
+
+// ==========================================
+// BEARR LINKS (BANK SOAL, EBOOK, DSB)
+// ==========================================
+export type BearrKategori = 'bank_soal' | 'ebook' | 'aplikasi' | 'responsi' | 'referensi';
+export type BearrTipeUrl = 'drive' | 'form' | 'list' | 'wa' | 'lainnya';
+
+export interface BearrLink {
+    id: string;
+    kategori: BearrKategori;
+    judul: string;
+    deskripsi: string | null;
+    url: string;
+    tipe_url: BearrTipeUrl;
+    is_active: boolean;
+    urutan: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export async function getAllBearrLinks(onlyActive = true): Promise<BearrLink[]> {
+    try {
+        let query = supabase
+            .from('BearrLink')
+            .select('*')
+            .order('urutan', { ascending: true })
+            .order('created_at', { ascending: true });
+
+        if (onlyActive) {
+            query = query.eq('is_active', true);
+        }
+
+        const { data, error } = await query;
+        if (error) {
+            console.error("Gagal menarik data BEARR:", error.message);
+            return [];
+        }
+        return (data || []) as BearrLink[];
+    } catch (err: any) {
+        console.error("CATCH: Gagal menarik data BEARR:", err.message);
+        return [];
+    }
+}
