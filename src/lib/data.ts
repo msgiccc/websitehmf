@@ -173,3 +173,25 @@ export async function getProfilAktif() {
         return null;
     }
 }
+
+// ==========================================
+// MATA KULIAH KURIKULUM UPI (UNTUK KINETIK)
+// ==========================================
+export async function getAllMataKuliah() {
+    try {
+        const { data, error } = await supabase
+            .from('MataKuliah')
+            .select('*')
+            .order('semester_rekomendasi', { ascending: true })
+            .order('nama', { ascending: true });
+
+        if (error) {
+            console.error("Gagal menarik data matkul:", error.message);
+            return [];
+        }
+        return data || [];
+    } catch (err: any) {
+        console.error("CATCH: Gagal menarik data matkul:", err.message);
+        return [];
+    }
+}

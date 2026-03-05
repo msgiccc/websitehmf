@@ -36,6 +36,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         { href: '/admin/artikel', label: 'Artikel', icon: FileText, adminOnly: true },
         { href: '/admin/bidang', label: 'Bidang & Lembaga', icon: Briefcase, adminOnly: false },
         { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon, adminOnly: true },
+        { href: '/admin/kurikulum', label: 'Kurikulum Matkul', icon: FileText, adminOnly: true },
         { href: '/admin/shortlink', label: 'LASER', icon: Shield, adminOnly: false },
         { href: '/admin/laser-quota', label: 'Pengaturan Kuota LASER', icon: Target, adminOnly: true },
     ];
