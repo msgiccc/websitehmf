@@ -44,9 +44,18 @@ export default async function AdminShortLinkPage() {
 
     return (
         <div className="space-y-6 max-w-6xl mx-auto">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight">Manajemen LASER</h1>
-                <p className="text-muted-foreground">Buat dan pantau tautan pendek untuk kampanye, formulir pendaftaran, dan media publikasi himpunan.</p>
+            <div className="flex items-start justify-between gap-4 flex-wrap">
+                <div className="flex flex-col gap-2">
+                    <h1 className="text-3xl font-bold tracking-tight">Manajemen LASER</h1>
+                    <p className="text-muted-foreground">Buat dan pantau tautan pendek untuk kampanye, formulir pendaftaran, dan media publikasi himpunan.</p>
+                </div>
+                <Link
+                    href="/admin/laser-quota"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 shadow-sm transition-colors"
+                >
+                    <ShieldCheck className="w-4 h-4 text-gray-500" />
+                    Pengaturan Kuota
+                </Link>
             </div>
 
             {/* Statistik */}

@@ -39,7 +39,6 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         { href: '/admin/kurikulum', label: 'Kurikulum Matkul', icon: FileText, adminOnly: true },
         { href: '/admin/bearr', label: 'BEARR', icon: BookOpen, adminOnly: false },
         { href: '/admin/shortlink', label: 'LASER', icon: Shield, adminOnly: false },
-        { href: '/admin/laser-quota', label: 'Pengaturan Kuota LASER', icon: Target, adminOnly: true },
     ];
 
     const filteredLinks = isAdmin ? navLinks : navLinks.filter(l => !l.adminOnly);
