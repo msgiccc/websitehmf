@@ -238,3 +238,48 @@ export async function getAllBearrLinks(onlyActive = true): Promise<BearrLink[]> 
         return [];
     }
 }
+
+// ==========================================
+// ORBIT - Marketplace Barang Bekas Mahasiswa
+// ==========================================
+export type OrbitKategori = 'buku' | 'jas_lab' | 'alat_ukur' | 'alat_tulis' | 'elektronik' | 'lainnya';
+export type OrbitKondisi = 'baru' | 'baik' | 'cukup' | 'butuh_perbaikan';
+
+export interface OrbitItem {
+    id: string;
+    judul: string;
+    deskripsi: string | null;
+    harga: number;               // 0 = gratis/hibah
+    kondisi: OrbitKondisi;
+    kategori: OrbitKategori;
+    foto_url: string | null;
+    penjual_nama: string;
+    penjual_instagram: string;   // username IG tanpa @
+    is_terjual: boolean;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export async function getOrbitItems(onlyActive = true): Promise<OrbitItem[]> {
+    try {
+        let query = supabase
+            .from('OrbitItem')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (onlyActive) {
+            query = query.eq('is_active', true);
+        }
+
+        const { data, error } = await query;
+        if (error) {
+            console.error("Gagal menarik data ORBIT:", error.message);
+            return [];
+        }
+        return (data || []) as OrbitItem[];
+    } catch (err: any) {
+        console.error("CATCH: Gagal menarik data ORBIT:", err.message);
+        return [];
+    }
+}

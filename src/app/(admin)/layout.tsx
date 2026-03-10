@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield, Home, Target, BookOpen } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Briefcase, Image as ImageIcon, LogOut, Shield, Home, Target, BookOpen, ShoppingBag } from "lucide-react";
 import { SessionProvider, useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import ChangePasswordDialog from "@/components/admin/change-password-dialog";
@@ -38,6 +38,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         { href: '/admin/galeri', label: 'Galeri', icon: ImageIcon, adminOnly: true },
         { href: '/admin/kurikulum', label: 'Kurikulum Matkul', icon: FileText, adminOnly: true },
         { href: '/admin/bearr', label: 'BEARR', icon: BookOpen, adminOnly: false },
+        { href: '/admin/orbit', label: 'ORBIT', icon: ShoppingBag, adminOnly: false },
         { href: '/admin/shortlink', label: 'LASER', icon: Shield, adminOnly: false },
     ];
 
