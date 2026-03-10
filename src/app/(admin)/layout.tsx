@@ -48,21 +48,22 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <div className="admin-theme flex min-h-screen w-full bg-[#050E1F] relative text-foreground overflow-hidden">
+        <div className="admin-theme flex w-full bg-[#050E1F] text-foreground">
             {/* Cosmic Background globally for Admin */}
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#E63946]/15 rounded-full blur-[120px]"></div>
                 <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#2c1469]/25 rounded-full blur-[150px]"></div>
             </div>
 
-            {/* Sidebar Desktop - Creative Glassmorphism */}
-            <div className="hidden lg:block w-[280px] shrink-0 p-4 relative z-20">
-                <div className="flex h-full max-h-[calc(100vh-32px)] flex-col gap-2 bg-card border border-border shadow-2xl rounded-3xl overflow-hidden relative">
+            {/* Sidebar Desktop - FIXED/STICKY */}
+            <div className="hidden lg:flex flex-col sticky top-0 h-screen w-[280px] shrink-0 p-4 z-20">
+                <div className="flex flex-col h-full bg-card border border-border shadow-2xl rounded-3xl overflow-hidden relative">
                     {/* Decorative Blobs di Belakang */}
                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#E63946]/20 rounded-full blur-3xl pointer-events-none"></div>
                     <div className="absolute bottom-10 left-10 w-40 h-40 bg-[#c9a24d]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                    <div className="flex h-[80px] items-center border-b border-white/10 px-6 relative z-10">
+                    {/* Logo / Brand */}
+                    <div className="flex h-[80px] shrink-0 items-center border-b border-white/10 px-6 relative z-10">
                         <Link href="/admin" className="flex items-center gap-3 font-bold text-foreground group">
                             <div className="p-2 bg-gradient-to-tr from-[#E63946] to-[#c9a24d] rounded-xl group-hover:scale-105 transition-transform shadow-lg shadow-[#E63946]/20">
                                 <Shield className="h-5 w-5 text-white" />
@@ -70,7 +71,9 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                             <span className="tracking-wide text-lg text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">Dashboard</span>
                         </Link>
                     </div>
-                    <div className="flex-1 overflow-auto py-4 scrollbar-hide relative z-10 px-3">
+
+                    {/* Nav Links — scrollable di dalam sidebar */}
+                    <div className="flex-1 overflow-y-auto py-4 scrollbar-hide relative z-10 px-3">
                         <nav className="grid items-start gap-1 text-sm font-medium">
                             {filteredLinks.map((link) => (
                                 <Link
@@ -84,7 +87,9 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                             ))}
                         </nav>
                     </div>
-                    <div className="p-4 border-t border-border space-y-3 relative z-10 bg-black/10">
+
+                    {/* Bottom User Info & Actions */}
+                    <div className="shrink-0 p-4 border-t border-border space-y-3 relative z-10 bg-black/10">
                         {session?.user?.name && (
                             <div className="px-2 py-1 mb-2">
                                 <p className="font-bold text-sm text-foreground">{session.user.name}</p>
@@ -106,9 +111,9 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                 </div>
             </div>
 
-            {/* Main Content Area */}
-            <div className="flex flex-col flex-1 w-full relative z-10 overflow-hidden lg:pl-0">
-                <header className="flex h-16 lg:h-20 lg:mt-4 lg:mr-4 items-center gap-4 lg:rounded-2xl border border-border bg-card px-6 justify-between shadow-sm sticky top-0 lg:top-4 z-30">
+            {/* Main Content Area — flex-1, scroll terjadi di sini */}
+            <div className="flex flex-col flex-1 min-w-0 relative z-10">
+                <header className="sticky top-0 z-30 flex h-16 lg:h-20 lg:mt-4 lg:mr-4 items-center gap-4 lg:rounded-2xl border border-border bg-card px-6 justify-between shadow-sm">
                     <div className="lg:hidden font-bold flex items-center gap-2 text-foreground">
                         <Shield className="h-5 w-5 text-primary" />
                         <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">Dashboard</span>
@@ -123,7 +128,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                         </div>
                     )}
                 </header>
-                <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:px-8 lg:py-6 h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)] scrollbar-hide">
+                <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:px-8 lg:py-6 scrollbar-hide">
                     {children}
                 </main>
             </div>

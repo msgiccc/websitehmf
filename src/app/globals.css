@@ -170,4 +170,166 @@
       max-width: 1280px;
     }
   }
+
+  /* Hilangkan Scrollbar Native yang jelek */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}
+
+/* Enhanced Form Overrides untuk .admin-theme (Input, Textarea, dsb) */
+.admin-theme input,
+.admin-theme textarea,
+.admin-theme select,
+.admin-theme [role="combobox"] {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #FFFFFF !important;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.admin-theme input:hover,
+.admin-theme textarea:hover,
+.admin-theme select:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.admin-theme input:focus,
+.admin-theme textarea:focus,
+.admin-theme select:focus {
+  background-color: rgba(11, 31, 58, 0.6) !important;
+  border-color: #C9A24D !important;
+  box-shadow: 0 0 0 2px rgba(201, 162, 77, 0.3), 0 0 15px rgba(230, 57, 70, 0.1) !important;
+  outline: none !important;
+}
+
+/* Mempercantik Table Shadcn / Panel Dalam */
+.admin-theme table th {
+  background-color: rgba(11, 31, 58, 0.6) !important;
+  color: #C9A24D !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-theme table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Premium Button Hover FX untuk Admin Form */
+.admin-theme button[type="submit"],
+.admin-theme .bg-primary,
+.admin-theme button:not(.bg-transparent):not(.bg-secondary) {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-theme button[type="submit"]:not(:disabled):hover,
+.admin-theme .bg-primary:hover {
+  box-shadow: 0 0 20px rgba(230, 57, 70, 0.5) !important;
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.admin-theme button:active {
+  transform: translateY(1px);
+}
+
+/* ============================================================
+   BEAUTIFUL DIALOG / MODAL FORM untuk semua Admin Form
+   ============================================================ */
+
+/* Overlay backdrop yang premium */
+.admin-theme [role="dialog"],
+.admin-theme [data-radix-dialog-content] {
+  background: linear-gradient(135deg,
+      rgba(5, 14, 31, 0.97) 0%,
+      rgba(11, 31, 58, 0.95) 60%,
+      rgba(20, 10, 50, 0.97) 100%) !important;
+  border: 1px solid rgba(201, 162, 77, 0.25) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 25px 80px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(230, 57, 70, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  color: #F4F1EC !important;
+}
+
+/* Dialog Title — gradient emas */
+.admin-theme [data-radix-dialog-content] h2,
+.admin-theme [role="dialog"] h2 {
+  background: linear-gradient(90deg, #ffffff, #C9A24D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Label yang cantik di dalam form */
+.admin-theme [role="dialog"] label,
+.admin-theme [data-radix-dialog-content] label {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Placeholder text */
+.admin-theme [role="dialog"] input::placeholder,
+.admin-theme [role="dialog"] textarea::placeholder {
+  color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Garis separator bawah DialogHeader */
+.admin-theme [role="dialog"] [data-radix-dialog-header] {
+  border-bottom: 1px solid rgba(201, 162, 77, 0.2);
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Tombol submit di dalam Dialog — merah berkilau */
+.admin-theme [role="dialog"] button[type="submit"] {
+  background: linear-gradient(135deg, #E63946 0%, #c01f2b 100%) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4) !important;
+}
+
+.admin-theme [role="dialog"] button[type="submit"]:hover:not(:disabled) {
+  box-shadow: 0 6px 30px rgba(230, 57, 70, 0.6) !important;
+  transform: translateY(-2px);
+}
+
+/* Deskripsi / hint text */
+.admin-theme [role="dialog"] p.text-muted-foreground,
+.admin-theme [role="dialog"] .text-xs {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Close button (X) di pojok kanan */
+.admin-theme [role="dialog"] button[aria-label="Close"] {
+  color: rgba(255, 255, 255, 0.5) !important;
+  opacity: 0.7;
+}
+
+.admin-theme [role="dialog"] button[aria-label="Close"]:hover {
+  color: #E63946 !important;
+  opacity: 1;
+  background: rgba(230, 57, 70, 0.1) !important;
+  border-radius: 50%;
 }
