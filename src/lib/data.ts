@@ -287,7 +287,7 @@ export async function getOrbitItems(onlyActive = true): Promise<OrbitItem[]> {
 // ==========================================
 // FLUKS - Etalase Digital Danusan Ekobis
 // ==========================================
-export type FluksKategori = 'makanan' | 'aplikasi' | 'merchandise' | 'layanan' | 'lainnya';
+export type FluksKategori = 'buku' | 'makanan' | 'aplikasi' | 'merchandise' | 'layanan' | 'lainnya';
 export type FluksTipeLInk = 'instagram' | 'whatsapp' | 'lainnya';
 export type FluksStok = 'tersedia' | 'terbatas' | 'habis';
 
@@ -301,10 +301,17 @@ export interface FluksItem {
     link_order: string | null;
     tipe_link: FluksTipeLInk;
     stok: FluksStok;
-    badge: string | null;         // 'Terlaris', 'Baru', 'Diskon', dsb
+    badge: string | null;
     is_active: boolean;
     urutan: number;
     created_at: string;
+    updated_at: string;
+}
+
+export interface FluksConfig {
+    id: string;
+    form_order_url: string;
+    catatan: string | null;
     updated_at: string;
 }
 
@@ -329,5 +336,19 @@ export async function getFluksItems(onlyActive = true): Promise<FluksItem[]> {
     } catch (err: any) {
         console.error("CATCH: Gagal menarik data FLUKS:", err.message);
         return [];
+    }
+}
+
+export async function getFluksConfig(): Promise<FluksConfig | null> {
+    try {
+        const { data, error } = await supabase
+            .from('FluksConfig')
+            .select('*')
+            .limit(1)
+            .single();
+        if (error) return null;
+        return data as FluksConfig;
+    } catch {
+        return null;
     }
 }

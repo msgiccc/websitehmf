@@ -2,24 +2,21 @@
 
 import { useState, useMemo } from 'react';
 import {
-    Store, Search, ShoppingCart, Instagram, MessageCircle,
+    Store, Search, ShoppingCart, Instagram, ClipboardList,
     UtensilsCrossed, Smartphone, Gift, Wrench, MoreHorizontal,
-    ExternalLink, Sparkles, Tag, Flame, Star, Package,
-    ArrowUpRight, Zap, BadgePercent
+    BookOpen, Sparkles, Flame, Star, Package,
+    ArrowUpRight, Zap, BadgePercent, ExternalLink, Info
 } from 'lucide-react';
-import type { FluksItem, FluksKategori } from '@/lib/data';
+import type { FluksItem, FluksConfig } from '@/lib/data';
 
 // ============================================================
-// Konfigurasi
+// Konfigurasi Kategori — tambah 'buku'
 // ============================================================
 const KATEGORI_CONFIG: Record<string, {
-    label: string;
-    icon: React.ElementType;
-    color: string;
-    bg: string;
-    border: string;
-    gradient: string;
+    label: string; icon: React.ElementType;
+    color: string; bg: string; border: string; gradient: string;
 }> = {
+    buku: { label: 'Buku', icon: BookOpen, color: 'text-indigo-700', bg: 'bg-indigo-50', border: 'border-indigo-200', gradient: 'from-indigo-500 to-blue-500' },
     makanan: { label: 'Makanan', icon: UtensilsCrossed, color: 'text-orange-700', bg: 'bg-orange-50', border: 'border-orange-200', gradient: 'from-orange-500 to-red-500' },
     aplikasi: { label: 'Aplikasi', icon: Smartphone, color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-200', gradient: 'from-blue-500 to-indigo-500' },
     merchandise: { label: 'Merchandise', icon: Gift, color: 'text-purple-700', bg: 'bg-purple-50', border: 'border-purple-200', gradient: 'from-purple-500 to-violet-500' },
@@ -38,47 +35,35 @@ const BADGE_STYLE: Record<string, string> = {
     'Baru': 'bg-blue-500 text-white',
     'Diskon': 'bg-green-500 text-white',
     'Limited': 'bg-purple-500 text-white',
+    'Paket': 'bg-indigo-600 text-white',
 };
 
-const KATEGORI_ORDER = ['semua', 'makanan', 'aplikasi', 'merchandise', 'layanan', 'lainnya'] as const;
+const KATEGORI_ORDER = ['semua', 'buku', 'makanan', 'aplikasi', 'merchandise', 'layanan', 'lainnya'] as const;
 
 function formatHarga(harga: number): string {
     if (harga === 0) return 'Gratis';
     return `Rp ${harga.toLocaleString('id-ID')}`;
 }
 
-function buildOrderUrl(item: FluksItem): string {
-    if (!item.link_order) return '#';
-    if (item.tipe_link === 'instagram') {
-        const username = item.link_order.replace(/^@/, '').replace(/https?:\/\/(www\.)?instagram\.com\//, '');
-        return `https://www.instagram.com/${username}`;
-    }
-    if (item.tipe_link === 'whatsapp') {
-        const phone = item.link_order.replace(/\D/g, '');
-        return `https://wa.me/${phone}`;
-    }
-    return item.link_order;
-}
-
 // ============================================================
 // Product Card
 // ============================================================
-function FluksCard({ item }: { item: FluksItem }) {
+function FluksCard({ item, formUrl }: { item: FluksItem; formUrl: string }) {
     const cat = KATEGORI_CONFIG[item.kategori] || KATEGORI_CONFIG.lainnya;
     const stok = STOK_CONFIG[item.stok] || STOK_CONFIG.tersedia;
     const CatIcon = cat.icon;
     const isHabis = item.stok === 'habis';
-    const orderUrl = buildOrderUrl(item);
     const badgeClass = item.badge ? (BADGE_STYLE[item.badge] || 'bg-gray-700 text-white') : null;
 
     return (
         <div className={`group relative bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col ${isHabis ? 'opacity-60' : ''}`}>
-            {/* Badge (Terlaris, Baru, dsb) */}
+            {/* Badge */}
             {item.badge && badgeClass && (
                 <div className={`absolute top-3 left-3 z-10 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider shadow ${badgeClass}`}>
                     {item.badge === 'Terlaris' && <Flame className="w-3 h-3 inline mr-1" />}
                     {item.badge === 'Diskon' && <BadgePercent className="w-3 h-3 inline mr-1" />}
                     {item.badge === 'Baru' && <Star className="w-3 h-3 inline mr-1" />}
+                    {item.badge === 'Paket' && <Package className="w-3 h-3 inline mr-1" />}
                     {item.badge}
                 </div>
             )}
@@ -101,9 +86,7 @@ function FluksCard({ item }: { item: FluksItem }) {
                 {/* Overlay habis */}
                 {isHabis && (
                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                        <span className="bg-white text-gray-800 font-black text-base px-4 py-2 rounded-xl rotate-[-8deg] shadow-xl">
-                            HABIS
-                        </span>
+                        <span className="bg-white text-gray-800 font-black text-base px-4 py-2 rounded-xl rotate-[-8deg] shadow-xl">HABIS</span>
                     </div>
                 )}
 
@@ -126,27 +109,25 @@ function FluksCard({ item }: { item: FluksItem }) {
                     </span>
                 </div>
 
-                <h3 className="font-black text-gray-900 text-lg leading-snug mb-1.5 group-hover:text-[#0B1F3A] transition-colors line-clamp-2">
+                <h3 className="font-black text-gray-900 text-base leading-snug mb-1.5 group-hover:text-[#0B1F3A] transition-colors line-clamp-2">
                     {item.nama}
                 </h3>
 
                 {item.deskripsi && (
-                    <p className="text-sm text-gray-500 line-clamp-2 mb-4 leading-relaxed flex-1">{item.deskripsi}</p>
+                    <p className="text-xs text-gray-500 line-clamp-2 mb-3 leading-relaxed flex-1">{item.deskripsi}</p>
                 )}
 
-                {/* Tombol Order */}
+                {/* Tombol Order via Form */}
                 <div className="mt-auto pt-3 border-t border-gray-100">
-                    {!isHabis && item.link_order ? (
+                    {!isHabis && formUrl ? (
                         <a
-                            href={orderUrl}
+                            href={formUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-black text-white transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] bg-gradient-to-r ${cat.gradient}`}
                         >
-                            {item.tipe_link === 'instagram' && <Instagram className="w-4 h-4" />}
-                            {item.tipe_link === 'whatsapp' && <MessageCircle className="w-4 h-4" />}
-                            {item.tipe_link === 'lainnya' && <ExternalLink className="w-4 h-4" />}
-                            {item.tipe_link === 'instagram' ? 'Order via Instagram' : item.tipe_link === 'whatsapp' ? 'Order via WhatsApp' : 'Order Sekarang'}
+                            <ClipboardList className="w-4 h-4" />
+                            Pesan via Formulir
                             <ArrowUpRight className="w-3.5 h-3.5 opacity-80" />
                         </a>
                     ) : (
@@ -164,9 +145,17 @@ function FluksCard({ item }: { item: FluksItem }) {
 // ============================================================
 // Main FLUKS Client Component
 // ============================================================
-export default function FluksClient({ initialData }: { initialData: FluksItem[] }) {
+export default function FluksClient({
+    initialData,
+    config,
+}: {
+    initialData: FluksItem[];
+    config: FluksConfig | null;
+}) {
     const [activeKategori, setActiveKategori] = useState<string>('semua');
     const [searchQuery, setSearchQuery] = useState('');
+
+    const formUrl = config?.form_order_url || '';
 
     const filteredItems = useMemo(() => {
         return initialData.filter(item => {
@@ -185,14 +174,10 @@ export default function FluksClient({ initialData }: { initialData: FluksItem[] 
 
             {/* ====== HERO ====== */}
             <div className="bg-gradient-to-br from-[#0B1F3A] via-[#1a0b40] to-[#0B1F3A] text-white relative overflow-hidden py-14">
-                {/* Decorative blobs */}
                 <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl -ml-16 -mb-16 pointer-events-none" />
-                {/* Grid pattern */}
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOFYwaDQydjQySDE4QzI3Ljk0IDQyIDM2IDMzLjk0IDM2IDI0VjE4eiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAyKSIvPjwvZz48L3N2Zz4=')] opacity-40 pointer-events-none" />
 
                 <div className="container px-4 md:px-8 relative z-10 max-w-5xl mx-auto text-center">
-                    {/* Ikon + Label Ekobis */}
                     <div className="flex items-center justify-center gap-3 mb-6">
                         <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-2xl backdrop-blur-md border border-white/20 shadow-lg">
                             <Store className="w-8 h-8 text-orange-400" />
@@ -202,53 +187,72 @@ export default function FluksClient({ initialData }: { initialData: FluksItem[] 
                         </span>
                     </div>
 
-                    <h1 className="text-5xl md:text-6xl font-black font-serif mb-4 tracking-tight">
-                        FLUKS
-                    </h1>
+                    <h1 className="text-5xl md:text-6xl font-black font-serif mb-4 tracking-tight">FLUKS</h1>
                     <p className="text-xl md:text-2xl font-light text-orange-100 mb-3 tracking-wide">
                         Fasilitas Layanan Usaha dan Kebutuhan Sekitar
                     </p>
                     <p className="text-sm md:text-base text-gray-400 leading-relaxed max-w-2xl mx-auto mb-8">
-                        Etalase digital resmi danusan Ekobis HMF — dari makanan, aplikasi premium,
-                        merchandise, hingga berbagai layanan terjangkau untuk mahasiswa.
+                        Etalase digital resmi danusan Ekobis HMF — buku teks, makanan, merchandise, dan layanan terjangkau untuk mahasiswa Fisika UPI.
                     </p>
 
-                    {/* Stats */}
                     <div className="flex items-center justify-center gap-4 flex-wrap">
                         <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full text-sm font-semibold">
                             <Zap className="w-4 h-4 text-orange-400" />
-                            {initialData.length} produk tersedia
+                            {initialData.length} produk
                         </div>
                         <div className="flex items-center gap-2 bg-green-500/20 border border-green-400/30 px-4 py-2 rounded-full text-sm font-semibold text-green-300">
                             <Sparkles className="w-4 h-4" />
                             {tersediaCount} siap diorder
                         </div>
+                        {formUrl && (
+                            <a
+                                href={formUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 bg-orange-500/90 hover:bg-orange-500 border border-orange-400/50 px-4 py-2 rounded-full text-sm font-bold text-white transition-all hover:scale-105"
+                            >
+                                <ClipboardList className="w-4 h-4" />
+                                Buka Formulir Pemesanan
+                                <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>
 
+            {/* ====== CARA ORDER BANNER ====== */}
+            {formUrl && (
+                <div className="bg-orange-50 border-b border-orange-100">
+                    <div className="container px-4 md:px-8 mx-auto max-w-7xl py-3 flex items-center gap-3">
+                        <Info className="w-4 h-4 text-orange-500 shrink-0" />
+                        <p className="text-sm text-orange-700">
+                            Cara order: Pilih produk → klik <strong>Pesan via Formulir</strong> → isi data → tunggu konfirmasi dari admin Ekobis HMF.
+                        </p>
+                    </div>
+                </div>
+            )}
+
             {/* ====== FILTER BAR ====== */}
             <div className="bg-white sticky top-[68px] z-30 border-b border-gray-200 shadow-sm">
                 <div className="container px-4 md:px-8 mx-auto max-w-7xl py-3 flex flex-col sm:flex-row gap-3 items-center">
-                    {/* Search */}
                     <div className="relative flex-1 w-full">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                             type="text"
-                            placeholder="Cari produk danusan..."
+                            placeholder="Cari produk..."
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
                             className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 transition-all text-gray-700"
                         />
                     </div>
 
-                    {/* Filter Kategori */}
                     <div className="flex overflow-x-auto scrollbar-hide gap-2 shrink-0">
                         {KATEGORI_ORDER.map(kat => {
                             const cfg = kat === 'semua' ? null : KATEGORI_CONFIG[kat];
                             const count = kat === 'semua'
                                 ? initialData.length
                                 : initialData.filter(i => i.kategori === kat).length;
+                            if (count === 0 && kat !== 'semua') return null;
                             return (
                                 <button
                                     key={kat}
@@ -260,11 +264,9 @@ export default function FluksClient({ initialData }: { initialData: FluksItem[] 
                                 >
                                     {cfg && <cfg.icon className="w-3.5 h-3.5" />}
                                     {kat === 'semua' ? 'Semua' : cfg?.label}
-                                    {count > 0 && (
-                                        <span className={`text-[9px] px-1.5 rounded-full font-black ${activeKategori === kat ? 'bg-white/20' : 'bg-gray-100'}`}>
-                                            {count}
-                                        </span>
-                                    )}
+                                    <span className={`text-[9px] px-1.5 rounded-full font-black ${activeKategori === kat ? 'bg-white/20' : 'bg-gray-100'}`}>
+                                        {count}
+                                    </span>
                                 </button>
                             );
                         })}
@@ -280,11 +282,7 @@ export default function FluksClient({ initialData }: { initialData: FluksItem[] 
                             <Store className="w-9 h-9 text-orange-300" />
                         </div>
                         <p className="text-gray-600 font-bold text-lg">Produk tidak ditemukan</p>
-                        <p className="text-gray-400 text-sm mt-1">Coba ubah filter atau kata kunci pencarian.</p>
-                        <button
-                            onClick={() => { setSearchQuery(''); setActiveKategori('semua'); }}
-                            className="mt-4 px-5 py-2.5 bg-[#0B1F3A] text-white text-sm font-bold rounded-xl hover:bg-[#0B1F3A]/80 transition-colors"
-                        >
+                        <button onClick={() => { setSearchQuery(''); setActiveKategori('semua'); }} className="mt-4 px-5 py-2.5 bg-[#0B1F3A] text-white text-sm font-bold rounded-xl hover:bg-[#0B1F3A]/80 transition-colors">
                             Reset Filter
                         </button>
                     </div>
@@ -295,12 +293,22 @@ export default function FluksClient({ initialData }: { initialData: FluksItem[] 
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                             {filteredItems.map(item => (
-                                <FluksCard key={item.id} item={item} />
+                                <FluksCard key={item.id} item={item} formUrl={formUrl} />
                             ))}
                         </div>
                     </>
                 )}
             </div>
+
+            {/* ====== BANNER CATATAN EKOBIS ====== */}
+            {config?.catatan && (
+                <div className="container px-4 md:px-8 mx-auto max-w-7xl mb-4">
+                    <div className="flex items-start gap-3 bg-orange-50 border border-orange-200 rounded-2xl px-5 py-4">
+                        <Info className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
+                        <p className="text-sm text-orange-800">{config.catatan}</p>
+                    </div>
+                </div>
+            )}
 
             {/* ====== BANNER EKOBIS ====== */}
             <div className="container px-4 md:px-8 mx-auto max-w-7xl mb-8">
@@ -313,8 +321,7 @@ export default function FluksClient({ initialData }: { initialData: FluksItem[] 
                         <div className="flex-1">
                             <h2 className="font-black text-xl mb-1">Dukung Danusan Ekobis HMF!</h2>
                             <p className="text-orange-100 text-sm leading-relaxed max-w-lg">
-                                Setiap pembelian mendukung program & kegiatan mahasiswa Fisika UPI.
-                                Ada produk atau danusan yang ingin kamu ajukan? Hubungi Ekobis HMF!
+                                Setiap pembelian mendukung program & kegiatan mahasiswa Fisika UPI. Hubungi Ekobis HMF untuk info lebih lanjut.
                             </p>
                         </div>
                         <a

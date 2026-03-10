@@ -3,18 +3,19 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import { createFluksItem, updateFluksItem, deleteFluksItem } from '@/lib/admin-fluks-actions';
+import { createFluksItem, updateFluksItem, deleteFluksItem, updateFluksConfig } from '@/lib/admin-fluks-actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Plus, Pencil, Trash2, Store, Tag } from 'lucide-react';
-import type { FluksItem } from '@/lib/data';
+import { Plus, Pencil, Trash2, Store, Tag, ClipboardList, ExternalLink, Save } from 'lucide-react';
+import type { FluksItem, FluksConfig } from '@/lib/data';
 import { useRouter } from 'next/navigation';
 
 const KATEGORI_OPTIONS = [
+    { value: 'buku', label: '📚 Buku' },
     { value: 'makanan', label: '🍱 Makanan' },
     { value: 'aplikasi', label: '📱 Aplikasi Premium' },
     { value: 'merchandise', label: '🎁 Merchandise' },
@@ -193,9 +194,81 @@ function FluksForm({
 }
 
 // ============================================================
+// Config Editor — URL Formulir Pemesanan Global
+// ============================================================
+function FluksConfigEditor({ config, onSuccess }: { config: FluksConfig | null; onSuccess: () => void }) {
+    const [isSaving, setIsSaving] = useState(false);
+    const form = useForm({
+        defaultValues: {
+            form_order_url: config?.form_order_url || '',
+            catatan: config?.catatan || '',
+        },
+    });
+
+    const onSubmit = async (values: any) => {
+        if (!config?.id) { toast.error('Config tidak ditemukan. Jalankan schema_fluks_v2.sql dulu.'); return; }
+        setIsSaving(true);
+        try {
+            const fd = new FormData();
+            fd.append('form_order_url', values.form_order_url);
+            fd.append('catatan', values.catatan || '');
+            const result = await updateFluksConfig(config.id, fd);
+            if (result?.error) toast.error('Gagal menyimpan', { description: result.error });
+            else { toast.success('URL Formulir berhasil diperbarui!'); onSuccess(); }
+        } catch (e: any) {
+            toast.error('Error', { description: e.message });
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    return (
+        <div className="mb-8 rounded-2xl border-2 border-orange-200 bg-orange-50/50 p-6">
+            <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-orange-100 rounded-xl">
+                    <ClipboardList className="w-5 h-5 text-orange-600" />
+                </div>
+                <div>
+                    <h3 className="font-bold text-foreground">Formulir Pemesanan Global</h3>
+                    <p className="text-xs text-muted-foreground">URL ini digunakan untuk tombol &quot;Pesan via Formulir&quot; di semua produk FLUKS.</p>
+                </div>
+                {config?.form_order_url && (
+                    <a href={config.form_order_url} target="_blank" rel="noopener noreferrer"
+                        className="ml-auto flex items-center gap-1.5 text-xs text-orange-600 hover:text-orange-800 font-semibold">
+                        <ExternalLink className="w-3.5 h-3.5" /> Buka Form
+                    </a>
+                )}
+            </div>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+                <div className="space-y-1.5">
+                    <Label className="text-sm">URL Google Form / Link Order *</Label>
+                    <Input
+                        {...form.register('form_order_url')}
+                        placeholder="https://docs.google.com/forms/..."
+                        className="bg-white"
+                    />
+                </div>
+                <div className="space-y-1.5">
+                    <Label className="text-sm">Catatan untuk Pengunjung (opsional)</Label>
+                    <Input
+                        {...form.register('catatan')}
+                        placeholder="Contoh: Order dibuka setiap Senin-Jumat, konfirmasi dalam 1x24 jam."
+                        className="bg-white"
+                    />
+                </div>
+                <Button type="submit" size="sm" disabled={isSaving} className="gap-2 bg-orange-500 hover:bg-orange-600 text-white">
+                    <Save className="w-3.5 h-3.5" />
+                    {isSaving ? 'Menyimpan...' : 'Simpan URL Form'}
+                </Button>
+            </form>
+        </div>
+    );
+}
+
+// ============================================================
 // Main Admin Table
 // ============================================================
-export default function FluksTable({ initialData }: { initialData: FluksItem[] }) {
+export default function FluksTable({ initialData, config }: { initialData: FluksItem[]; config: FluksConfig | null }) {
     const [formOpen, setFormOpen] = useState(false);
     const [editingItem, setEditingItem] = useState<FluksItem | null>(null);
     const router = useRouter();
@@ -219,6 +292,8 @@ export default function FluksTable({ initialData }: { initialData: FluksItem[] }
 
     return (
         <div>
+            {/* Editor URL Form Global */}
+            <FluksConfigEditor config={config} onSuccess={() => router.refresh()} />
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h2 className="text-xl font-bold text-foreground flex items-center gap-2">

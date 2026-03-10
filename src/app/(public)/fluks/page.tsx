@@ -1,4 +1,4 @@
-import { getFluksItems } from '@/lib/data';
+import { getFluksItems, getFluksConfig } from '@/lib/data';
 import FluksClient from './fluks-client';
 import type { Metadata } from 'next';
 
@@ -8,6 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default async function FluksPage() {
-    const items = await getFluksItems(true);
-    return <FluksClient initialData={items} />;
+    const [items, config] = await Promise.all([
+        getFluksItems(true),
+        getFluksConfig(),
+    ]);
+
+    return <FluksClient initialData={items} config={config} />;
 }

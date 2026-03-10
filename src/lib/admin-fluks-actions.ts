@@ -74,3 +74,33 @@ export async function getAllFluksItemsAdmin() {
     if (error) return [];
     return data || [];
 }
+
+export async function getFluksConfigAdmin() {
+    const { data, error } = await supabaseAdmin
+        .from('FluksConfig')
+        .select('*')
+        .limit(1)
+        .single();
+    if (error) return null;
+    return data;
+}
+
+export async function updateFluksConfig(id: string, formData: FormData) {
+    const payload = {
+        form_order_url: formData.get('form_order_url') as string,
+        catatan: (formData.get('catatan') as string) || null,
+    };
+
+    if (!payload.form_order_url) return { error: 'URL form tidak boleh kosong.' };
+
+    const { error } = await supabaseAdmin
+        .from('FluksConfig')
+        .update(payload)
+        .eq('id', id);
+
+    if (error) return { error: error.message };
+
+    revalidatePath('/fluks');
+    revalidatePath('/admin/fluks');
+    return { success: true };
+}
