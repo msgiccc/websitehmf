@@ -23,9 +23,10 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
         defaultValues: initialData || {
             namaKabinet: '',
             periode: `${new Date().getFullYear()}/${new Date().getFullYear() + 1}`,
-            logoUrl: '',
             visi: '',
             misi: '',
+            lambangUrl: '',
+            filosofiLambang: '',
             heroPhoto1: '',
             heroPhoto2: '',
             heroPhoto3: '',
@@ -51,6 +52,7 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
     };
 
     const watchLogoUrl = formatDriveLink(form.watch('logoUrl'));
+    const watchLambangUrl = formatDriveLink(form.watch('lambangUrl'));
     const watchHero1 = formatDriveLink(form.watch('heroPhoto1'));
     const watchHero2 = formatDriveLink(form.watch('heroPhoto2'));
     const watchHero3 = formatDriveLink(form.watch('heroPhoto3'));
@@ -66,6 +68,7 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
         const processedValues = {
             ...values,
             logoUrl: formatDriveLink(values.logoUrl) || '',
+            lambangUrl: formatDriveLink(values.lambangUrl) || '',
             heroPhoto1: formatDriveLink(values.heroPhoto1) || '',
             heroPhoto2: formatDriveLink(values.heroPhoto2) || '',
             heroPhoto3: formatDriveLink(values.heroPhoto3) || '',
@@ -202,8 +205,56 @@ export default function KabinetForm({ initialData }: { initialData?: any }) {
                 )}
             </div>
 
-            {/* FOTO LANDING PAGE */}
             <div className="space-y-4 pt-4 border-t">
+                <div>
+                    <Label className="text-lg font-bold">Logo & Filosofi Lambang</Label>
+                    <p className="text-xs text-muted-foreground mt-1">
+                        Logo utuh kabinet beserta makna khusus atau filosofi yang ada di belakangnya.
+                    </p>
+                </div>
+
+                <div className="space-y-4">
+                    <Label htmlFor="lambangUrl">URL / Link Gambar Lambang Kabinet</Label>
+                    <div className="flex flex-col md:flex-row gap-6 items-start">
+                        <div className="flex-1 w-full space-y-2">
+                            <Input
+                                id="lambangUrl"
+                                {...form.register('lambangUrl')}
+                                placeholder="https://..."
+                            />
+                            {form.formState.errors.lambangUrl && (
+                                <p className="text-sm text-red-500">{form.formState.errors.lambangUrl.message}</p>
+                            )}
+                        </div>
+
+                        {/* Live Preview Box */}
+                        <div className="w-full md:w-32 aspect-square rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center p-2 text-center text-xs text-muted-foreground overflow-hidden shrink-0 group">
+                            {watchLambangUrl ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={watchLambangUrl as string} alt="Preview Lambang" className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-300" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = 'Image tidak<br/>valid' }} />
+                            ) : (
+                                <span>Pratinjau<br />Lambang</span>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="space-y-2 pt-2">
+                        <Label htmlFor="filosofiLambang">Filosofi / Makna Lambang</Label>
+                        <Textarea
+                            id="filosofiLambang"
+                            {...form.register('filosofiLambang')}
+                            rows={6}
+                            placeholder="Uraikan filosofi setiap bentuk desain dari logo / lambang kabinet di sini..."
+                        />
+                        {form.formState.errors.filosofiLambang && (
+                            <p className="text-sm text-red-500">{form.formState.errors.filosofiLambang.message}</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {/* FOTO LANDING PAGE */}
+            <div className="space-y-4 pt-8 border-t">
                 <div>
                     <Label className="text-lg font-bold">Foto Pahlawan (Landing Page)</Label>
                     <p className="text-xs text-muted-foreground mt-1">

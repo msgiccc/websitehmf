@@ -87,6 +87,7 @@ function PublicLayoutContent({
                             <div className="absolute top-full left-0 mt-0 w-56 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-300 z-50">
                                 <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-2 flex flex-col mt-2">
                                     <Link href="/kabinet?tab=visi-misi" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Visi & Misi</Link>
+                                    <Link href="/kabinet?tab=lambang" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Lambang Kabinet</Link>
                                     <Link href="/kabinet?tab=program-unggulan" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Program Unggulan</Link>
                                     <Link href="/kabinet?tab=profil" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">Profil Kabinet</Link>
                                 </div>
@@ -234,6 +235,7 @@ function PublicLayoutContent({
                                             </AccordionTrigger>
                                             <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
                                                 <Link href="/kabinet?tab=visi-misi" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Visi & Misi</Link>
+                                                <Link href="/kabinet?tab=lambang" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Lambang Kabinet</Link>
                                                 <Link href="/kabinet?tab=program-unggulan" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Program Unggulan</Link>
                                                 <Link href="/kabinet?tab=profil" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Profil Kabinet</Link>
                                             </AccordionContent>

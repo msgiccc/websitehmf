@@ -49,6 +49,8 @@ export const KabinetSchema = z.object({
     logoUrl: z.string().url("Path URL Logo tidak valid").or(z.string().startsWith('/')).optional().or(z.literal("")),
     visi: z.string().min(10, "Visi terlalu pendek"),
     misi: z.string().min(10, "Misi terlalu pendek"),
+    lambangUrl: z.string().url("URL Lambang tidak valid").or(z.string().startsWith('/')).optional().or(z.literal("")),
+    filosofiLambang: z.string().optional().or(z.literal("")),
     heroPhoto1: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
     heroPhoto2: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),
     heroPhoto3: z.string().url().or(z.string().startsWith('/')).optional().or(z.literal("")),

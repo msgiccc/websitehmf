@@ -68,10 +68,16 @@ export default async function KabinetPage() {
                 <div className="absolute bottom-10 right-10 w-80 h-80 bg-[#C9A24D]/10 rounded-full blur-3xl pointer-events-none"></div>
             </section>
 
-            {/* Interactive Tabs Section */}
             <section className="w-full pb-24">
                 <Suspense fallback={<div className="container px-4 text-center py-20 text-gray-500">Memuat data kabinet...</div>}>
-                    <KabinetTabs groupedPengurus={groupedPengurus} visi={visi} misiList={misiList} unggulan={kabinet?.ProgramUnggulan || []} />
+                    <KabinetTabs
+                        groupedPengurus={groupedPengurus}
+                        visi={visi}
+                        misiList={misiList}
+                        unggulan={kabinet?.ProgramUnggulan || []}
+                        lambangUrl={kabinet?.lambangUrl}
+                        filosofiLambang={kabinet?.filosofiLambang}
+                    />
                 </Suspense>
             </section>
         </div>

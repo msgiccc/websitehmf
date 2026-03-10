@@ -8,6 +8,8 @@ type KabinetTabsProps = {
     visi: string;
     misiList: string[];
     unggulan: any[];
+    lambangUrl?: string | null;
+    filosofiLambang?: string | null;
 };
 
 // Sub-component to handle search params safely within Suspense
@@ -16,7 +18,7 @@ function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
     const tabParam = searchParams.get("tab");
 
     useEffect(() => {
-        if (tabParam && ["visi-misi", "program-unggulan", "profil"].includes(tabParam)) {
+        if (tabParam && ["visi-misi", "program-unggulan", "profil", "lambang"].includes(tabParam)) {
             setActiveTab(tabParam);
         }
     }, [tabParam, setActiveTab]);
@@ -24,11 +26,12 @@ function TabHandler({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
     return null;
 }
 
-export function KabinetTabs({ groupedPengurus, visi, misiList, unggulan }: KabinetTabsProps) {
+export function KabinetTabs({ groupedPengurus, visi, misiList, unggulan, lambangUrl, filosofiLambang }: KabinetTabsProps) {
     const [activeTab, setActiveTab] = useState("visi-misi");
 
     const tabs = [
         { id: "visi-misi", label: "Visi & Misi" },
+        { id: "lambang", label: "Lambang Kabinet" },
         { id: "program-unggulan", label: "Program Unggulan" },
         { id: "profil", label: "Profil Kabinet" },
     ];
@@ -116,6 +119,68 @@ export function KabinetTabs({ groupedPengurus, visi, misiList, unggulan }: Kabin
                                     Belum ada Program Unggulan pada kabinet ini.
                                 </div>
                             )}
+                        </div>
+
+                    </div>
+                )}
+
+                {/* TAB EXTRA: LAMBANG KABINET */}
+                {activeTab === "lambang" && (
+                    <div className="animate-in fade-in slide-in-from-left-8 duration-700 max-w-6xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-start">
+                            {/* BAGIAN KIRI: GAMBAR LAMBANG (GLASSMORPHISM CARD) */}
+                            <div className="relative group perspective-1000">
+                                <div className="absolute inset-0 bg-gradient-to-tr from-[#2c1469]/20 to-[#E63946]/20 blur-3xl rounded-[3rem] -z-10 transform group-hover:scale-105 transition-transform duration-700 ease-out"></div>
+                                <div className="relative bg-white/70 backdrop-blur-xl border border-white/50 shadow-2xl rounded-[2.5rem] p-8 lg:p-12 overflow-hidden flex flex-col items-center justify-center aspect-square transform transition-all duration-500 hover:shadow-[#2c1469]/20 hover:border-white/80">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/60 to-transparent blur-md pointer-events-none"></div>
+                                    <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-[#C9A24D]/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                                    {lambangUrl ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img
+                                            src={lambangUrl}
+                                            alt="Lambang Kabinet"
+                                            className="w-[85%] h-[85%] object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 z-10"
+                                        />
+                                    ) : (
+                                        <div className="flex flex-col items-center justify-center text-gray-400 z-10">
+                                            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4 border-2 border-dashed border-gray-300">
+                                                <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            </div>
+                                            <p className="text-sm font-medium">Bentuk Lambang Belum Diunggah</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* BAGIAN KANAN: FILOSOFI LAMBANG */}
+                            <div className="space-y-8 py-4 lg:py-8">
+                                <div className="space-y-4 relative">
+                                    <span className="inline-block py-1 px-4 rounded-full bg-[#E63946]/10 text-[#E63946] text-sm font-bold tracking-widest uppercase">
+                                        Identitas Visual
+                                    </span>
+                                    <h2 className="text-3xl md:text-5xl font-serif font-black text-[#0B1F3A] leading-tight">
+                                        Filosofi <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2c1469] to-[#E63946]">Lambang</span>
+                                    </h2>
+                                    <div className="w-20 h-1.5 bg-gradient-to-r from-[#2c1469] to-[#C9A24D] rounded-full"></div>
+                                </div>
+
+                                <div className="prose prose-lg prose-blue max-w-none text-gray-600 leading-relaxed">
+                                    {filosofiLambang ? (
+                                        filosofiLambang.split('\n').map((paragraph, idx) => (
+                                            paragraph.trim() && (
+                                                <p key={idx} className="mb-4 text-justify">
+                                                    {paragraph}
+                                                </p>
+                                            )
+                                        ))
+                                    ) : (
+                                        <p className="italic text-gray-400 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                                            Penjelasan mengenai nilai, makna, dan filosofi lambang kabinet ini belum dicantumkan.
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
                         </div>
 
                     </div>
