@@ -291,7 +291,7 @@ export default function OrbitClient({ initialData }: { initialData: OrbitItem[] 
                             </p>
                         </div>
                         <a
-                            href="https://www.instagram.com/hmffpmipaupi"
+                            href="https://www.instagram.com/hmf_upi"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="shrink-0 flex items-center gap-2 px-5 py-3 bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 rounded-xl font-bold text-sm hover:shadow-lg hover:scale-105 transition-all"
