@@ -186,9 +186,8 @@ function PublicLayoutContent({
                                 <span className="sr-only">Toggle menu</span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="right" className="bg-gradient-to-br from-[#071324]/95 to-[#1A2C4D]/95 backdrop-blur-2xl text-white border-l border-white/10 p-0 overflow-hidden">
-                            {/* Ambient Glow */}
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-[#E63946]/20 rounded-full blur-[80px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
+                        <SheetContent side="right" className="bg-[#1a0b40] text-white border-l border-white/10 p-0 overflow-hidden">
+                            {/* Ambient Glow (dihapus agar tidak ada gradient/glow) */}
 
                             <div className="flex flex-col h-full w-full py-6 px-6 relative z-10 overflow-y-auto">
                                 <Link href="/" className="flex items-center space-x-3 mb-8">
@@ -296,24 +295,23 @@ function PublicLayoutContent({
                                                 <Link href="/link-shortener" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">LASER</Link>
                                             </AccordionContent>
                                         </AccordionItem>
+                                        {/* Accordion Media */}
+                                        <AccordionItem value="media" className="border-b-0 space-y-1">
+                                            <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
+                                                <div className="flex items-center gap-4 text-lg font-medium">
+                                                    <ImageIcon className="w-5 h-5 text-[#C9A24D]" /> Media
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
+                                                <Link href="/galeri" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Galeri</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Prestasi</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Rangers Talk</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Laporan Keuangan</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Berita HMF</Link>
+                                                <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Awardee PH</Link>
+                                            </AccordionContent>
+                                        </AccordionItem>
                                     </Accordion>
-
-                                    {/* Accordion Media */}
-                                    <AccordionItem value="media" className="border-b-0 space-y-1">
-                                        <AccordionTrigger className="hover:bg-white/10 hover:no-underline rounded-xl px-3 py-3 data-[state=open]:bg-white/5 transition-colors">
-                                            <div className="flex items-center gap-4 text-lg font-medium">
-                                                <ImageIcon className="w-5 h-5 text-[#C9A24D]" /> Media
-                                            </div>
-                                        </AccordionTrigger>
-                                        <AccordionContent className="pl-12 pr-4 pb-2 space-y-2">
-                                            <Link href="/galeri" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Galeri</Link>
-                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Prestasi</Link>
-                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Rangers Talk</Link>
-                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Laporan Keuangan</Link>
-                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Berita HMF</Link>
-                                            <Link href="#" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">Awardee PH</Link>
-                                        </AccordionContent>
-                                    </AccordionItem>
 
                                     {/* Link Admin Terpisah jadi Tombol Menonjol */}
                                     <div className="pt-8 pb-4 mt-auto">
