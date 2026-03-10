@@ -46,7 +46,7 @@ function PublicLayoutContent({
     };
 
     return (
-        <div className={`flex min-h-screen flex-col transition-transform duration-500 ease-in-out ${isMobileMenuOpen ? '-translate-x-[80vw] sm:-translate-x-[400px]' : 'translate-x-0'}`}>
+        <div className={`flex min-h-screen flex-col transition-transform duration-500 ease-in-out will-change-transform ${isMobileMenuOpen ? '-translate-x-[80vw] sm:-translate-x-[400px]' : 'translate-x-0'}`}>
             {/* Header / Navbar Interaktif */}
             <header className={`fixed top-0 z-50 w-full text-white transition-all duration-300 ${isScrolledOrSolid ? 'bg-[#1a0b40]/95 backdrop-blur-md shadow-lg border-b border-white/10 py-0' : 'bg-transparent pt-2'}`}>
                 <div className="container flex h-16 items-center justify-between px-4 md:px-8">
@@ -201,7 +201,7 @@ function PublicLayoutContent({
                                 <Link href="/" className="flex items-center space-x-3 mb-8">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img src="/logo.png" alt="Logo HMF" className="w-8 h-8 object-contain" />
-                                    <span className="font-bold text-xl tracking-wide uppercase drop-shadow-sm">Niskala Cakra</span>
+                                    <span className="font-bold text-xl tracking-wide uppercase drop-shadow-sm">HMF FPMIPA UPI</span>
                                 </Link>
 
                                 <nav className="flex flex-col space-y-1 mt-4 flex-1" onClick={handleMobileLinkClick}>
