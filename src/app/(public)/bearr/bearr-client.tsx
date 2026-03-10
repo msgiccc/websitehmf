@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BookOpen, Database, Smartphone, MessageCircle, BookMarked, ExternalLink, FileText, ChevronRight, Zap, FolderOpen, ClipboardList, Eye, X, Maximize2, Minimize2 } from 'lucide-react';
+import { BookOpen, Database, Smartphone, MessageCircle, BookMarked, ExternalLink, FileText, ChevronRight, Zap, FolderOpen, ClipboardList, Eye, X, Maximize2, Minimize2, Folder } from 'lucide-react';
 import type { BearrLink, BearrKategori } from '@/lib/data';
 
 // Konfigurasi tiap Kategori
@@ -92,51 +92,73 @@ const TIPE_LABEL: Record<string, string> = {
 const KATEGORI_ORDER: BearrKategori[] = ['bank_soal', 'referensi', 'ebook', 'aplikasi', 'responsi'];
 
 /**
- * Mengkonversi berbagai format URL Google Drive menjadi embed preview URL.
- * Mengembalikan null jika bukan link Google Drive file.
+ * Mengkonversi berbagai format URL Google Drive menjadi embed info.
+ * Mengembalikan { url, type } atau null jika bukan Drive.
  */
-function toDrivePreviewUrl(url: string): string | null {
+function toDriveEmbedInfo(url: string): { url: string; type: 'file' | 'folder' } | null {
     if (!url) return null;
 
-    // Format: https://drive.google.com/file/d/FILE_ID/view?... atau /edit?...
+    // Folder: https://drive.google.com/drive/folders/FOLDER_ID
+    const folderMatch = url.match(/drive\.google\.com\/drive\/folders\/([a-zA-Z0-9_-]+)/);
+    if (folderMatch) {
+        return {
+            url: `https://drive.google.com/embeddedfolderview?id=${folderMatch[1]}#list`,
+            type: 'folder',
+        };
+    }
+
+    // File: https://drive.google.com/file/d/FILE_ID/...
     const fileMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
     if (fileMatch) {
-        return `https://drive.google.com/file/d/${fileMatch[1]}/preview`;
+        return {
+            url: `https://drive.google.com/file/d/${fileMatch[1]}/preview`,
+            type: 'file',
+        };
     }
 
-    // Format: https://drive.google.com/open?id=FILE_ID
+    // Shared link: https://drive.google.com/open?id=FILE_ID
     const openMatch = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
     if (openMatch) {
-        return `https://drive.google.com/file/d/${openMatch[1]}/preview`;
+        return {
+            url: `https://drive.google.com/file/d/${openMatch[1]}/preview`,
+            type: 'file',
+        };
     }
 
-    // Format: https://docs.google.com/document/d/FILE_ID/...
+    // Google Docs/Sheets/Slides
     const docsMatch = url.match(/docs\.google\.com\/(?:document|spreadsheets|presentation)\/d\/([a-zA-Z0-9_-]+)/);
     if (docsMatch) {
-        return `https://docs.google.com/document/d/${docsMatch[1]}/preview`;
+        return {
+            url: `${url.split('/edit')[0]}/preview`,
+            type: 'file',
+        };
     }
 
     return null;
 }
 
 // ============================================================
-//  PDF Modal Viewer Component
+//  Google Drive Viewer Modal (File PDF & Folder)
 // ============================================================
-function PdfModal({
+function DriveModal({
     url,
     title,
+    type,
+    originalUrl,
     onClose,
     accentFrom,
     accentTo,
 }: {
     url: string;
     title: string;
+    type: 'file' | 'folder';
+    originalUrl: string;
     onClose: () => void;
     accentFrom: string;
     accentTo: string;
 }) {
     const [isExpanded, setIsExpanded] = useState(false);
-
+    const isFolder = type === 'folder';
     return (
         <div
             className="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-8"
@@ -151,18 +173,20 @@ function PdfModal({
             {/* Modal Container */}
             <div
                 className={`relative z-10 w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300 ${isExpanded
-                        ? 'h-[98vh] max-w-[98vw]'
-                        : 'max-w-5xl h-[88vh]'
+                    ? 'h-[98vh] max-w-[98vw]'
+                    : 'max-w-5xl h-[88vh]'
                     }`}
             >
                 {/* Modal Header */}
                 <div className={`flex items-center justify-between px-5 py-4 bg-gradient-to-r ${accentFrom} ${accentTo} text-white shrink-0`}>
                     <div className="flex items-center gap-3 min-w-0">
                         <div className="p-2 bg-white/20 rounded-xl shrink-0">
-                            <FileText className="w-5 h-5" />
+                            {isFolder ? <Folder className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
                         </div>
                         <div className="min-w-0">
-                            <p className="text-xs font-semibold opacity-75 uppercase tracking-widest">Pratinjau Dokumen</p>
+                            <p className="text-xs font-semibold opacity-75 uppercase tracking-widest">
+                                {isFolder ? 'Jelajah Isi Folder' : 'Pratinjau Dokumen'}
+                            </p>
                             <h3 className="font-bold text-lg leading-tight truncate">{title}</h3>
                         </div>
                     </div>
@@ -180,11 +204,11 @@ function PdfModal({
                         </button>
                         {/* Open in new tab */}
                         <a
-                            href={url.replace('/preview', '/view')}
+                            href={originalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 rounded-xl bg-white/20 hover:bg-white/30 transition-colors"
-                            title="Buka di tab baru"
+                            title={isFolder ? 'Buka folder di Drive' : 'Buka file di Drive'}
                         >
                             <ExternalLink className="w-4 h-4" />
                         </a>
@@ -199,13 +223,23 @@ function PdfModal({
                     </div>
                 </div>
 
+                {/* Info banner untuk Folder */}
+                {isFolder && (
+                    <div className="shrink-0 px-5 py-2.5 bg-blue-50 border-b border-blue-100 flex items-center gap-2 text-blue-700 text-xs font-medium">
+                        <Folder className="w-3.5 h-3.5 shrink-0" />
+                        Klik file PDF di bawah untuk membukanya. Klik tombol ↗ di kanan atas untuk membuka folder di Google Drive.
+                    </div>
+                )}
+
                 {/* iFrame */}
                 <div className="flex-1 min-h-0 bg-gray-100 relative">
                     {/* Loading skeleton */}
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="text-center space-y-3">
                             <div className="w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin mx-auto" />
-                            <p className="text-sm text-gray-400">Memuat dokumen...</p>
+                            <p className="text-sm text-gray-400">
+                                {isFolder ? 'Memuat isi folder...' : 'Memuat dokumen...'}
+                            </p>
                         </div>
                     </div>
                     <iframe
@@ -219,8 +253,8 @@ function PdfModal({
 
                 {/* Modal Footer */}
                 <div className="shrink-0 px-5 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between text-xs text-gray-400">
-                    <span>📄 Dokumen ditampilkan via Google Drive Viewer</span>
-                    <span>Pastikan file sudah dibagikan secara publik</span>
+                    <span>{isFolder ? '📁 Isi folder ditampilkan via Google Drive' : '📄 Dokumen ditampilkan via Google Drive Viewer'}</span>
+                    <span>Pastikan file/folder telah dibagikan secara publik</span>
                 </div>
             </div>
         </div>
@@ -232,18 +266,23 @@ function PdfModal({
 // ============================================================
 export default function BearrClient({ initialData }: { initialData: BearrLink[] }) {
     const [activeTab, setActiveTab] = useState<BearrKategori>('bank_soal');
-    const [pdfModal, setPdfModal] = useState<{ url: string; title: string } | null>(null);
+    const [driveModal, setDriveModal] = useState<{
+        url: string;
+        title: string;
+        type: 'file' | 'folder';
+        originalUrl: string;
+    } | null>(null);
 
     const activeConfig = KATEGORI_CONFIG[activeTab];
     const activeLinks = initialData.filter(l => l.kategori === activeTab);
     const Icon = activeConfig.icon;
 
-    const handlePreview = (url: string, title: string) => {
-        const previewUrl = toDrivePreviewUrl(url);
-        if (previewUrl) {
-            setPdfModal({ url: previewUrl, title });
+    const handleOpenDrive = (rawUrl: string, title: string) => {
+        const embedInfo = toDriveEmbedInfo(rawUrl);
+        if (embedInfo) {
+            setDriveModal({ url: embedInfo.url, title, type: embedInfo.type, originalUrl: rawUrl });
         } else {
-            window.open(url, '_blank', 'noopener,noreferrer');
+            window.open(rawUrl, '_blank', 'noopener,noreferrer');
         }
     };
 
@@ -362,8 +401,9 @@ export default function BearrClient({ initialData }: { initialData: BearrLink[] 
                                 activeLinks.map((link, idx) => {
                                     const TipeIcon = TIPE_ICON[link.tipe_url] || ExternalLink;
                                     const tipeLabel = TIPE_LABEL[link.tipe_url] || 'Buka Tautan';
-                                    const previewUrl = link.url ? toDrivePreviewUrl(link.url) : null;
-                                    const isDriveFile = !!previewUrl;
+                                    const embedInfo = link.url ? toDriveEmbedInfo(link.url) : null;
+                                    const isDrive = !!embedInfo;
+                                    const isFolder = embedInfo?.type === 'folder';
 
                                     return (
                                         <div
@@ -388,14 +428,17 @@ export default function BearrClient({ initialData }: { initialData: BearrLink[] 
                                                     )}
                                                     {/* Action Buttons */}
                                                     <div className="mt-4 flex flex-wrap gap-2">
-                                                        {/* Preview Button — hanya jika link adalah Google Drive file */}
-                                                        {isDriveFile && (
+                                                        {/* Open Viewer — untuk file PDF atau folder Drive */}
+                                                        {isDrive && (
                                                             <button
-                                                                onClick={() => handlePreview(link.url!, link.judul)}
+                                                                onClick={() => handleOpenDrive(link.url!, link.judul)}
                                                                 className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 bg-gradient-to-r ${activeConfig.accentFrom} ${activeConfig.accentTo} text-white shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98]`}
                                                             >
-                                                                <Eye className="w-4 h-4" />
-                                                                Pratinjau PDF
+                                                                {isFolder
+                                                                    ? <Folder className="w-4 h-4" />
+                                                                    : <Eye className="w-4 h-4" />
+                                                                }
+                                                                {isFolder ? 'Jelajah Isi Folder' : 'Pratinjau PDF'}
                                                             </button>
                                                         )}
 
@@ -405,13 +448,13 @@ export default function BearrClient({ initialData }: { initialData: BearrLink[] 
                                                                 href={link.url}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${isDriveFile
+                                                                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${isDrive
                                                                     ? `bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:shadow-sm`
                                                                     : `bg-gradient-to-r ${activeConfig.accentFrom} ${activeConfig.accentTo} text-white shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98]`
                                                                     }`}
                                                             >
                                                                 <TipeIcon className="w-4 h-4" />
-                                                                {isDriveFile ? 'Buka di Drive' : tipeLabel}
+                                                                {isDrive ? (isFolder ? 'Buka Folder di Drive' : 'Buka File di Drive') : tipeLabel}
                                                                 <ExternalLink className="w-3.5 h-3.5 opacity-70" />
                                                             </a>
                                                         ) : (
@@ -432,12 +475,14 @@ export default function BearrClient({ initialData }: { initialData: BearrLink[] 
                 </div>
             </div>
 
-            {/* PDF Modal Viewer */}
-            {pdfModal && (
-                <PdfModal
-                    url={pdfModal.url}
-                    title={pdfModal.title}
-                    onClose={() => setPdfModal(null)}
+            {/* Drive Modal Viewer (File PDF & Folder) */}
+            {driveModal && (
+                <DriveModal
+                    url={driveModal.url}
+                    title={driveModal.title}
+                    type={driveModal.type}
+                    originalUrl={driveModal.originalUrl}
+                    onClose={() => setDriveModal(null)}
                     accentFrom={activeConfig.accentFrom}
                     accentTo={activeConfig.accentTo}
                 />
