@@ -194,7 +194,7 @@ function PublicLayoutContent({
                                 <span className="sr-only">Toggle menu</span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="right" className="bg-[#1a0b40] text-white border-l border-white/10 p-0 overflow-hidden">
+                        <SheetContent side="right" className="w-[80vw] sm:w-[400px] sm:max-w-[400px] bg-[#1a0b40] text-white border-l border-white/10 p-0 overflow-hidden">
                             {/* Ambient Glow (dihapus agar tidak ada gradient/glow) */}
 
                             <div className="flex flex-col h-full w-full py-6 px-6 relative z-10 overflow-y-auto">
