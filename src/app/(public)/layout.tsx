@@ -16,6 +16,7 @@ function PublicLayoutContent({
     children: React.ReactNode;
 }) {
     const [scrolled, setScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { data: session } = useSession();
 
     useEffect(() => {
@@ -37,8 +38,15 @@ function PublicLayoutContent({
     // Jika bukan di Homepage, navbar selalu pakai background solid (non-transparan)
     const isScrolledOrSolid = scrolled || !isHomePage;
 
+    const handleMobileLinkClick = (e: React.MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('a')) {
+            setIsMobileMenuOpen(false);
+        }
+    };
+
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className={`flex min-h-screen flex-col transition-transform duration-500 ease-in-out ${isMobileMenuOpen ? '-translate-x-[80vw] sm:-translate-x-[400px]' : 'translate-x-0'}`}>
             {/* Header / Navbar Interaktif */}
             <header className={`fixed top-0 z-50 w-full text-white transition-all duration-300 ${isScrolledOrSolid ? 'bg-[#1a0b40]/95 backdrop-blur-md shadow-lg border-b border-white/10 py-0' : 'bg-transparent pt-2'}`}>
                 <div className="container flex h-16 items-center justify-between px-4 md:px-8">
@@ -179,7 +187,7 @@ function PublicLayoutContent({
                     </nav>
 
                     {/* Mobile Navigation */}
-                    <Sheet>
+                    <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                         <SheetTrigger asChild>
                             <Button variant="ghost" className="lg:hidden px-2 text-white hover:bg-[#c92020] hover:text-white transition-colors">
                                 <Menu className="h-7 w-7" />
@@ -196,7 +204,7 @@ function PublicLayoutContent({
                                     <span className="font-bold text-xl tracking-wide uppercase drop-shadow-sm">Niskala Cakra</span>
                                 </Link>
 
-                                <nav className="flex flex-col space-y-1 mt-4 flex-1">
+                                <nav className="flex flex-col space-y-1 mt-4 flex-1" onClick={handleMobileLinkClick}>
                                     <Link href="/" className="flex items-center gap-4 py-3 px-3 rounded-xl hover:bg-white/10 text-lg font-medium transition-colors">
                                         <Home className="w-5 h-5 text-[#C9A24D]" /> Beranda
                                     </Link>
