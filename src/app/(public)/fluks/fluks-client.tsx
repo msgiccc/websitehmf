@@ -69,7 +69,7 @@ function FluksCard({ item, formUrl }: { item: FluksItem; formUrl: string }) {
             )}
 
             {/* Foto / Placeholder */}
-            <div className={`relative h-52 overflow-hidden bg-gradient-to-br ${cat.gradient} shrink-0`}>
+            <div className={`relative aspect-square overflow-hidden bg-gradient-to-br ${cat.gradient} shrink-0`}>
                 {item.foto_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -260,8 +260,8 @@ export default function FluksClient({
                                     key={kat}
                                     onClick={() => setActiveKategori(kat)}
                                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap border transition-all shrink-0 ${activeKategori === kat
-                                            ? 'bg-[#0B1F3A] text-white border-[#0B1F3A] shadow-sm'
-                                            : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
+                                        ? 'bg-[#0B1F3A] text-white border-[#0B1F3A] shadow-sm'
+                                        : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
                                         }`}
                                 >
                                     {cfg && <cfg.icon className="w-3.5 h-3.5" />}

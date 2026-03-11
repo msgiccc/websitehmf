@@ -62,7 +62,7 @@ function OrbitCard({ item }: { item: OrbitItem }) {
             )}
 
             {/* Foto / Placeholder */}
-            <div className={`relative h-52 overflow-hidden bg-gradient-to-br ${cat.gradient}`}>
+            <div className={`relative aspect-square overflow-hidden bg-gradient-to-br ${cat.gradient}`}>
                 {item.foto_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
