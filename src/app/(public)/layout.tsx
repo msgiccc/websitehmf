@@ -159,14 +159,8 @@ function PublicLayoutContent({
                                         KINETIK
                                     </Link>
                                     <Link href="/link-shortener" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">LASER</Link>
-                                    <Link href="/orbit" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors flex items-center gap-2">
-                                        ORBIT
-                                        <span className="text-[9px] font-bold bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full">Baru</span>
-                                    </Link>
-                                    <Link href="/fluks" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors flex items-center gap-2">
-                                        FLUKS
-                                        <span className="text-[9px] font-bold bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-full">Baru</span>
-                                    </Link>
+                                    <Link href="/orbit" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">ORBIT</Link>
+                                    <Link href="/fluks" className="px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#c92020] font-medium transition-colors">FLUKS</Link>
                                 </div>
                             </div>
                         </div>
@@ -313,11 +307,9 @@ function PublicLayoutContent({
                                                 <Link href="/link-shortener" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">LASER</Link>
                                                 <Link href="/orbit" className="block py-2 text-base text-gray-300 hover:text-white transition-colors flex items-center gap-2">
                                                     ORBIT
-                                                    <span className="text-[9px] font-bold bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded-full">Baru</span>
                                                 </Link>
-                                                <Link href="/fluks" className="block py-2 text-base text-gray-300 hover:text-white transition-colors flex items-center gap-2">
+                                                <Link href="/fluks" className="block py-2 text-base text-gray-300 hover:text-white transition-colors">
                                                     FLUKS
-                                                    <span className="text-[9px] font-bold bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded-full">Baru</span>
                                                 </Link>
                                             </AccordionContent>
                                         </AccordionItem>

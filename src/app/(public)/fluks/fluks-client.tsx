@@ -233,9 +233,10 @@ export default function FluksClient({
             )}
 
             {/* ====== FILTER BAR ====== */}
-            <div className="bg-white sticky top-[68px] z-30 border-b border-gray-200 shadow-sm">
-                <div className="container px-4 md:px-8 mx-auto max-w-7xl py-3 flex flex-col sm:flex-row gap-3 items-center">
-                    <div className="relative flex-1 w-full">
+            <div className="bg-white sticky top-16 z-30 border-b border-gray-200 shadow-sm">
+                <div className="container px-4 md:px-8 mx-auto max-w-7xl py-3 space-y-2">
+                    {/* Search — full width selalu */}
+                    <div className="relative w-full">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                             type="text"
@@ -246,7 +247,8 @@ export default function FluksClient({
                         />
                     </div>
 
-                    <div className="flex overflow-x-auto scrollbar-hide gap-2 shrink-0">
+                    {/* Filter Kategori — scroll horizontal di mobile */}
+                    <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
                         {KATEGORI_ORDER.map(kat => {
                             const cfg = kat === 'semua' ? null : KATEGORI_CONFIG[kat];
                             const count = kat === 'semua'
@@ -257,7 +259,7 @@ export default function FluksClient({
                                 <button
                                     key={kat}
                                     onClick={() => setActiveKategori(kat)}
-                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap border transition-all ${activeKategori === kat
+                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap border transition-all shrink-0 ${activeKategori === kat
                                             ? 'bg-[#0B1F3A] text-white border-[#0B1F3A] shadow-sm'
                                             : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
                                         }`}
