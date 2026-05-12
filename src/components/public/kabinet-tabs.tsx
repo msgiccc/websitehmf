@@ -217,25 +217,52 @@ export function KabinetTabs({ groupedPengurus, visi, misiList, unggulan, lambang
                             {/* Pimpinan Section */}
                             {pimpinan.length > 0 && (
                                 <div className="mb-24 relative">
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-64 bg-gradient-to-r from-[#E63946]/10 via-[#2c1469]/10 to-[#C9A24D]/10 blur-3xl rounded-full z-0 pointer-events-none"></div>
-                                    <div className="text-center mb-16 relative z-10">
+                                    <div className="text-center mb-12 relative z-10">
                                         <h3 className="text-3xl font-serif font-bold text-[#0B1F3A] inline-block relative">
                                             Pimpinan
                                             <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-[#E63946] rounded-full"></div>
                                         </h3>
                                     </div>
 
-                                    <div className="flex flex-wrap justify-center gap-6 md:gap-10 relative z-10">
+                                    <div className="flex flex-col items-center gap-12 relative z-10 w-full px-4 md:px-0">
                                         {pimpinan.map(person => (
-                                            <div key={person.id} className="w-full sm:w-1/3 md:w-1/4 lg:w-1/5 flex flex-col items-center">
-                                                <div className="relative w-full aspect-[4/5] max-w-[200px] bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
-                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                    <img src={person.fotoUrl} alt={person.nama} className="w-full h-full object-contain md:object-cover group-hover:scale-110 transition-transform duration-500" />
-                                                </div>
+                                            <div key={person.id} className="w-full max-w-4xl relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#122238] to-[#0a1220] shadow-2xl aspect-[3/4] md:aspect-[21/9] transition-transform duration-500 hover:scale-[1.02]">
+                                                {/* Background Glows */}
+                                                <div className="absolute -top-32 -left-32 w-96 h-96 bg-white/5 blur-3xl rounded-full pointer-events-none"></div>
+                                                <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#2c1469]/30 blur-3xl rounded-full pointer-events-none"></div>
 
-                                                <div className="text-center mt-4">
-                                                    <h4 className="text-sm md:text-base font-bold text-[#0B1F3A] leading-tight">{person.jabatan}</h4>
-                                                    <p className="text-xs font-semibold text-gray-500 mt-1">{person.nama}</p>
+                                                {/* Top Navigation Logos */}
+                                                <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20 flex gap-2 items-center bg-white rounded-full px-4 py-1.5 shadow-md">
+                                                    <span className="text-[#E63946] font-black text-sm md:text-base tracking-tighter">UPI</span>
+                                                </div>
+                                                
+                                                {lambangUrl && (
+                                                    <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20 flex gap-3 items-center">
+                                                        <div className="text-right hidden sm:block">
+                                                            <p className="text-white/80 text-[10px] md:text-xs">Kabinet</p>
+                                                            <p className="text-white font-bold text-xs md:text-sm">Niskala Cakra</p>
+                                                        </div>
+                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                        <img src={lambangUrl} className="h-8 md:h-12 w-auto object-contain drop-shadow-md" alt="Lambang Kabinet" />
+                                                    </div>
+                                                )}
+
+                                                <div className="absolute inset-0 flex flex-col md:flex-row">
+                                                    {/* Left side: Photo */}
+                                                    <div className="w-full md:w-5/12 h-1/2 md:h-full relative flex justify-center md:block order-2 md:order-1 mt-auto">
+                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                        <img 
+                                                            src={person.fotoUrl} 
+                                                            alt={person.nama} 
+                                                            className="absolute bottom-0 md:left-8 lg:left-12 h-[95%] w-auto object-contain object-bottom drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)] pointer-events-none z-10" 
+                                                        />
+                                                    </div>
+                                                    
+                                                    {/* Right side: Text */}
+                                                    <div className="w-full md:w-7/12 h-1/2 md:h-full flex flex-col justify-center items-center md:items-start px-8 md:pl-12 md:pr-16 relative z-10 order-1 md:order-2 mt-16 md:mt-0 text-center md:text-left">
+                                                        <h3 className="text-white text-3xl md:text-4xl lg:text-5xl font-serif font-bold leading-tight drop-shadow-xl mb-3 md:mb-4">{person.nama}</h3>
+                                                        <p className="text-white/90 text-lg md:text-xl lg:text-2xl font-serif drop-shadow-md border-b-2 border-white/20 pb-2 inline-block">{person.jabatan}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}
