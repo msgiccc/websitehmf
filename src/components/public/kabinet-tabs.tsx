@@ -224,45 +224,49 @@ export function KabinetTabs({ groupedPengurus, visi, misiList, unggulan, lambang
                                         </h3>
                                     </div>
 
-                                    <div className="flex flex-col items-center gap-12 relative z-10 w-full px-4 md:px-0">
+                                    <div className="flex flex-wrap justify-center gap-8 md:gap-12 relative z-10 w-full px-4 md:px-0">
                                         {pimpinan.map(person => (
-                                            <div key={person.id} className="w-full max-w-4xl relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#122238] to-[#0a1220] shadow-2xl aspect-[3/4] md:aspect-[21/9] transition-transform duration-500 hover:scale-[1.02]">
-                                                {/* Background Glows */}
-                                                <div className="absolute -top-32 -left-32 w-96 h-96 bg-white/5 blur-3xl rounded-full pointer-events-none"></div>
-                                                <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#2c1469]/30 blur-3xl rounded-full pointer-events-none"></div>
+                                            <div key={person.id} className="w-full max-w-[360px] relative overflow-hidden rounded-[2rem] bg-gradient-to-b from-[#182c47] to-[#0a1321] shadow-2xl aspect-[3/4] transition-transform duration-500 hover:scale-[1.02] group border border-white/5">
+                                                
+                                                {/* Background Blur Overlay (Simulating the blurred building in the image) */}
+                                                <div className="absolute inset-0 bg-blue-900/10 mix-blend-multiply"></div>
 
                                                 {/* Top Navigation Logos */}
-                                                <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20 flex gap-2 items-center bg-white rounded-full px-4 py-1.5 shadow-md">
-                                                    <span className="text-[#E63946] font-black text-sm md:text-base tracking-tighter">UPI</span>
+                                                <div className="absolute top-6 left-6 z-20 flex gap-2 items-center bg-white rounded-full px-3 py-1.5 shadow-md">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                                                            {/* Simulate UPI Logo or use text */}
+                                                            <span className="text-[#E63946] text-[8px] font-black leading-none">UPI</span>
+                                                        </div>
+                                                        <span className="text-[#0B1F3A] font-black text-xs tracking-tighter">UPI</span>
+                                                    </div>
                                                 </div>
                                                 
                                                 {lambangUrl && (
-                                                    <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20 flex gap-3 items-center">
-                                                        <div className="text-right hidden sm:block">
-                                                            <p className="text-white/80 text-[10px] md:text-xs">Kabinet</p>
-                                                            <p className="text-white font-bold text-xs md:text-sm">Niskala Cakra</p>
+                                                    <div className="absolute top-6 right-6 z-20 flex gap-2 items-center">
+                                                        <div className="text-right">
+                                                            <p className="text-white/90 text-[10px] font-medium leading-tight">Kabinet</p>
+                                                            <p className="text-white font-bold text-xs leading-tight drop-shadow-md">Niskala Cakra</p>
                                                         </div>
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                        <img src={lambangUrl} className="h-8 md:h-12 w-auto object-contain drop-shadow-md" alt="Lambang Kabinet" />
+                                                        <img src={lambangUrl} className="h-10 w-auto object-contain drop-shadow-md" alt="Lambang Kabinet" />
                                                     </div>
                                                 )}
 
-                                                <div className="absolute inset-0 flex flex-col md:flex-row">
-                                                    {/* Left side: Photo */}
-                                                    <div className="w-full md:w-5/12 h-1/2 md:h-full relative flex justify-center md:block order-2 md:order-1 mt-auto">
-                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                        <img 
-                                                            src={person.fotoUrl} 
-                                                            alt={person.nama} 
-                                                            className="absolute bottom-0 md:left-8 lg:left-12 h-[95%] w-auto object-contain object-bottom drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)] pointer-events-none z-10" 
-                                                        />
-                                                    </div>
-                                                    
-                                                    {/* Right side: Text */}
-                                                    <div className="w-full md:w-7/12 h-1/2 md:h-full flex flex-col justify-center items-center md:items-start px-8 md:pl-12 md:pr-16 relative z-10 order-1 md:order-2 mt-16 md:mt-0 text-center md:text-left">
-                                                        <h3 className="text-white text-3xl md:text-4xl lg:text-5xl font-serif font-bold leading-tight drop-shadow-xl mb-3 md:mb-4">{person.nama}</h3>
-                                                        <p className="text-white/90 text-lg md:text-xl lg:text-2xl font-serif drop-shadow-md border-b-2 border-white/20 pb-2 inline-block">{person.jabatan}</p>
-                                                    </div>
+                                                {/* Person Info Text (Positioned on the right side) */}
+                                                <div className="absolute top-[35%] right-6 z-20 text-right w-3/5 mt-4">
+                                                    <h3 className="text-white text-2xl md:text-[28px] font-serif font-bold leading-tight drop-shadow-lg mb-1">{person.nama}</h3>
+                                                    <p className="text-white/90 text-sm md:text-base font-serif drop-shadow-md">{person.jabatan}</p>
+                                                </div>
+
+                                                {/* Person Photo (Anchored to bottom) */}
+                                                <div className="absolute bottom-0 left-0 w-[90%] h-[75%] z-10 flex justify-end items-end">
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img 
+                                                        src={person.fotoUrl} 
+                                                        alt={person.nama} 
+                                                        className="w-full h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform duration-700 origin-bottom"
+                                                    />
                                                 </div>
                                             </div>
                                         ))}
